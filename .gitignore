@@ -1,3 +1,14 @@
 .idea
 *.sqlite
 gobbivenv
+/apps/__pycache__/
+/__pycache__/
+/apps/clientes/__pycache__/
+/apps/servicos/__pycache__/
+/apps/tiposServicos/__pycache__/
+/apps/empresas/__pycache__/
+/apps/clientes/migrations/__pycache__/
+/apps/servicos/migrations/__pycache__/
+/apps/tiposServicos/migrations/__pycache__/
+/apps/empresas/migrations/__pycache__/
+
