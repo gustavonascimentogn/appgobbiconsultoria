@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'apps.tiposServicos',
     'apps.servicos',
     'apps.clientes',
+    'apps.pedidos',
+    'apps.status',
+    'apps.andamentos',
 ]
 
 MIDDLEWARE = [

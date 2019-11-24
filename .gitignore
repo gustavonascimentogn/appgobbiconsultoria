@@ -11,4 +11,10 @@ gobbivenv
 /apps/servicos/migrations/__pycache__/
 /apps/tiposServicos/migrations/__pycache__/
 /apps/empresas/migrations/__pycache__/
+/apps/andamentos/__pycache__/
+/apps/andamentos/migrations/__pycache__/
+/apps/pedidos/__pycache__/
+/apps/pedidos/migrations/__pycache__/
+/apps/status/__pycache__/
+/apps/status/migrations/__pycache__/
 
