@@ -17,4 +17,8 @@ gobbivenv
 /apps/pedidos/migrations/__pycache__/
 /apps/status/__pycache__/
 /apps/status/migrations/__pycache__/
+/apps/parcelas/__pycache__/
+/apps/parcelas/migrations/__pycache__/
+/apps/solicitacoes/__pycache__/
+/apps/solicitacoes/migrations/__pycache__/
 
