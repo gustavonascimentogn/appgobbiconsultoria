@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'apps.andamentos',
     'apps.parcelas',
     'apps.solicitacoes',
+    'apps.templates_mensagens',
+    'apps.campanhas',
+    'apps.empregados',
 ]
 
 MIDDLEWARE = [
