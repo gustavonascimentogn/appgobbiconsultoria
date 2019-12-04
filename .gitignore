@@ -27,4 +27,6 @@ gobbivenv
 /apps/empregados/migrations/__pycache__/
 /apps/templates_mensagens/__pycache__/
 /apps/templates_mensagens/migrations/__pycache__/
+/apps/core/__pycache__/
+/apps/core/migrations/__pycache__/
 
