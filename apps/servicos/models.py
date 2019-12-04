@@ -6,9 +6,10 @@ from apps.clientes.models import Cliente
 class Servico(models.Model):
 		nome = models.CharField(max_length=100, blank=False, help_text='Nome do serviço/processo a ser oferecido')
 		descricao = models.CharField(max_length=100, blank=False, help_text='Descrição ou exemplo do serviço/processo')
-		empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT)
-		tipo = models.ForeignKey(TiposServico, on_delete=models.PROTECT)
-		clientes = models.ManyToManyField(Cliente)
+
+		empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT)
+		tipo = models.ForeignKey(TiposServico, blank=True, default=None, on_delete=models.PROTECT)
+		clientes = models.ManyToManyField(Cliente, blank=True, default=None)
 
 		def __str__(self):
-	        	return self.nome
+			return self.nome
