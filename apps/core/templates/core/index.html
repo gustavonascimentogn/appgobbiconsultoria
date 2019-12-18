@@ -7,10 +7,10 @@ Home Core
 {% block main %}
 <div class="row">
     <div class="col-sm">
-      One of three columns
+      Empresa: {{ usuario.empregado.empresa }}
     </div>
     <div class="col-sm">
-      One of three columns
+      Olá {{ usuario.empregado.nome }}
     </div>
     <div class="col-sm">
         <a href="{% url 'logout' %}">Logout</a>
