@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 from apps.empresas.models import Empresa
 from apps.campanhas.models import Campanha
 
@@ -14,7 +16,12 @@ class Cliente(models.Model):
         cep = models.CharField(max_length=9, blank=False, help_text='Incluindo traço. Exemplo: 15000-000')
 
         empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT)
-        campanha = models.ManyToManyField(Campanha)
+        campanha = models.ManyToManyField(Campanha, blank=True)
+
+
+        def get_absolute_url(self):
+                return reverse('list_clientes')
+
 
         def __str__(self):
                 return self.nome

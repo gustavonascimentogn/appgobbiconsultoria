@@ -29,4 +29,5 @@ gobbivenv
 /apps/templates_mensagens/migrations/__pycache__/
 /apps/core/__pycache__/
 /apps/core/migrations/__pycache__/
+gobbiconsultoria/__pycache__/urls.cpython-37.pyc
 

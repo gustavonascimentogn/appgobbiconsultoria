@@ -9,7 +9,6 @@ class Servico(models.Model):
 
 		empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT)
 		tipo = models.ForeignKey(TiposServico, blank=True, default=None, on_delete=models.PROTECT)
-		clientes = models.ManyToManyField(Cliente, blank=True, default=None)
 
 		def __str__(self):
 			return self.nome

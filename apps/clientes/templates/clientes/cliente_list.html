@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    {% for cliente in object_list %}
+        {{ cliente }}
+        <a href="{% url 'update_cliente' cliente.id %}">Editar</a><br>
+        <a href="{% url 'delete_cliente' cliente.id %}">Deletar</a><br>
+    {% endfor %}
+
+    <a href="{% url 'create_funcionario' %}" class="btn btn-info">Novo</a>
+{% endblock %}

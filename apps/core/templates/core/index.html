@@ -10,7 +10,8 @@ Home Core
       Empresa: {{ usuario.empregado.empresa }}
     </div>
     <div class="col-sm">
-      Olá {{ usuario.empregado.nome }}
+        Olá {{ usuario.empregado.nome }}
+        <a href="{% url 'list_clientes' %}">Gerenciar clientes</a>
     </div>
     <div class="col-sm">
         <a href="{% url 'logout' %}">Logout</a>
