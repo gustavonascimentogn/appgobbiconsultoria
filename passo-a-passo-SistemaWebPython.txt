@@ -1,0 +1,321 @@
+Passos para Sistema Web
+
+### usar "winpty" antes dos comandos caso não esteja reconhecendo. :-(
+### Exemplo: winpty git status
+
+1. Criar venv para o projeto: 
+python -m venv nomevenv
+2. Ativar venv. Basta entrar dentro da pasta nomevenv / Scripts e executar o comando activate.
+	No BASH, usar seguinte comando  . gobbivenv/Scripts/activate
+
+3. Instalar Django
+	pip install django
+4. Abrir o PyCharm e o projeto (diretório vazio, caso ainda esteja vazio)
+5. No PyCharm, configurar o ambiente do projeto, para que ele utilize o arquivo python.exe dentro da venv criada
+	Menu File / Settings / Project Interpreter
+6. Criar projeto usando o seguinte comando
+	django-admin startproject gobbiconsultoria .
+7. Executar comando migrate (para criar as tabelas de administração do Django)
+8. Criar super usuário 
+
+	python manage.py createsuperuser 
+	* (caso dê ERRO relacionado a TTY no Git Bash, usar o CMD)
+	
+	para o projeto Gobbi, foi criado superuser com usuario: django / senha: django
+9. Testar se está funcionando	
+-------------------------- GIT -----------------------
+10. Instalar o GIT e configurar o Git Bash no PyCharm
+	Settings / Terminal..... é preciso configurar com o mesmo caminho que o atalho para "Git Bash" do menu iniciar
+11. Criar arquivo .gitignore e adicionar arquivos a serem ignorados
+12. Iniciar repositório 
+	git init
+	
+13. git commit -m 'mensagem de commit'
+
+14. git status
+
+15. git push origin master
+
+------------------ CRIANDO APLICATIVOS ------
+
+1. Criar Python Package chamado "app" dentro do projeto 
+2. Criar os apps desejados:
+	2.1 Executar comando: 	
+		
+		python manage.py startapp [nome do app] --> tudo minúsculo e no Plural
+		
+	2.2 Mover o app criado para dentro da pasta Apps
+	2.3 Registrar app no arquivo "settings.py" dentro do projeto, seção "INSTALLED_APPS" 
+3. Criar o Model, editando o arquivo Models dentro da pasta do App criado:
+
+	3.1 Criar o Model (nome no Singular, com primeira letra Maiuscula)
+	EXEMPLO:
+	---
+	class Empresa(models.Model):
+		dataHoraCriacao = models.DateTimeField(auto_now_add=True, editable=False, help_text='Captura automaticamente a data de criação')
+		nomeFantasia = models.CharField(max_length=100, blank=False, help_text='Nome Fantasia da empresa')
+		razaoSocial = models.CharField(max_length=100, blank=False, help_text='Razao Social da empresa')
+
+		def __str__(self):
+	        	return self.nomeFantasia
+	---
+
+	3.2 Executar comando makemigrations
+		python manage.py makemigrations
+		
+	3.3 Executar comando migrate
+		python manage.py makemigrations
+		
+4. Abrir arquivo admin dentro do diretório do App e Registrar o Model. Adicionar os seguintes comandos ao arquivo
+
+	from .models import NOME DA CLASSE CADASTRADA NO ARQUIVO MODELS.PY
+		from .models import Pedido
+	
+	admin.site.register(NOME DA CLASSE CADASTRADA NO ARQUIVO MODELS.PY)
+		# Register your models here.
+		admin.site.register(Pedido)
+	
+	Executar runserver
+
+------------------ CRIANDO RELACIONAMENTOS ------
+5. Assim que todos os Models estiverem criados, criar os relacionamentos.
+	
+	IMPORTANTE: 
+		- Certifique-se de que as tabelas estão vazias. Isso evita muitos erros.
+		- 
+
+	5.1. Acessar os models dos apps e incluir os atributos de relacionamento
+	Exemplo:
+
+	from apps.tiposServicos.models import TiposServico
+	from apps.clientes.models import Cliente
+
+	class Servico(models.Model):
+		...
+		empresa = models.ForeignKey(Empresa, blank=True, default=None, on_delete=models.PROTECT)
+		tipo = models.ForeignKey(TiposServico, blank=True, default=None, on_delete=models.PROTECT)
+		clientes = models.ManyToManyField(Cliente, blank=True, default=None)
+
+------------------- CONFIGURANDO TEMPLATES ------------
+6. Criar pasta "templates" na raís do projeto
+
+7. No arquivos settings, dentro da pasta do Projeto, incluir na seção "TEMPLATES", no parametro "DIRS" o nome da pasta "templates" (pasta a ser criada na raíz do projeto)
+
+8. Ainda no arquivo settings, configurar Internacionalização
+	
+	LANGUAGE_CODE = 'pt-br'
+
+	TIME_ZONE = 'America/Sao_Paulo'
+
+	USE_I18N = True
+
+	USE_L10N = True
+
+	USE_TZ = True
+	
+9. Criar arquivo chamado base.html, dentro do diretorio "templates"
+
+	Criar os blocks desejados --> {% block main %} {%  endblock %}
+
+10. Configurar as URLS - arquivo urls.py, adicionando as Apps desejadas 
+	
+	from django.contrib import admin
+	from django.urls import path, include
+
+	urlpatterns = [
+		path('empregados/', include('apps.empregados.urls')),
+		path('admin/', admin.site.urls),
+	]
+
+11. Implementar arquivo view.py para cada App
+
+	from django.http import HttpResponse
+	from django.shortcuts import render
+
+	# Create your views here.
+	def home(request):
+		return HttpResponse("Ola")
+	
+11. Criar arquivo urls.py dentro das Apps incluídas no passo anterior
+
+	from django.urls import path, include
+	from .views import home
+
+	urlpatterns = [
+		path('', home, name='home'),,
+	]
+
+################# IMPORTAR BOOTSTRAP
+
+12. Fazer download do arquivo bootstrap do site - versão "Compiled CSS and JS" 
+13. Criar um diretório chamado static dentro do projeto e copiar as pastas CSS e JS para lá
+
+	C:\Users\gustavo\gobbiconsultoria\static\bootstrap
+14. No arquivo Settings, incluir código (no final)
+
+	STATIC_URL = '/static/'
+
+	STATICFILES_DIRS = [
+		os.path.join(BASE_DIR, "static"),
+	]
+	LOGIN_REDIRECT_URL = 'home'
+	LOGOUT_REDIRECT_URL = 'login'
+	
+	
+15. No arquivo base.html (pasta Templates), incluir seguinte código na primeira linha 
+	{% load static %}
+	
+16. Incluir seguinte código antes da tag Title do arquivo base.html
+	
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+	
+17. Incluir Container no arquivo base.html
+
+	<body>
+		<div class="container">
+		  {% block main %} {%  endblock %}
+		</div>
+	</body>
+		 
+################## Criando pagina de Login
+
+1. No arquivo urls.py da pasta gobbiconsultoria, incluir comando que cria o sistema de logins (sem templates, que precisará ser criado depois):
+
+	path('accounts/', include('django.contrib.auth.urls')),
+	
+2. No diretorio Templates, criar diretorio "registration" e arquivo "login.html"
+
+3. NO arquivo login.html, herdar código de base.html e criar form de login.
+
+	{% extends 'base.html' %}
+
+
+	{% block main %}
+		<form method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button type="submit">Login</button>
+		</form>
+	{% endblock %}
+
+4. Incluir no arquivo view.py de todos os Apps que exigirem autenticação. Inserir antes de qualquer função definida:
+
+	...
+	from django.contrib.auth.decorators import login_required
+
+	@login_required
+	...
+	
+################### CRUD
+
+1. Criar link Gerenciar clientes, no Core/templates/Core/index.html
+	<a href="{% url 'list_clientes' %}">Gerenciar clientes</a>
+	
+2. Criar referência para o App Clientes no arquivo urls.py do Gobbiconsultoria
+
+	path('clientes/', include('apps.clientes.urls')),
+
+------------- 
+
+3. Criar arquivos TEMPLATE para as opções Editar, Confirmar Deletar e Listar Clientes. O arquivo templates/clientes/cliente_list.html trará todos os clientes cadastrados. O nome do arquivo deve ser composto por <NomeDoModel>_list.html
+	Neste caso, o model chama "cliente"
+	
+	### cliente_list.html - Lista todos os clientes
+	{% extends 'base.html' %}
+
+	{% block main %}
+		{% for cliente in object_list %}
+			{{ cliente }}
+			<a href="{% url 'update_cliente' cliente.id %}">Editar</a><br>
+			<a href="{% url 'delete_cliente' cliente.id %}">Deletar</a><br>
+		{% endfor %}
+		<a href="{% url 'create_cliente' %}" class="btn btn-info">Novo</a>
+	{% endblock %}
+	
+
+	### cliente_form.html - Para Alterar e Inserir
+	{% extends 'base.html' %}
+
+	{% block main %}
+		<form method="post">
+			{% csrf_token %}
+
+			{{ form }}
+
+			<button type="submit" class="btn btn-main">Salvar</button>
+		</form>
+	{% endblock %}
+	
+
+	### cliente_confirm_delete.html - Para Deletar
+	{% extends 'base.html' %}
+
+	{% block main %}
+		<form method="post">
+			{% csrf_token %}
+			<h2>Você está certo que quer deletar {{ obj }}</h2>
+			{{ form }}
+
+			<button type="submit" class="btn btn-danger">Confirmar</button>
+		</form>
+	{% endblock %}
+	
+
+4. Em urls do App Cliente, adicionar o novo path
+
+	from .views import ClientesList, ClienteEdit, ClienteDelete, ClienteNovo
+
+	urlpatterns = [
+		...
+		path('', ClientesList.as_view(), name='list_clientes'),
+		path('editar/<int:pk>', ClienteEdit.as_view(), name='update_cliente'), ##int:pk é o parâmetro passado pelo arquivo "cliente_list.html"
+		path('delete/<int:pk>', ClienteDelete.as_view(), name='delete_cliente'),
+		path('novo', ClienteNovo.as_view(), name='create_cliente'),
+	]
+
+5. Em views do App Cliente, adicionar nova função ClientesList. Esta nova função deve ter o mesmo nome citado no passo anterior (Passo 3)
+
+	...
+	## Classe para listagem dos registros
+	class ClientesList(ListView):
+		model = Cliente
+		paginate_by = 20
+
+		## filtrando somente clientes da empresa do funcionario logado
+		def get_queryset(self):
+			empresa_logada = self.request.user.empregado.empresa
+			return Cliente.objects.filter(empresa=empresa_logada)
+
+
+	## Classe para edição dos registros
+	class ClienteEdit(UpdateView):
+		model = Cliente
+		fields = ['nome','nomeContato','emailContato','cidade','estado','endereco','complemento','bairro','cep']
+		
+		
+	class ClienteDelete(DeleteView):
+		model = Cliente
+		success_url = reverse_lazy('list_clientes')
+		
+		
+	class ClienteNovo(CreateView):
+		model = Cliente
+		fields = ['nome','nomeContato','emailContato','cidade','estado','endereco','complemento','bairro','cep']
+
+		## Sobrescrevendo o método form_valid para vincular o Cliente a empresa que o atende
+		## Ao final, chamo o método da super classe para prosseguir com a gravação
+		def form_valid(self, form):
+			cliente = form.save(commit=False)
+			cliente.empresa = self.request.user.empregado.empresa
+			cliente.save()
+			return super(ClienteNovo, self).form_valid(form)
+
+
+6. Atualizar o models.py do App para redirecionar após a alteração. Adicionar o método a seguir:
+
+	 def get_absolute_url(self):
+		return reverse('list_clientes')
+				
+
+
+	

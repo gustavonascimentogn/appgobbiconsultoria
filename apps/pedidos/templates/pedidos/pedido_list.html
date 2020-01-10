@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    {% for pedido in object_list %}
+        {{ pedido }}
+        <a href="{% url 'update_pedido' pedido.id %}">Editar</a><br>
+        <a href="{% url 'delete_pedido' pedido.id %}">Deletar</a><br>
+    {% endfor %}
+
+    <a href="{% url 'create_pedido' %}" class="btn btn-info">Novo</a>
+{% endblock %}
