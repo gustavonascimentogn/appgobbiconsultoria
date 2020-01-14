@@ -1,0 +1,54 @@
+{%  load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="{% url 'home'   %}">
+    <span class="navbar-logo">
+        <a href="{% url 'home'   %}">
+             <img src="{% static 'images/gobbi-logotipo-oficial-2-162x91.png'%}" alt="Gobbi Consultoria" title="" style="height: 3rem;" class="">
+        </a>
+    </span>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home'   %}">&nbsp; <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home'   %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Clientes
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'list_pedidos' %}">Registrar venda de serviço</a>
+          <a class="dropdown-item" href="#">Gerenciar serviços prestados</a>
+          <a class="dropdown-item" href="{% url 'list_clientes' %}">Gerenciar clientes</a>
+          <a class="dropdown-item" href="{% url 'list_solicitacoes' %}">Acompanhar solicitações via APP</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Serviços oferecidos
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'list_tiposServicos' %}">Gerenciar tipos de serviços</a>
+          <a class="dropdown-item" href="{% url 'list_servicos' %}">Gerenciar serviços oferecidos</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'list_templates_mensagens' %}">Mensagens padrão</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'list_status' %}">Cadastro de status</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">Sair</a>
+      </li>
+    </ul>
+  </div>
+</nav>

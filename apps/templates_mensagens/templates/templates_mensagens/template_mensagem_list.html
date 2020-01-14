@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    {% for template in object_list %}
+        {{ template }}
+        <a href="{% url 'update_template_mensagem' template.id %}">Editar</a><br>
+        <a href="{% url 'delete_template_mensagem' template.id %}">Deletar</a><br>
+    {% endfor %}
+
+    <a href="{% url 'create_template_mensagem' %}" class="btn btn-info">Novo</a>
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.db import models
 from apps.status.models import Status
 from apps.pedidos.models import Pedido
+from apps.solicitacoes.models import Solicitacao
 
 # Create your models here.
 class Andamento(models.Model):
@@ -9,5 +10,5 @@ class Andamento(models.Model):
     disponivelCliente = models.BooleanField(default=False)
 
     status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT)
-    pedido = models.ForeignKey(Pedido, blank=False, default=None, on_delete=models.PROTECT)
-
+    pedido = models.ForeignKey(Pedido, blank=True, default=None, on_delete=models.PROTECT)
+    solicitacao = models.ForeignKey(Solicitacao, blank=True, default=None, on_delete=models.PROTECT)

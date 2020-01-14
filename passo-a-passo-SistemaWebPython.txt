@@ -193,7 +193,7 @@ python -m venv nomevenv
 	{% block main %}
 		<form method="post">
 			{% csrf_token %}
-			{{ form.as_p }}
+			{{ form.as_p }} ## quando aplicado o plugin bootstrap-form, trocar para {{ form|bootstrap }}
 			<button type="submit">Login</button>
 		</form>
 	{% endblock %}
@@ -316,6 +316,38 @@ python -m venv nomevenv
 	 def get_absolute_url(self):
 		return reverse('list_clientes')
 				
+----------------- INSTALANDO BOOTSTRAP FORM
 
+Seguir instruções da página.
+https://django-bootstrap-form.readthedocs.io/en/latest/
 
+1. Ativar Virtual Env utilizada no projeto
+2. Instalar o pacote 
+	
+		pip install django-bootstrap-form
+		
+3. Adicionar o novo plugin como Installed Apps. Arquivo Gobbiconsultoria/settings
+
+	INSTALLED_APPS = (
+		...
+		'bootstrapform',
+		...
+	)
+4. Adicionar comandos para utilizar nos forms. Pagínas HTML que contenham Form.
+
+	{% load bootstrap %}
+
+	{{ form|bootstrap }}
+	
+------------------- ADICIONANDO NAV BAR
+
+1. Procurar por "navbar" na documentação online do bootstrap
+
+2. Copiar código da navbar escolhida para o arquivo gobbiconsultoria/templates/base.html. Colocar ANTES do block MAIN.
+
+3. Incluir bibliotecas CDN para os submenus funcionarem
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src=" {% static 'bootstrap/js/bootstrap.js'   %} "></script>
 	

@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 from apps.empresas.models import Empresa
 
 class Status(models.Model):
@@ -6,6 +8,9 @@ class Status(models.Model):
     ativo = models.BooleanField(default=True)
 
     empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT)
+
+    def get_absolute_url(self):
+        return reverse('list_status')
 
     def __str__(self):
         return self.nome

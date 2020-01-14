@@ -5,19 +5,60 @@ Home Core
 {% endblock %}
 
 {% block main %}
-<div class="row">
-    <div class="col-sm">
-      Empresa: {{ usuario.empregado.empresa }}
+<br>
+<div class="row-fluid">
+    <div class="span3">
+        <div class="card">
+          <div class="card-header">
+              <h4>
+                <i class="fa fa-users" aria-hidden="true"></i> Clientes
+              </h4>
+          </div>
+          <div class="card-body text-secondary">
+            <ul>
+                <li>Total de clientes: 300</li>
+                <li>Clientes ativos: 55</li>
+                <li>Novos clientes (90 dias): 10</li>
+                <li>Clientes inativos (90 dias): 40</li>
+            </ul>
+          </div>
+        </div>
     </div>
-    <div class="col-sm">
-        Olá {{ usuario.empregado.nome }}
-        <a href="{% url 'list_clientes' %}">Gerenciar clientes</a>
-        <a href="{% url 'list_servicos' %}">Gerenciar serviços</a>
-        <a href="{% url 'list_tiposServicos' %}">Gerenciar tipos de serviços</a>
-        <a href="{% url 'list_pedidos' %}">Gerenciar pedidos</a>
+    <div class="span3">
+        <div class="card">
+          <div class="card-header">
+              <h4>
+                <i class="fa fa-handshake-o" aria-hidden="true"></i> Serviços
+              </h4>
+          </div>
+          <div class="card-body text-secondary">
+            <ul>
+                <li>Movimentados hoje: 20</li>
+                <li>Finalizados (7 dias): 40</li>
+                <li>Sem movimentação: 23</li>
+                <li>Cancelados (90 dias): 3</li>
+            </ul>
+          </div>
+        </div>
     </div>
-    <div class="col-sm">
-        <a href="{% url 'logout' %}">Logout</a>
+    <div class="span3">
+        <div class="card" >
+            <div class="card-header">
+                <h4>
+                <i class="fa fa-bullhorn" aria-hidden="true"></i> Campanhas
+              </h4>
+            </div>
+            <div class="card-body text-secondary">
+                <ul>
+                    <li>Ativas: 20</li>
+                    <li>Finalizadas (7 dias): 12</li>
+                    <li>Total criadas: 33</li>
+                    <li>A iniciar (7 dias): 3</li>
+                </ul>
+            </div>
+        </div>
+
     </div>
 </div>
+
 {% endblock %}

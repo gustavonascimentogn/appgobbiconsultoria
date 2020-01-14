@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    {% for status in object_list %}
+        {{ status }}
+        <a href="{% url 'update_status' status.id %}">Editar</a><br>
+        <a href="{% url 'delete_status' status.id %}">Deletar</a><br>
+    {% endfor %}
+
+    <a href="{% url 'create_status' %}" class="btn btn-info">Novo</a>
+{% endblock %}

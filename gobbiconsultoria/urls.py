@@ -25,4 +25,7 @@ urlpatterns = [
     path('servicos/', include('apps.servicos.urls')),
     path('tiposServicos/', include('apps.tiposServicos.urls')),
     path('pedidos/', include('apps.pedidos.urls')),
+    path('status/', include('apps.status.urls')),
+    path('templates_mensagens/', include('apps.templates_mensagens.urls')),
+    path('solicitacoes/', include('apps.solicitacoes.urls')),
 ]

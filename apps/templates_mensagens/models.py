@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 from apps.empresas.models import Empresa
 
 class Template_mensagem(models.Model):
@@ -20,6 +22,10 @@ class Template_mensagem(models.Model):
     ativo = models.BooleanField(default=True)
 
     empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT)
+
+    def get_absolute_url(self):
+        return reverse('list_template_mensagens')
+
 
     def __str__(self):
         return 'Tipo: ' + self.tipo + ' | ' + self.texto
