@@ -31,7 +31,6 @@ class SolicitacaoNovo(CreateView):
     ## Ao final, chamo o método da super classe para prosseguir com a gravação
     def form_valid(self, form):
         solicitacao = form.save(commit=False)
-        solicitacao.empresa = self.request.user.empregado.empresa
         solicitacao.save()
         return super(SolicitacaoNovo, self).form_valid(form)
 

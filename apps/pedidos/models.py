@@ -11,6 +11,7 @@ class Pedido(models.Model):
     dataHoraCriacao = models.DateTimeField(auto_now_add=True, editable=False, help_text='Captura automaticamente a data de crição')
     qtdParcelas = models.IntegerField(blank=False)
     dataVencimento = models.DateField(blank=False, editable=True, help_text='Data de vencimento da primeira parcela')
+    valor = models.IntegerField(blank=False, help_text='Insira o valor em R$')
 
     servico = models.ForeignKey(Servico, blank=False, default=None, on_delete=models.PROTECT)
     cliente = models.ForeignKey(Cliente, blank=False, default=None, on_delete=models.PROTECT)
@@ -21,4 +22,4 @@ class Pedido(models.Model):
         return reverse('list_pedidos')
 
     def __str__(self):
-        return 'Cliente: ' + self.cliente.nome + ' | Serviço:' + self.servico.nome + ' | Data: ' + str(self.dataHoraCriacao.strftime('%d-%m-%Y  '))
+        return 'Cliente: ' + self.cliente.nome + ' | Serviço: ' + self.servico.nome + ' | Em: ' + str(self.dataHoraCriacao.strftime('%d-%m-%Y  ')) + ' | Parcelas: ' + str(self.qtdParcelas) + ' x  R$ ' + str(self.valor/self.qtdParcelas)

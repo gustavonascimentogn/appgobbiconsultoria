@@ -15,7 +15,7 @@ class ServicosList(ListView):
 ## Classe para edição dos registros
 class ServicoEdit(UpdateView):
     model = Servico
-    fields = ['nome','descricao','tipo']
+    fields = ['nome','descricao','valor','tipo']
 
 class ServicoDelete(DeleteView):
     model = Servico
@@ -23,7 +23,7 @@ class ServicoDelete(DeleteView):
 
 class ServicoNovo(CreateView):
     model = Servico
-    fields = ['nome','descricao','tipo']
+    fields = ['nome','descricao','valor','tipo']
 
     ## Sobrescrevendo o método form_valid para vincular o Servico a empresa que o atende
     ## Ao final, chamo o método da super classe para prosseguir com a gravação

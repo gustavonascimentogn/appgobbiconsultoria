@@ -25,7 +25,6 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{% url 'list_pedidos' %}">Registrar venda de serviço</a>
-          <a class="dropdown-item" href="#">Gerenciar serviços prestados</a>
           <a class="dropdown-item" href="{% url 'list_clientes' %}">Gerenciar clientes</a>
           <a class="dropdown-item" href="{% url 'list_solicitacoes' %}">Acompanhar solicitações via APP</a>
         </div>
@@ -39,6 +38,9 @@
           <a class="dropdown-item" href="{% url 'list_tiposServicos' %}">Gerenciar tipos de serviços</a>
           <a class="dropdown-item" href="{% url 'list_servicos' %}">Gerenciar serviços oferecidos</a>
         </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'list_campanhas' %}">Campanhas</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'list_templates_mensagens' %}">Mensagens padrão</a>

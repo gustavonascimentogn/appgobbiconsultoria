@@ -331,7 +331,7 @@ https://django-bootstrap-form.readthedocs.io/en/latest/
 	INSTALLED_APPS = (
 		...
 		'bootstrapform',
-		...
+		... #085c24
 	)
 4. Adicionar comandos para utilizar nos forms. Pagínas HTML que contenham Form.
 
@@ -345,9 +345,13 @@ https://django-bootstrap-form.readthedocs.io/en/latest/
 
 2. Copiar código da navbar escolhida para o arquivo gobbiconsultoria/templates/base.html. Colocar ANTES do block MAIN.
 
-3. Incluir bibliotecas CDN para os submenus funcionarem
+3. Incluir bibliotecas CDN para os submenus funcionarem. Códigos devem ser incluídos APÓS o navbar. Pode ser dentro do BODY, mas no final.
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src=" {% static 'bootstrap/js/bootstrap.js'   %} "></script>
+	
+4. Incluir load i18n (para tradução)
+
+	{%  load i18n  %}
 	

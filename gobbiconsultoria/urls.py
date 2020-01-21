@@ -28,4 +28,5 @@ urlpatterns = [
     path('status/', include('apps.status.urls')),
     path('templates_mensagens/', include('apps.templates_mensagens.urls')),
     path('solicitacoes/', include('apps.solicitacoes.urls')),
+    path('campanhas/', include('apps.campanhas.urls')),
 ]

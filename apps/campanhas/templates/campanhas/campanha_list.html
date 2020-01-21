@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    {% for campanha in object_list %}
+        {{ campanha }}
+        <a href="{% url 'update_campanha' campanha.id %}">Editar</a><br>
+        <a href="{% url 'delete_campanha' campanha.id %}">Deletar</a><br>
+    {% endfor %}
+
+    <a href="{% url 'create_campanha' %}" class="btn btn-info">Novo</a>
+{% endblock %}
