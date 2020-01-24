@@ -1,14 +1,15 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
-from django.urls import reverse
+
 from django.views.generic import CreateView
 from .models import Arquivo
+from .form import ArquivoForm
 
 
 class ArquivoNovo(CreateView):
     model = Arquivo
-    fields = ['cliente','nome','arquivo']
+    form_class = ArquivoForm
 
- #   def form_valid(self, form):
- #       return HttpResponseRedirect(reverse('update_cliente', args=[self.object.id]))
+    def get_form_kwargs(self):
+        kwargs = super(ArquivoNovo, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
+        kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
+        return kwargs
 

@@ -11,7 +11,7 @@ class Arquivo(models.Model):
 
 
     def get_absolute_url(self):
-        return reverse('update_cliente', args=[self.object.id])
+        return reverse('create_arquivo')
 
 
     def __str__(self):
