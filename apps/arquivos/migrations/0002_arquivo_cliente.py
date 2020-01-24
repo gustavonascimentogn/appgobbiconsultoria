@@ -9,14 +9,14 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('parcelas', '0001_initial'),
-        ('pedidos', '0001_initial'),
+        ('arquivos', '0001_initial'),
+        ('clientes', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='parcela',
-            name='pedido',
-            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.PROTECT, to='pedidos.Pedido'),
+            model_name='arquivo',
+            name='cliente',
+            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.PROTECT, to='clientes.Cliente'),
         ),
     ]

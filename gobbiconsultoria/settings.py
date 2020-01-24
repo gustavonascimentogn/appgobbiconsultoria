@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'apps.templates_mensagens',
     'apps.campanhas',
     'apps.empregados',
+    'apps.arquivos',
     'apps.core',
     'bootstrapform',
 ]
@@ -124,5 +125,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media'
+
 LOGIN_REDIRECT_URL = 'home'
+
 LOGOUT_REDIRECT_URL = 'login'

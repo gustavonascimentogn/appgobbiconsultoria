@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 
 {% block main %}
+
     {% for cliente in object_list %}
         {{ cliente }}
         <a href="{% url 'update_cliente' cliente.id %}">Editar</a><br>
         <a href="{% url 'delete_cliente' cliente.id %}">Deletar</a><br>
-    {% endfor %}
+        <a href="{% url 'create_arquivo' cliente.id %}" >Adicionar arquivo</a><br>
 
+    {% endfor %}
+    <br>
     <a href="{% url 'create_cliente' %}" class="btn btn-info">Novo</a>
+
 {% endblock %}
