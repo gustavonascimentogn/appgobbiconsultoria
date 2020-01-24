@@ -10,9 +10,5 @@ class Arquivo(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
 
 
-    def get_absolute_url(self):
-        return reverse('create_arquivo')
-
-
     def __str__(self):
         return self.nome

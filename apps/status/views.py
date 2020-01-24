@@ -17,6 +17,13 @@ class StatusEdit(UpdateView):
     model = Status
     fields = ['nome','ativo']
 
+    def form_valid(self, form):
+        status = form.save(commit=False)
+        status.save()
+
+        from django.shortcuts import redirect
+        return redirect('list_status')
+
 class StatusDelete(DeleteView):
     model = Status
     success_url = reverse_lazy('list_status')
@@ -31,5 +38,8 @@ class StatusNovo(CreateView):
         status = form.save(commit=False)
         status.empresa = self.request.user.empregado.empresa
         status.save()
-        return super(StatusNovo, self).form_valid(form)
+        ## return super(StatusNovo, self).form_valid(form)
+        ## substituindo a chamada a superclasse, pois o get_absolute_url nao estava funcionando
+        from django.shortcuts import redirect
+        return redirect('list_status')
 

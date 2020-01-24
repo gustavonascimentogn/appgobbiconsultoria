@@ -32,4 +32,5 @@ urlpatterns = [
     path('solicitacoes/', include('apps.solicitacoes.urls')),
     path('campanhas/', include('apps.campanhas.urls')),
     path('arquivos/', include('apps.arquivos.urls')),
+    path('andamentos/', include('apps.andamentos.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

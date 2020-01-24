@@ -15,7 +15,14 @@ class Templates_mensagensList(ListView):
 ## Classe para edição dos registros
 class Template_mensagemEdit(UpdateView):
     model = Template_mensagem
-    fields = ['texto','tipo','ativo']
+    fields = ['texto','tipo','ativo','arquivo']
+
+    def form_valid(self, form):
+        templates = form.save(commit=False)
+        templates.save()
+
+        from django.shortcuts import redirect
+        return redirect('list_templates_mensagens')
 
 class Template_mensagemDelete(DeleteView):
     model = Template_mensagem
@@ -23,7 +30,7 @@ class Template_mensagemDelete(DeleteView):
 
 class Template_mensagemNovo(CreateView):
     model = Template_mensagem
-    fields = ['texto','tipo','ativo']
+    fields = ['texto','tipo','ativo','arquivo']
 
     ## Sobrescrevendo o método form_valid para vincular o Cliente a empresa que o atende
     ## Ao final, chamo o método da super classe para prosseguir com a gravação
@@ -31,6 +38,9 @@ class Template_mensagemNovo(CreateView):
         template = form.save(commit=False)
         template.empresa = self.request.user.empregado.empresa
         template.save()
-        return super(Template_mensagemNovo, self).form_valid(form)
+        ## return super(Template_mensagemNovo, self).form_valid(form)
+        ## substituindo a chamada a superclasse, pois o get_absolute_url nao estava funcionando
+        from django.shortcuts import redirect
+        return redirect('list_templates_mensagens')
 
 

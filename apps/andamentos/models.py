@@ -10,5 +10,5 @@ class Andamento(models.Model):
     disponivelCliente = models.BooleanField(default=False)
 
     status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT)
-    pedido = models.ForeignKey(Pedido, blank=True, default=None, on_delete=models.PROTECT)
-    solicitacao = models.ForeignKey(Solicitacao, blank=True, default=None, on_delete=models.PROTECT)
+    pedido = models.ForeignKey(Pedido, blank=True, null=True, default=None, on_delete=models.PROTECT)
+    solicitacao = models.ForeignKey(Solicitacao, blank=True, null=True, default=None, on_delete=models.PROTECT)

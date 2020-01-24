@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+    {% for andamento in object_list %}
+
+        <a href="{% url 'update_andamento' andamento.id  %}">Editar</a><br>
+        <a href="{% url 'delete_andamento' andamento.id %}">Deletar</a><br>
+
+    {% endfor %}
+    <br>
+    <a href="{% url 'create_andamento' %}" class="btn btn-info">Novo</a>
+
+{% endblock %}

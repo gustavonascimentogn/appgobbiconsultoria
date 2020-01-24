@@ -17,6 +17,13 @@ class ClienteEdit(UpdateView):
     model = Cliente
     fields = ['nome','nomeContato','emailContato','cidade','estado','endereco','complemento','bairro','cep']
 
+    def form_valid(self, form):
+        cliente = form.save(commit=False)
+        cliente.save()
+
+        from django.shortcuts import redirect
+        return redirect('list_clientes')
+
 class ClienteDelete(DeleteView):
     model = Cliente
     success_url = reverse_lazy('list_clientes')
@@ -31,5 +38,8 @@ class ClienteNovo(CreateView):
         cliente = form.save(commit=False)
         cliente.empresa = self.request.user.empregado.empresa
         cliente.save()
-        return super(ClienteNovo, self).form_valid(form)
+
+        #return super(CampanhaNovo, self).form_valid(form) ## substituindo a chamada a superclasse, pois o get_absolute_url nao estava funcionando
+        from django.shortcuts import redirect
+        return redirect('list_clientes')
 

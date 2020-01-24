@@ -18,6 +18,14 @@ class TiposServicoEdit(UpdateView):
     model = TiposServico
     fields = ['nomeTipo','descricao']
 
+    def form_valid(self, form):
+        tiposServico = form.save(commit=False)
+        tiposServico.save()
+
+        from django.shortcuts import redirect
+        return redirect('list_tiposServicos')
+
+
 class TiposServicoDelete(DeleteView):
     model = TiposServico
     success_url = reverse_lazy('list_tiposServicos')
@@ -32,5 +40,8 @@ class TiposServicoNovo(CreateView):
         tiposServico = form.save(commit=False)
         tiposServico.empresa = self.request.user.empregado.empresa
         tiposServico.save()
-        return super(TiposServicoNovo, self).form_valid(form)
+        ##return super(TiposServicoNovo, self).form_valid(form)
+        ## substituindo a chamada a superclasse, pois o get_absolute_url nao estava funcionando
+        from django.shortcuts import redirect
+        return redirect('list_tiposServicos')
 

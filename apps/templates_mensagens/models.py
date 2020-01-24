@@ -20,11 +20,9 @@ class Template_mensagem(models.Model):
     texto = models.CharField(max_length=170, blank=False, help_text='Texto a ser enviado')
     tipo = models.CharField(max_length=10, blank=False, choices=TIPO_OPCOES, help_text='Tipo de mensagem')
     ativo = models.BooleanField(default=True)
+    arquivo = models.FileField(upload_to='msgpadrao')
 
     empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT)
-
-    def get_absolute_url(self):
-        return reverse('list_template_mensagens')
 
 
     def __str__(self):

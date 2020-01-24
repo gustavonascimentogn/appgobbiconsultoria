@@ -1,4 +1,5 @@
 from django.db import models
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from apps.empresas.models import Empresa
@@ -17,10 +18,6 @@ class Cliente(models.Model):
 
         empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT)
         campanha = models.ManyToManyField(Campanha, blank=True)
-
-
-        def get_absolute_url(self):
-                return reverse('list_clientes')
 
 
         def __str__(self):

@@ -3,6 +3,7 @@ from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Pedido
 from .models import Cliente
 from apps.parcelas.models import Parcela
+from .form import PedidoForm
 
 ## Classe para listagem dos registros
 class PedidosList(ListView):
@@ -19,14 +20,12 @@ class PedidosList(ListView):
 ## Classe para edição dos registros
 class PedidoEdit(UpdateView):
     model = Pedido
-    fields = ['cliente','servico','valor','qtdParcelas','dataVencimento','status']
+    form_class = PedidoForm
 
     def form_valid(self, form):
         ## Apagando parcelas geradas anteriormente
         pedidoN = form.save(commit=False)
         Parcela.objects.filter(pedido=pedidoN).delete()
-        ##parcela = Parcela.objects.get(pedido=pedidoN)
-        ##parcela.delete()
 
         ## Inserindo novamente as parcelas
         insert_list = []
@@ -35,7 +34,16 @@ class PedidoEdit(UpdateView):
 
         Parcela.objects.bulk_create(insert_list)
         pedidoN.save()
-        return super(PedidoEdit, self).form_valid(form)
+
+        from django.shortcuts import redirect
+        return redirect('list_pedidos')
+
+
+    ## Methodo para filtrar o campo "cliente", trazendo somente os clientes da empresa do user logado
+    def get_form_kwargs(self):
+        kwargs = super(PedidoEdit, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
+        kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
+        return kwargs
 
 
 class PedidoDelete(DeleteView):
@@ -45,7 +53,7 @@ class PedidoDelete(DeleteView):
 
 class PedidoNovo(CreateView):
     model = Pedido
-    fields = ['cliente','servico','valor','qtdParcelas','dataVencimento','status']
+    form_class = PedidoForm
 
     def form_valid(self, form):
         pedidoN = form.save(commit=False)
@@ -57,5 +65,14 @@ class PedidoNovo(CreateView):
             insert_list.append(Parcela(numParcela=i,dataVencimento=pedidoN.dataVencimento,valor=pedidoN.valor/pedidoN.qtdParcelas, pedido=pedidoN))
 
         Parcela.objects.bulk_create(insert_list)
-        return super(PedidoNovo, self).form_valid(form)
+        ## return super(PedidoNovo, self).form_valid(form)
+        ## substituindo a chamada a superclasse, pois o get_absolute_url nao estava funcionando
+        from django.shortcuts import redirect
+        return redirect('list_pedidos')
 
+
+    ## Methodo para filtrar o campo "cliente", trazendo somente os clientes da empresa do user logado
+    def get_form_kwargs(self):
+        kwargs = super(PedidoNovo, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
+        kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
+        return kwargs

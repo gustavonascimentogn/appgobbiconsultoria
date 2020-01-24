@@ -17,9 +17,6 @@ class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, blank=False, default=None, on_delete=models.PROTECT)
     status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT)
 
-    def get_absolute_url(self):
-        ## return reverse('list_pedidos', kwargs={'pk': str(self.pk)})
-        return reverse('list_pedidos')
 
     def __str__(self):
         return 'Cliente: ' + self.cliente.nome + ' | Serviço: ' + self.servico.nome + ' | Em: ' + str(self.dataHoraCriacao.strftime('%d-%m-%Y  ')) + ' | Parcelas: ' + str(self.qtdParcelas) + ' x  R$ ' + str(self.valor/self.qtdParcelas)
