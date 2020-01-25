@@ -77,6 +77,19 @@ python -m venv nomevenv
 	
 	Executar runserver
 
+------------------ ACESSANDO O SHELL PARA AUXILIO AO DEV
+1. No terminal (Exemplo):
+
+	python manage.py shell
+	
+	from apps.clientes.models import *
+	
+	cli = Cliente.objects.last()
+	
+	dir (cli) ## visualizar todos os atributos e metodos disponiveis
+	
+	
+
 ------------------ CRIANDO RELACIONAMENTOS ------
 5. Assim que todos os Models estiverem criados, criar os relacionamentos.
 	

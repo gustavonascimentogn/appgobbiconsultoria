@@ -2,6 +2,20 @@
 {% load bootstrap %}
 
 {% block main %}
+    <h3>Documentos do cliente</h3>
+    <ul>
+        {% for arquivo in object.arquivo_set.all  %}
+            <li>
+                <a href="{{ arquivo.arquivo.url }}" target="_blank"> {{ arquivo.nome }}</a> -
+                <a href="{% url 'update_arquivo' arquivo.id %}">Editar</a> |
+                <a href="{% url 'delete_arquivo' arquivo.id object.id %}">Deletar</a><br>
+            </li>
+        {% endfor %}
+        <br>
+        <a href="{% url 'create_arquivo' object.id %}" class="btn btn-info">Anexar novo documento</a>
+    </ul>
+    <br>
+    <h3>Dados cadastrais</h3>
     <form method="post">
         {% csrf_token %}
 
@@ -9,7 +23,10 @@
 
         <button type="submit" class="btn btn-info">Salvar</button>
     </form>
-    <br>
+    <br><br>
+
+
+
 
 {% endblock %}
 

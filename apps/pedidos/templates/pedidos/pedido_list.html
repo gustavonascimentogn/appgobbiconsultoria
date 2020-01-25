@@ -3,9 +3,9 @@
 {% block main %}
     {% for pedido in object_list %}
         {{ pedido }}
-        <a href="{% url 'update_pedido' pedido.id %}">Editar</a><br>
-        <a href="{% url 'delete_pedido' pedido.id %}">Deletar</a><br>
-        <a href="{% url 'create_andamento' pedido.id 'pedido' %}" class="btn btn-success">Registrar movimentação</a><br><br>
+        <a href="{% url 'update_pedido' pedido.id %}">Editar</a> |
+        <a href="{% url 'delete_pedido' pedido.id %}">Deletar</a> |
+        <a href="{% url 'create_andamento' pedido.id 'pedido' %}">Registrar movimentação</a><br><br>
     {% endfor %}
 
     <a href="{% url 'create_pedido' %}" class="btn btn-info">Novo</a>

@@ -3,9 +3,9 @@
 {% block main %}
     {% for tiposServico in object_list %}
         {{ tiposServico }}
-        <a href="{% url 'update_tiposServico' tiposServico.id %}">Editar</a><br>
+        <a href="{% url 'update_tiposServico' tiposServico.id %}">Editar</a> |
         <a href="{% url 'delete_tiposServico' tiposServico.id %}">Deletar</a><br>
     {% endfor %}
-
+    <br>
     <a href="{% url 'create_tiposServico' %}" class="btn btn-info">Novo</a>
 {% endblock %}
