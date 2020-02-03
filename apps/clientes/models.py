@@ -22,3 +22,13 @@ class Cliente(models.Model):
 
         def __str__(self):
                 return self.nome
+
+        @property
+        def total_pedidos(self):
+                return self.pedido_set.all().count()
+
+        @property
+        def total_solicitacao(self):
+                return self.solicitacao_set.all().count()
+
+

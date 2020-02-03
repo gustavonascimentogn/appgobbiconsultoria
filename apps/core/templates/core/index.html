@@ -11,19 +11,20 @@ Home Core
         <div class="card">
           <div class="card-header">
               <h4>
-                <i class="fa fa-users" aria-hidden="true"></i> Clientes
+                <i class="fa fa-users" aria-hidden="true"></i> Dashboard
               </h4>
           </div>
           <div class="card-body text-secondary">
             <ul>
-                <li>Total de clientes: 300</li>
-                <li>Clientes ativos: 55</li>
-                <li>Novos clientes (90 dias): 10</li>
-                <li>Clientes inativos (90 dias): 40</li>
+                <li>Total de clientes cadastrados: {{   total_clientes   }}</li>
+                <li>Clientes sem serviços cadastrados: {{   total_clientes_sem_pedidos   }}</li>
+                <li>Total de serviços vendidos: {{   total_pedidos   }} </li>
+                <li>Total de campanhas criadas: {{  total_campanhas }}</li>
             </ul>
           </div>
         </div>
     </div>
+    <!--
     <div class="span3">
         <div class="card">
           <div class="card-header">
@@ -33,10 +34,10 @@ Home Core
           </div>
           <div class="card-body text-secondary">
             <ul>
-                <li>Movimentados hoje: 20</li>
-                <li>Finalizados (7 dias): 40</li>
-                <li>Sem movimentação: 23</li>
-                <li>Cancelados (90 dias): 3</li>
+                <li>Movimentados hoje:  </li>
+                <li>Finalizados (7 dias): </li>
+                <li>Sem movimentação: </li>
+                <li>Cancelados (90 dias):  </li>
             </ul>
           </div>
         </div>
@@ -50,15 +51,14 @@ Home Core
             </div>
             <div class="card-body text-secondary">
                 <ul>
-                    <li>Ativas: 20</li>
-                    <li>Finalizadas (7 dias): 12</li>
-                    <li>Total criadas: 33</li>
-                    <li>A iniciar (7 dias): 3</li>
+                    <li>Ativas: </li>
+                    <li>Finalizadas (7 dias):  </li>
+                    <li>A iniciar (7 dias):  </li>
                 </ul>
             </div>
         </div>
-
     </div>
+    -->
 </div>
 
 {% endblock %}

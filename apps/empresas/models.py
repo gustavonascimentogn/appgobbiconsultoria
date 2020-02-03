@@ -14,3 +14,16 @@ class Empresa(models.Model):
 
     def __str__(self):
         return self.nomeFantasia
+
+    @property
+    def total_clientes(self):
+        return self.cliente_set.all().count()
+
+    @property
+    def total_campanhas(self):
+        return self.campanha_set.all().count()
+
+
+    @property
+    def total_clientes_sem_pedido(self):
+        return self.cliente_set.filter(pedido=None).count()

@@ -20,3 +20,4 @@ class Pedido(models.Model):
 
     def __str__(self):
         return 'Cliente: ' + self.cliente.nome + ' | Serviço: ' + self.servico.nome + ' | Em: ' + str(self.dataHoraCriacao.strftime('%d-%m-%Y  ')) + ' | Parcelas: ' + str(self.qtdParcelas) + ' x  R$ ' + str(self.valor/self.qtdParcelas)
+
