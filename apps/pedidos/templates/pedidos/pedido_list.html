@@ -1,12 +1,37 @@
 {% extends 'base.html' %}
+{%  load static %}
 
 {% block main %}
-    {% for pedido in object_list %}
-        {{ pedido }}
-        <a href="{% url 'update_pedido' pedido.id %}">Editar</a> |
-        <a href="{% url 'delete_pedido' pedido.id %}">Deletar</a> |
-        <a href="{% url 'create_andamento' pedido.id 'pedido' %}">Registrar movimentação</a><br><br>
-    {% endfor %}
 
-    <a href="{% url 'create_pedido' %}" class="btn btn-info">Novo</a>
+    <p>
+        <h1>Serviços vendidos</h1>
+        <a href="{% url 'create_pedido' %}" class="btn btn-info">Cadastrar nova venda</a>
+    </p><br>
+
+
+    <div class="row">
+        {%  for pedido in object_list %}
+        <div class="col-md-3">
+            <div class="card bg-light mb-3" >
+                <div class="card-header"><h5>{{ pedido.cliente.nome }} <br> Pedido {{ pedido.id }}</h5></div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ pedido.dataHoraCriacao|date:'d/m/Y' }}</h5>
+                    <p class="card-text">
+                        {{ pedido.cliente.nome }}<br>
+                        {{ pedido.servico.nome }}<br>
+                        R$ {{ pedido.valor }} ({{ pedido.qtdParcelas }} parcelas)<br>
+                        <b>{{ pedido.status }}</b>
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent" align="center">
+                    <a href="{% url 'update_pedido' pedido.id %}" ><img src="{% static 'images/edit.png'%}" alt="Editar" ></a>&nbsp;
+                    <a href="{% url 'create_andamento' pedido.id 'pedido' %}"><img src="{% static 'images/ship.png'%}" alt="Movimentar" ></a>&nbsp;
+                    <a href="{% url 'delete_pedido' pedido.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a>&nbsp;
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div><br>
+
+
 {% endblock %}

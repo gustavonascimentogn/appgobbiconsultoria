@@ -9,6 +9,5 @@ class Arquivo(models.Model):
 
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
 
-
     def __str__(self):
         return self.nome

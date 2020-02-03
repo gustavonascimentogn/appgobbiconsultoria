@@ -1,14 +1,38 @@
 {% extends 'base.html' %}
+{%  load static %}
 
 {% block main %}
 
-    {% for cliente in object_list %}
-        {{ cliente }}
-        <a href="{% url 'update_cliente' cliente.id %}">Editar</a> |
-        <a href="{% url 'delete_cliente' cliente.id %}">Deletar</a><br>
+    <p>
+        <h1>Clientes cadastrados</h1>
+         <a href="{% url 'create_cliente' %}" class="btn btn-info">Cadastrar novo cliente</a>
+    </p><br>
 
-    {% endfor %}
-    <br>
-    <a href="{% url 'create_cliente' %}" class="btn btn-info">Novo</a>
+    <div class="row">
+        {%  for objeto in object_list %}
+        <div class="col-md-4">
+            <div class="card bg-light mb-3" >
+                <div class="card-header"><h5>{{ objeto.nome }} <br> ID {{ objeto.id }}</h5></div>
+                <div class="card-body">
+
+                    <p class="card-text">
+                        <b>{{ objeto.nomeContato }}</b><br>
+                        {{ objeto.emailContato }}<br><br>
+                        Servicos comprados: {{  objeto.total_pedidos }} <br>
+                        Solicitações realizadas: {{ objeto.total_solicitacao }}<br>
+                        Documentos anexados: {{ objeto.total_arquivos }}
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent" align="center">
+                    <a href="{% url 'update_cliente' objeto.id %}" ><img src="{% static 'images/edit.png'%}" alt="Editar" ></a>&nbsp;
+                    <a href="{% url 'create_arquivo' objeto.id %}"><img src="{% static 'images/document.png'%}" alt="Upload" ></a>
+                    <a href="{% url 'delete_cliente' objeto.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a>&nbsp;
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div><br>
+
+
 
 {% endblock %}

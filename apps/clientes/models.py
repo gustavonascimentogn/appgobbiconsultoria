@@ -28,6 +28,10 @@ class Cliente(models.Model):
                 return self.pedido_set.all().count()
 
         @property
+        def total_arquivos(self):
+                return self.arquivo_set.all().count()
+
+        @property
         def total_solicitacao(self):
                 return self.solicitacao_set.all().count()
 

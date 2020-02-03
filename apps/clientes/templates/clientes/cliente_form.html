@@ -1,29 +1,39 @@
 {% extends 'base.html' %}
 {% load bootstrap %}
+{% load static %}
 
 {% block main %}
-    <h3>Documentos do cliente</h3>
-    <ul>
-        {% for arquivo in object.arquivo_set.all  %}
-            <li>
-                <a href="{{ arquivo.arquivo.url }}" target="_blank"> {{ arquivo.nome }}</a> -
-                <a href="{% url 'update_arquivo' arquivo.id %}">Editar</a> |
-                <a href="{% url 'delete_arquivo' arquivo.id object.id %}">Deletar</a><br>
-            </li>
-        {% endfor %}
-        <br>
-        <a href="{% url 'create_arquivo' object.id %}" class="btn btn-info">Anexar novo documento</a>
-    </ul>
+
+
     <br>
-    <h3>Dados cadastrais</h3>
-    <form method="post">
-        {% csrf_token %}
+    <div class="card bg-light mb-3" >
+        <div class="card-header">
+        <h1>Clientes cadastrados</h1>
+            {% if not object.id == None %}
+                Documentos anexados<br>
+                {% for arquivo in object.arquivo_set.all  %}
+                        <a href="{{ arquivo.arquivo.url }}" target="_blank"> {{ arquivo.nome }}</a> -
+                        <a href="{% url 'update_arquivo' arquivo.id object.id %}">Editar</a> /
+                        <a href="{% url 'delete_arquivo' arquivo.id object.id %}">Deletar</a> ||
+                {% endfor %}
+                <br>
+                <a href="{% url 'create_arquivo' object.id %}" class="btn btn-info">Anexar novo documento</a>
+            {%  endif%}
 
-        {{ form|bootstrap }}
+        </div>
+        <div class="card-body">
+        <p class="card-text">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|bootstrap }}
+                    <div class="card-footer bg-transparent" align="center">
+                            <button type="submit" class="btn btn-info">Salvar</button>
+                    </div>
 
-        <button type="submit" class="btn btn-info">Salvar</button>
-    </form>
-    <br><br>
+            </form>
+        </p>
+      </div>
+    </div>
 
 
 

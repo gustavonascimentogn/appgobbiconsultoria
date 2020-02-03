@@ -24,9 +24,9 @@
           Cadastros
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="{% url 'list_pedidos' %}">Registrar venda de serviços</a>
-          <a class="dropdown-item" href="{% url 'list_clientes' %}">Gerenciar cadastro de clientes</a>
-          <a class="dropdown-item" href="{% url 'list_campanhas' %}">Gerenciar campanhas</a>
+          <a class="dropdown-item" href="{% url 'list_clientes' %}">Cadastro de clientes</a>
+          <a class="dropdown-item" href="{% url 'list_pedidos' %}">Venda de serviços</a>
+          <a class="dropdown-item" href="{% url 'list_campanhas' %}">Cadastro de campanhas</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -34,7 +34,6 @@
           Acompanhamento
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="{% url 'list_pedidos' %}">Movimentação de serviços contratados</a>
           <a class="dropdown-item" href="{% url 'list_solicitacoes' %}">Registrar e atualizar solicitações de cliente</a>
         </div>
       </li>
