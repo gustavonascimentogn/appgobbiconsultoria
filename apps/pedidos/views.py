@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Pedido
@@ -25,12 +27,15 @@ class PedidoEdit(UpdateView):
     def form_valid(self, form):
         ## Apagando parcelas geradas anteriormente
         pedidoN = form.save(commit=False)
-        Parcela.objects.filter(pedido=pedidoN).delete()
+
+        Parcela.objects.filter(pedido=pedidoN,paga=False).delete()
 
         ## Inserindo novamente as parcelas
         insert_list = []
-        for i in range(1, pedidoN.qtdParcelas+1):
-            insert_list.append(Parcela(numParcela=i,dataVencimento=pedidoN.dataVencimento,valor=pedidoN.valor/pedidoN.qtdParcelas, pedido=pedidoN))
+        qtd_parcelas_pagas = Parcela.objects.filter(pedido=pedidoN,paga=True).count()
+        for i in range(1+qtd_parcelas_pagas, pedidoN.qtdParcelas+1):
+            nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
+            insert_list.append(Parcela(numParcela=i,dataVencimento=nova_data_vencimento ,valor=pedidoN.valor/pedidoN.qtdParcelas, pedido=pedidoN))
 
         Parcela.objects.bulk_create(insert_list)
         pedidoN.save()
@@ -62,7 +67,8 @@ class PedidoNovo(CreateView):
         ## INCLUINDO AS PARCELAS DO PEDIDO
         insert_list = []
         for i in range(1, pedidoN.qtdParcelas+1):
-            insert_list.append(Parcela(numParcela=i,dataVencimento=pedidoN.dataVencimento,valor=pedidoN.valor/pedidoN.qtdParcelas, pedido=pedidoN))
+            nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
+            insert_list.append(Parcela(numParcela=i,dataVencimento=nova_data_vencimento,valor=pedidoN.valor/pedidoN.qtdParcelas, pedido=pedidoN))
 
         Parcela.objects.bulk_create(insert_list)
         ## return super(PedidoNovo, self).form_valid(form)

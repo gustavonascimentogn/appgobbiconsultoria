@@ -8,6 +8,8 @@ class Parcela(models.Model):
         numParcela = models.IntegerField(default=0, help_text='Número da parcela')
         dataVencimento = models.DateField(editable=True, default=timezone.now, help_text='Data de vencimento da parcela')
         valor = models.FloatField(blank=False, default=0)
+        paga = models.BooleanField(default=False)
+        valorPago = models.FloatField(blank=True, null=True, help_text='Insira o valor em R$')
 
         pedido = models.ForeignKey(Pedido, blank=False, default=None, on_delete=models.PROTECT)
 

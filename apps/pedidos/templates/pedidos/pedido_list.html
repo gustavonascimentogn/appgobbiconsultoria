@@ -11,7 +11,7 @@
 
     <div class="row">
         {%  for pedido in object_list %}
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card bg-light mb-3" >
                 <div class="card-header"><h5>{{ pedido.cliente.nome }} <br> Pedido {{ pedido.id }}</h5></div>
                 <div class="card-body">
@@ -19,10 +19,49 @@
                     <p class="card-text">
                         {{ pedido.cliente.nome }}<br>
                         {{ pedido.servico.nome }}<br>
-                        R$ {{ pedido.valor }} ({{ pedido.qtdParcelas }} parcelas)<br>
+
                         Movimentações: {{ pedido.total_andamentos }}<br>
                         <b>{{ pedido.status }}</b>
                     </p>
+                    <!-- Accordion -->
+                    <div id="accordion">
+                      <div class="card">
+                        <div class="card-header" id="headingOne">
+                          <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne{{ pedido.id }}" aria-expanded="false" aria-controls="collapseOne{{ pedido.id }}">
+                              Valor R$ {{ pedido.valor|floatformat:2 }} ({{ pedido.qtdParcelas }} parcelas)<br>
+
+                            </button>
+                          </h5>
+                        </div>
+
+
+                        <div id="collapseOne{{ pedido.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordion">
+                            <div class="card text-white bg-secondary mb-3" >
+                                <div class="card-header" style="font-size: small;">
+                                {% for parcela in pedido.parcela_set.all  %}
+                                    {%  if parcela.numParcela < 10 %}
+                                        Parcela 0{{ parcela.numParcela }}:
+                                    {%  else %}
+                                        Parcela {{ parcela.numParcela }}:
+                                    {% endif %}
+                                            {{ parcela.dataVencimento|date:'d/m/Y'  }} | R$ {{ parcela.valor|floatformat:2 }}
+                                    {%  if parcela.paga %}
+                                        <img src="{% static 'images/check.png'%}" alt="Editar" >
+                                    {%  else %}
+                                        <img src="{% static 'images/not.png'%}" alt="Editar" >
+                                        <a href="{% url 'update_parcela' parcela.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
+                                    {%  endif%}
+
+                                    <br>
+                                 {%  endfor  %}
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+
+
                 </div>
                 <div class="card-footer bg-transparent" align="center">
                     <a href="{% url 'update_pedido' pedido.id %}" ><img src="{% static 'images/edit.png'%}" alt="Editar" ></a>&nbsp;

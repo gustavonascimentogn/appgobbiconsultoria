@@ -22,7 +22,7 @@ class AndamentoEdit(UpdateView):
 
     def form_valid(self, form):
         ## Apagando parcelas geradas anteriormente
-        pedidoN = form.save(commit=False)
+        ## pedidoN = form.save(commit=False)
 
         from django.shortcuts import redirect
         return redirect('list_andamentos')

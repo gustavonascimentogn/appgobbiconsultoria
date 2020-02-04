@@ -17,6 +17,7 @@ class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, blank=False, default=None, on_delete=models.PROTECT)
     status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT)
 
+
     @property
     def total_andamentos(self):
         return self.andamento_set.all().count()
