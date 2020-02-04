@@ -1,14 +1,40 @@
 {% extends 'base.html' %}
+{%  load static %}
 
 {% block main %}
 
+    <p>
+        <h1>Movimentações cadastradas</h1>
+    </p><br>
+
+    <div class="row">
     {% for andamento in object_list %}
 
-        <a href="{% url 'update_andamento' andamento.id  %}">Editar</a><br>
-        <a href="{% url 'delete_andamento' andamento.id %}">Deletar</a><br>
+        <div class="col-md-3">
+
+            {% if not andamento.pedido_id == None %}
+                <div class="card text-white bg-info mb-3" >
+                    <div class="card-header"><h5>{{ andamento.pedido.cliente.nome }} <br> Pedido {{ andamento.pedido_id }}</h5></div>
+             {% else %}
+                <div class="card text-white bg-secondary mb-3" >
+                    <div class="card-header"><h5>{{ andamento.solicitacao.cliente.nome }} <br> Solicitacao {{ andamento.solicitacao_id }}</h5></div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ andamento.dataHoraCriacao|date:'d/m/Y' }}</h5>
+                    <p class="card-text">
+                        {{ andamento.comentario }}<br>
+                        Visivel para cliente? {{ andamento.disponivelCliente }}<br>
+                        Status do andamento:  {{ andamento.status }} <br>
+                        Status do pedido:  {{ andamento.pedido.status }}
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent" align="center">
+                    <a href="{% url 'update_andamento' andamento.id  %}" ><img src="{% static 'images/edit.png'%}" alt="Editar" ></a>&nbsp;
+                    <a href="{% url 'delete_andamento' andamento.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a>&nbsp;
+                </div>
+            </div>
+        </div>
 
     {% endfor %}
-    <br>
-    <a href="{% url 'create_andamento' %}" class="btn btn-info">Novo</a>
 
 {% endblock %}

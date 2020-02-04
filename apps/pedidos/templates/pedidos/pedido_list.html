@@ -15,11 +15,12 @@
             <div class="card bg-light mb-3" >
                 <div class="card-header"><h5>{{ pedido.cliente.nome }} <br> Pedido {{ pedido.id }}</h5></div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ pedido.dataHoraCriacao|date:'d/m/Y' }}</h5>
+                    <h5 class="card-title">Solicitado em {{ pedido.dataHoraCriacao|date:'d/m/Y' }}</h5>
                     <p class="card-text">
                         {{ pedido.cliente.nome }}<br>
                         {{ pedido.servico.nome }}<br>
                         R$ {{ pedido.valor }} ({{ pedido.qtdParcelas }} parcelas)<br>
+                        Movimentações: {{ pedido.total_andamentos }}<br>
                         <b>{{ pedido.status }}</b>
                     </p>
                 </div>

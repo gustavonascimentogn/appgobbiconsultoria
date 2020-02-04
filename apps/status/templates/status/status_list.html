@@ -1,11 +1,31 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block main %}
-    {% for status in object_list %}
-        {{ status }}
-        <a href="{% url 'update_status' status.id %}">Editar</a> |
-        <a href="{% url 'delete_status' status.id %}">Deletar</a><br>
-    {% endfor %}
-    <br>
-    <a href="{% url 'create_status' %}" class="btn btn-info">Novo</a>
+<p>
+        <h1>Status cadastrados</h1>
+        <a href="{% url 'create_status' %}" class="btn btn-info">Cadastrar novo status</a>
+    </p><br>
+
+    <div class="row">
+        {%  for status in object_list %}
+        <div class="col-md-3">
+            <div class="card bg-light mb-3" >
+                <div class="card-header"><h5>{{ status.nome }} </h5></div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ status.nome }}</h5>
+                    <p class="card-text">
+                        {{ status.nome }}<br>
+                        Ativo: {{ status.ativo }}<br>
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent" align="center">
+                    <a href="{% url 'update_status' status.id %}" ><img src="{% static 'images/edit.png'%}" alt="Editar" ></a>
+                    <a href="{% url 'delete_status' status.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div><br>
+
 {% endblock %}

@@ -1,13 +1,144 @@
 {% extends 'base.html' %}
 {% load bootstrap %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/all.css'   %} ">
+<style type="text/css">
+/* Made with love by Mutiullah Samim*/
+
+html,body{
+    background-image: url('../../static/images/background.jpg'),
+    url('../../static/images/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
+.container{
+    height: 100%;
+    align-content: center;
+}
+
+.card{
+    min-height: 370px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0,0,0,0.6) !important;
+}
+
+.card-header h3{
+    color: white;
+}
+
+.input-group-prepend span{
+    width: 50px;
+    background-color: #FFC312;
+    color: black;
+    border:0 !important;
+}
+
+input:focus{
+    outline: 0 0 0 0  !important;
+    box-shadow: 0 0 0 0 !important;
+
+}
+
+.remember{
+    color: white;
+}
+
+.remember input
+{
+    width: 20px;
+    height: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+.login_btn{
+    color: black;
+    background-color: #FFC312;
+    width: 100px;
+}
+
+.login_btn:hover{
+    color: black;
+    background-color: white;
+}
+
+.links{
+    color: white;
+}
+
+.links a{
+    margin-left: 4px;
+}
+.alert {
+    position: absolute !important;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    z-index: 999;
+    margin-top: 20px;
+}
+a:hover {
+    color: #ffdf82;
+    text-decoration: underline;
+}
+a {
+    color: #ffc312;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+</style>
+{% endblock%}
 
 {% block menu %}
 {%  endblock %}
 
 {% block main %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form|bootstrap }}
-        <button type="submit" class="btn btn-info">Login</button>
-    </form>
+
+    <div class="d-flex justify-content-center h-100">
+        <div class="card">
+			<div class="card-header">
+				<h3>Login</h3>
+			</div>
+			<div class="card-body">
+				<form method="post" >
+                    {% csrf_token %}
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="far fa-user"></i></span>
+						</div>
+						<input name="username" id="username" type="text" class="form-control" placeholder="Usu&aacute;rio" autocomplete="username">
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="far fa-key"></i></span>
+						</div>
+						<input type="password" name="password" id="password" class="form-control" placeholder="Senha" autocomplete="current-password">
+					</div>
+					<div class="row align-items-center remember">
+						<input type="checkbox" name="rememberusername" id="rememberusername" value="1">Lembrar identifica&ccedil;&atilde;o de usu&aacute;rio
+					</div>
+					<br/>
+                    <div class="form-group" style="text-align: center;">
+                    	<input type="submit" value="Login" class="btn btn-info">
+                    </div>
+				</form>
+			</div>
+			<div class="card-footer">
+				<div class="d-flex justify-content-center">
+					<a href="/login/forgot_password.php">Gobbi Consultoria e Assessoria</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
 {% endblock %}

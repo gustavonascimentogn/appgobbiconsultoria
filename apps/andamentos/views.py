@@ -51,7 +51,7 @@ class AndamentoNovo(CreateView):
         from django.shortcuts import redirect
         form = self.get_form()
 
-        if (self.kwargs['origem'] is 'pedido'):
+        if (str(self.kwargs['origem']) == str('pedido')):
             return redirect('list_pedidos')
         else: #elif (self.kwargs['origem'] is 'solicitacao'):
             return redirect('list_solicitacoes')

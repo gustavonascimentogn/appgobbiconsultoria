@@ -1,11 +1,33 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block main %}
-    {% for template in object_list %}
-        {{ template }}
-        <a href="{% url 'update_template_mensagem' template.id %}">Editar</a> |
-        <a href="{% url 'delete_template_mensagem' template.id %}">Deletar</a><br>
-    {% endfor %}
-    <br>
-    <a href="{% url 'create_template_mensagem' %}" class="btn btn-info">Novo</a>
+
+    <p>
+        <h1>Mensagens padrão cadastradas</h1>
+        <a href="{% url 'create_template_mensagem' %}" class="btn btn-info">Cadastrar nova mensagem padrão</a>
+    </p><br>
+
+    <div class="row">
+        {%  for template in object_list %}
+        <div class="col-md-3">
+            <div class="card bg-light mb-3" >
+                <div class="card-header"><h5>{{ template.tipo.upper }} </h5></div>
+                <div class="card-body">
+                    <h5 class="card-title">Cadastro em {{ template.dataHoraCriacao|date:'d/m/Y' }}</h5>
+                    <p class="card-text">
+                        {{ template.texto }}<br><br>
+                        Tipo : {{ template.tipo }}<br>
+                        Ativo: {{ template.ativo }}<br><br>
+                        Arquivo:<br> {{ template.arquivo }}
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent" align="center">
+                    <a href="{% url 'update_template_mensagem' template.id %}" ><img src="{% static 'images/edit.png'%}" alt="Editar" ></a>
+                    <a href="{% url 'delete_template_mensagem' template.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div><br>
+
 {% endblock %}

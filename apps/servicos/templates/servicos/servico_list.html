@@ -1,11 +1,33 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block main %}
-    {% for servico in object_list %}
-        {{ servico }}
-        <a href="{% url 'update_servico' servico.id %}">Editar</a> |
-        <a href="{% url 'delete_servico' servico.id %}">Deletar</a><br>
-    {% endfor %}
-    <br>
-    <a href="{% url 'create_servico' %}" class="btn btn-info">Novo</a>
+    <p>
+        <h1>Serviços cadastrados</h1>
+        <a href="{% url 'create_servico' %}" class="btn btn-info">Cadastrar novo serviço</a>
+    </p><br>
+
+    <div class="row">
+        {%  for servico in object_list %}
+        <div class="col-md-3">
+            <div class="card bg-light mb-3" >
+                <div class="card-header"><h5>{{ servico.nome }} </h5></div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ servico.tipo }}</h5>
+                    <p class="card-text">
+                        {{ servico.nome }}<br>
+                        Tipo de serviço: {{ servico.tipo }}<br>
+                        Descrição: {{ servico.descricao }}<br>
+                        <b>R$ {{ servico.valor }}</b>
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent" align="center">
+                    <a href="{% url 'update_servico' servico.id %}" ><img src="{% static 'images/edit.png'%}" alt="Editar" ></a>
+                    <a href="{% url 'delete_servico' servico.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div><br>
+
 {% endblock %}

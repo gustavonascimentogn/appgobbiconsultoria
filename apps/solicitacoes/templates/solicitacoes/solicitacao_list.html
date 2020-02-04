@@ -1,12 +1,34 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block main %}
-    {% for solicitacao in object_list %}
-        {{ solicitacao }}
-        <a href="{% url 'update_solicitacao' solicitacao.id %}">Editar</a> |
-        <a href="{% url 'delete_solicitacao' solicitacao.id %}">Deletar</a> |
-        <a href="{% url 'create_andamento' solicitacao.id 'solicitacao' %}">Registrar andamento da solicitação</a><br><br>
-    {% endfor %}
-    <br>
-    <a href="{% url 'create_solicitacao' %}" class="btn btn-info">Nova solicitação de cliente</a>
+    <p>
+        <h1>Solicitações cadastradas</h1>
+        <a href="{% url 'create_solicitacao' %}" class="btn btn-info">Cadastrar nova solicitação</a>
+    </p><br>
+
+    <div class="row">
+        {%  for solicitacao in object_list %}
+                <div class="col-md-3">
+                    <div class="card bg-light mb-3" >
+                        <div class="card-header"><h5>{{ solicitacao.cliente.nome }} </h5></div>
+                        <div class="card-body">
+                            <h5 class="card-title">Solicitado em {{ solicitacao.dataHoraCriacao|date:'d/m/Y' }}</h5>
+                            <p class="card-text">
+                                {{ solicitacao.cliente.nome }}<br>
+                                {{ solicitacao.solicitacao }}<br>
+                                Movimentações: {{ solicitacao.total_andamentos }}<br>
+                                Atendida: {{ solicitacao.atendida }}<br>
+                                Fechada: {{ solicitacao.fechada }}
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent" align="center">
+                            <a href="{% url 'update_solicitacao' solicitacao.id %}" ><img src="{% static 'images/edit.png'%}" alt="Editar" ></a>
+                            <a href="{% url 'delete_solicitacao' solicitacao.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+    </div><br>
+
 {% endblock %}

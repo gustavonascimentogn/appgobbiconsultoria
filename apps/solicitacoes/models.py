@@ -11,6 +11,10 @@ class Solicitacao(models.Model):
 
     cliente = models.ForeignKey(Cliente, blank=False, default=None, on_delete=models.PROTECT)
 
+    @property
+    def total_andamentos(self):
+        return self.andamento_set.all().count()
+
 
     def __str__(self):
         return 'Cliente: ' + self.cliente.nome + ' | Solicitacao:' + self.solicitacao
