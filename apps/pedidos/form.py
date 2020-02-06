@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from .models import Pedido
 from apps.clientes.models import Cliente
 from ..status.models import Status
+from bootstrap_datepicker_plus import DatePickerInput
 
 
 class PedidoForm(ModelForm):
@@ -15,3 +16,6 @@ class PedidoForm(ModelForm):
     class Meta:
         model = Pedido
         fields = ['cliente','servico','valor','qtdParcelas','dataVencimento','status']
+        widgets = {
+            'dataVencimento': DatePickerInput(format='%d/%m/%Y')
+        }

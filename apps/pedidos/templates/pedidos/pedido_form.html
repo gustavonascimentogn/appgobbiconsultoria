@@ -1,27 +1,61 @@
 {% extends 'base.html' %}
 {% load bootstrap %}
+{% load static %}
 
 {% block main %}
     <br>
-    <div class="card bg-light mb-3" >
+     <div class="card bg-light mb-3" >
         <div class="card-header">
         <h1>Venda de serviços</h1>
       </div>
-      <div class="card-body">
+         <!-- Accordion -->
+    <div id="accordion{{ object.id }}">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne{{ object.id }}" aria-expanded="false" aria-controls="collapseOne{{ object.id }}">
+              Valor R$ {{ object.valor|floatformat:2 }} ({{ object.qtdParcelas }} parcelas)<br>
+            </button>
+          </h5>
+        </div>
 
+        <div id="collapseOne{{ object.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordion">
+            <div class="card text-white bg-secondary mb-3" >
+                <div class="card-header" style="font-size: small;">
+                {% for parcela in object.parcela_set.all  %}
+                    {%  if parcela.numParcela < 10 %}
+                        Parcela 0{{ parcela.numParcela }}:
+                    {%  else %}
+                        Parcela {{ parcela.numParcela }}:
+                    {% endif %}
+                            {{ parcela.dataVencimento|date:'d/m/Y'  }} | R$ {{ parcela.valor|floatformat:2 }}
+                    {%  if parcela.paga %}
+                        <img src="{% static 'images/check.png'%}" alt="Editar" >
+                    {%  else %}
+                        <img src="{% static 'images/not.png'%}" alt="Nao pago" width="16px">
+                        <a href="{% url 'update_parcela' parcela.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="16px"></a>
+                    {%  endif%}
+
+                    <br>
+                 {%  endfor  %}
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- fim accordion -->
+      <div class="card-body">
         <p class="card-text">
             <form method="post">
                 {% csrf_token %}
-
                 {{ form|bootstrap }}
-
-                </div>
-                    <div class="card-footer bg-transparent" align="center">
-                            <button type="submit" class="btn btn-info">Salvar</button>
-                    </div>
+                <div class="card-footer bg-transparent" align="center">
+                        <button type="submit" class="btn btn-info">Salvar</button>
                 </div>
             </form>
         </p>
+      </div>
+    </div>
 
 {% endblock %}
 

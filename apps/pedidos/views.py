@@ -16,7 +16,7 @@ class PedidosList(ListView):
     def get_queryset(self):
         empresa_logada = self.request.user.empregado.empresa
         clientes_da_empresa = Cliente.objects.filter(empresa=empresa_logada)
-        return Pedido.objects.filter(cliente__in=clientes_da_empresa)
+        return Pedido.objects.filter(cliente__in=clientes_da_empresa).order_by('status__id','cliente__nome')
 
 
 ## Classe para edição dos registros

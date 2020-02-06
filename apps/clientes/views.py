@@ -10,7 +10,7 @@ class ClientesList(ListView):
     ## Listando somente clientes da empresa do funcionario logado
     def get_queryset(self):
         empresa_logada = self.request.user.empregado.empresa
-        return Cliente.objects.filter(empresa=empresa_logada)
+        return Cliente.objects.filter(empresa=empresa_logada).order_by('nome')
 
 ## Classe para edição dos registros
 class ClienteEdit(UpdateView):

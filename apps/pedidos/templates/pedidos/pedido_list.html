@@ -4,7 +4,7 @@
 {% block main %}
 
     <p>
-        <h1>Serviços vendidos</h1>
+        <h1>Serviços contratados</h1>
         <a href="{% url 'create_pedido' %}" class="btn btn-info">Cadastrar nova venda</a>
     </p><br>
 
@@ -12,7 +12,13 @@
     <div class="row">
         {%  for pedido in object_list %}
         <div class="col-md-4">
-            <div class="card bg-light mb-3" >
+            {% if pedido.status.nome == 'Novo' %}
+                <div class="card text-white bg-info mb-3" >
+            {% elif pedido.status.nome == 'Finalizado' %}
+                <div class="card text-white bg-dark mb-3" >
+            {% else %}
+                <div class="card bg-light mb-3" >
+            {% endif %}
                 <div class="card-header"><h5>{{ pedido.cliente.nome }} <br> Pedido {{ pedido.id }}</h5></div>
                 <div class="card-body">
                     <h5 class="card-title">Solicitado em {{ pedido.dataHoraCriacao|date:'d/m/Y' }}</h5>
@@ -24,7 +30,7 @@
                         <b>{{ pedido.status }}</b>
                     </p>
                     <!-- Accordion -->
-                    <div id="accordion">
+                    <div id="accordion{{ pedido.id }}">
                       <div class="card">
                         <div class="card-header" id="headingOne">
                           <h5 class="mb-0">
@@ -34,7 +40,6 @@
                             </button>
                           </h5>
                         </div>
-
 
                         <div id="collapseOne{{ pedido.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordion">
                             <div class="card text-white bg-secondary mb-3" >
@@ -60,6 +65,7 @@
                         </div>
                       </div>
                     </div>
+                    <!-- fim accordion -->
 
 
                 </div>

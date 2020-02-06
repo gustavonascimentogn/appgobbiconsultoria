@@ -1,6 +1,5 @@
 from django.db import models
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.db.models import Sum, Avg
 
 from apps.empresas.models import Empresa
 from apps.campanhas.models import Campanha
@@ -26,6 +25,11 @@ class Cliente(models.Model):
         @property
         def total_pedidos(self):
                 return self.pedido_set.all().count()
+
+        @property
+        def valor_total_pedidos(self):
+                return self.pedido_set.all().aggregate(Sum('valor')) ## Nao funciona :-(
+
 
         @property
         def total_arquivos(self):
