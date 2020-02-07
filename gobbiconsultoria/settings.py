@@ -128,8 +128,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+MEDIA_ROOT = (
+  os.path.join(BASE_DIR, "media") #pasta media para abrigar os arquivos dos usuários
+)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'media'
+
 
 LOGIN_REDIRECT_URL = 'home'
 

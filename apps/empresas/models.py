@@ -12,6 +12,8 @@ class Empresa(models.Model):
     cidade = models.CharField(max_length=100, blank=False, help_text='Cidade sede da empresas')
     estado = models.CharField(max_length=2, blank=False, help_text='UF da empresas')
     email = models.CharField(max_length=100, blank=False, null=True, help_text='E-mail de contato da empresa')
+    logotipo = models.FileField(upload_to='logotipos', null=True)
+
 
     def __str__(self):
         return self.nomeFantasia

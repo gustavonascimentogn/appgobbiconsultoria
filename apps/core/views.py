@@ -17,8 +17,10 @@ def home(request):
     clientes_da_empresa = Cliente.objects.filter(empresa=empresa)
     data['total_pedidos'] = Pedido.objects.filter(cliente__in=clientes_da_empresa).count()
 
-
-
+    from django.contrib.sites.shortcuts import get_current_site
+    ## request = None
+    url = ''.join(['http://', get_current_site(request).domain, request.user.empregado.empresa.logotipo.url])
+    data['url_logotipo'] = url
 
     return render(request, 'core/index.html', data)
 
