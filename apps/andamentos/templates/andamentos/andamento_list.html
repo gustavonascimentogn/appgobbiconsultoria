@@ -11,7 +11,6 @@
     {% for andamento in object_list %}
 
         <div class="col-md-3">
-
             {% if not andamento.pedido_id == None %}
                 <div class="card text-white bg-info mb-3" >
                     <div class="card-header"><h5>{{ andamento.pedido.cliente.nome }} <br> Pedido {{ andamento.pedido_id }}</h5></div>
