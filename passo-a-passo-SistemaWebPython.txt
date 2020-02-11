@@ -36,6 +36,8 @@ python -m venv nomevenv
 
 15. git push origin master
 
+16. git checkout -b NOVABRANCH #cria novabranch e troca para la
+
 ------------------ CRIANDO APLICATIVOS ------
 
 1. Criar Python Package chamado "app" dentro do projeto 
@@ -87,6 +89,8 @@ python -m venv nomevenv
 	cli = Cliente.objects.last()
 	
 	dir (cli) ## visualizar todos os atributos e metodos disponiveis
+	
+	cli.arquivo_set().all()
 	
 	
 
@@ -367,4 +371,8 @@ https://django-bootstrap-form.readthedocs.io/en/latest/
 4. Incluir load i18n (para tradução)
 
 	{%  load i18n  %}
+	
+-------------------- CRIANDO API
+
+1. https://www.django-rest-framework.org/#example
 	

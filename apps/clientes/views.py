@@ -15,7 +15,7 @@ class ClientesList(ListView):
 ## Classe para edição dos registros
 class ClienteEdit(UpdateView):
     model = Cliente
-    fields = ['nome','nomeContato','emailContato','cidade','estado','endereco','complemento','bairro','cep']
+    fields = ['nome','razao_social','cpf_cnpj','nomeContato','emailContato','cidade','estado','endereco','complemento','bairro','cep']
 
     def form_valid(self, form):
         cliente = form.save(commit=False)
@@ -30,7 +30,7 @@ class ClienteDelete(DeleteView):
 
 class ClienteNovo(CreateView):
     model = Cliente
-    fields = ['nome','nomeContato','emailContato','cidade','estado','endereco','complemento','bairro','cep']
+    fields = ['nome','razao_social','cpf_cnpj','nomeContato','emailContato','cidade','estado','endereco','complemento','bairro','cep']
 
     ## Sobrescrevendo o método form_valid para vincular o Cliente a empresa que o atende
     ## Ao final, chamo o método da super classe para prosseguir com a gravação

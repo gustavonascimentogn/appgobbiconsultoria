@@ -4,8 +4,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="{% url 'home'   %}">
     <span class="navbar-logo">
-        <a href="{% url 'home'   %}">
-            <img src="{{ request.user.empregado.empresa.logotipo.url }}" alt="" title="" style="height: 3rem;" class="">
+        <a href="{% url 'home' %}">
+            <img src="{{ request.user.empregado.empresa.logotipo.url }}" alt="Logotipo" title="" style="height: 3rem;" class="">
         </a>
     </span>
   </a>
@@ -26,6 +26,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{% url 'list_clientes' %}">Cadastro de clientes</a>
+          <a class="dropdown-item" href="{% url 'list_vendedores' %}">Cadastro de vendedores</a>
           <a class="dropdown-item" href="{% url 'list_pedidos' %}">Venda de serviços</a>
           <a class="dropdown-item" href="{% url 'list_campanhas' %}">Cadastro de campanhas</a>
         </div>

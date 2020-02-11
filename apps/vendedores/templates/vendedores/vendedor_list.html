@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+<p>
+        <h1>Vendedores cadastrados</h1>
+        <a href="{% url 'create_vendedor' %}" class="btn btn-info">Cadastrar novo vendedor</a>
+    </p><br>
+
+    <div class="row">
+        {%  for vendedor in object_list %}
+        <div class="col-md-3">
+            <div class="card bg-light mb-3" >
+                <div class="card-header"><h5>{{ vendedor.nome }} (Id. {{ vendedor.id }}) </h5></div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ vendedor.razao_social }}</h5>
+                    <p class="card-text">
+                        Responsável: <br>
+                        {{ vendedor.nomeContato }} <br>
+                        {{ vendedor.emailContato }}<br><br>
+                        Qtd. vendas: {{ vendedor.total_pedidos }}
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent" align="center">
+                    <a href="{% url 'update_vendedor' vendedor.id %}" ><img src="{% static 'images/edit.png'%}" alt="Editar" ></a>
+                    <a href="{% url 'delete_vendedor' vendedor.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div><br>
+
+{% endblock %}

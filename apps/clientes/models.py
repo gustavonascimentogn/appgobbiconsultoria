@@ -6,6 +6,8 @@ from apps.campanhas.models import Campanha
 
 class Cliente(models.Model):
         nome = models.CharField(max_length=100, blank=False, help_text='Quando for Empresa, digitar NomeFantasia')
+        razao_social = models.CharField(max_length=100, blank=True, null=True)
+        cpf_cnpj = models.CharField(max_length=50, blank=True, null=False , help_text='Incluindo pontos e traço.')
         nomeContato = models.CharField(max_length=100, blank=False, help_text='Nome da pessoa que será o contato principal')
         emailContato = models.CharField(max_length=100, blank=False, help_text='E-mail que será utilizado nas comunicações')
         cidade = models.CharField(max_length=100, blank=False)

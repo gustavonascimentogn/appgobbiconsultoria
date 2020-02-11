@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     'apps.empregados',
     'apps.arquivos',
     'apps.core',
+    'apps.comissoes',
+    'apps.vendedores',
+    'apps.planos_contas',
+    'apps.tipos_contas',
+
     'bootstrapform',
     'rest_framework',
     'bootstrap_datepicker_plus',

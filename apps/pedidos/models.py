@@ -1,10 +1,9 @@
 from django.db import models
-from django.urls import reverse
-from django.utils.datetime_safe import datetime
 
 from apps.servicos.models import Servico
 from apps.clientes.models import Cliente
 from apps.status.models import Status
+from apps.vendedores.models import Vendedor
 
 
 class Pedido(models.Model):
@@ -16,6 +15,7 @@ class Pedido(models.Model):
     servico = models.ForeignKey(Servico, blank=False, default=None, on_delete=models.PROTECT)
     cliente = models.ForeignKey(Cliente, blank=False, default=None, on_delete=models.PROTECT)
     status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT)
+    vendedor = models.ForeignKey(Vendedor, blank=False, default=None, null=False, on_delete=models.PROTECT)
 
 
     @property
