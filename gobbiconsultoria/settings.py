@@ -12,7 +12,7 @@ SECRET_KEY = '_(x(*#k_x5hvh0=jp=^xg-svpfp&@b8-evtjx_$ozufppgpsc!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['191.232.180.149']
+ALLOWED_HOSTS = ['191.232.180.149','127.0.0.1']
 
 
 # Application definition
@@ -133,7 +133,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+#STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 MEDIA_ROOT = (
   os.path.join(BASE_DIR, "media") #pasta media para abrigar os arquivos dos usuários

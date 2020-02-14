@@ -30,4 +30,13 @@ gobbivenv
 /apps/core/__pycache__/
 /apps/core/migrations/__pycache__/
 gobbiconsultoria/__pycache__/urls.cpython-37.pyc
+/apps/comissoes/migrations/__pycache__/
+/apps/comissoes/__pycache__/
+/apps/plano_contas/migrations/__pycache__/
+/apps/plano_contas/__pycache__/
+/apps/tipos_contas/migrations/__pycache__/
+/apps/tipos_contas/__pycache__/
+/apps/vendedores/migrations/__pycache__/
+/apps/vendedores/__pycache__/
+
 
