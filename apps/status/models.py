@@ -4,8 +4,8 @@ from django.urls import reverse
 from apps.empresas.models import Empresa
 
 class Status(models.Model):
-    nome = models.CharField(max_length=50, blank=False, help_text='Nome do status que irá ser utilizado para indicar o andamento de um serviço/processo')
-    ativo = models.BooleanField(default=True)
+    nome = models.CharField(max_length=50, blank=False, verbose_name='Dê um nome ao seu status')
+    ativo = models.BooleanField(default=True, verbose_name='Status ativo?')
 
     empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT)
 

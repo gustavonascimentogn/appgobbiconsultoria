@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 
+from .form import VendedorForm
 from .models import Vendedor
 
 ## Classe para listagem dos registros
@@ -16,9 +17,7 @@ class VendedoresList(ListView):
 ## Classe para edição dos registros
 class VendedorEdit(UpdateView):
     model = Vendedor
-    fields = ['nome','razao_social','cpf_cnpj','nomeContato','emailContato',
-              'cidade', 'estado','endereco','complemento','bairro','cep',
-              'percentual_bonificacao','duracao_em_meses']
+    form_class = VendedorForm
 
     def form_valid(self, form):
         vendedor = form.save(commit=False)
@@ -33,9 +32,7 @@ class VendedorDelete(DeleteView):
 
 class VendedorNovo(CreateView):
     model = Vendedor
-    fields = ['nome','razao_social','cpf_cnpj','nomeContato','emailContato',
-              'cidade', 'estado','endereco','complemento','bairro','cep',
-              'percentual_bonificacao','duracao_em_meses']
+    form_class = VendedorForm
 
     ## Sobrescrevendo o método form_valid para vincular o Cliente a empresa que o atende
     ## Ao final, chamo o método da super classe para prosseguir com a gravação
@@ -46,4 +43,10 @@ class VendedorNovo(CreateView):
         #return super(CampanhaNovo, self).form_valid(form) ## substituindo a chamada a superclasse, pois o get_absolute_url nao estava funcionando
         from django.shortcuts import redirect
         return redirect('list_vendedores')
+
+    ## Methodo para filtrar o campo "VENDEDOR", trazendo somente os status da empresa do user logado
+    def get_form_kwargs(self):
+        kwargs = super(VendedorNovo, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
+        kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
+        return kwargs
 

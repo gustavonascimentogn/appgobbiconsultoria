@@ -7,15 +7,15 @@ from apps.vendedores.models import Vendedor
 
 
 class Pedido(models.Model):
-    dataHoraCriacao = models.DateTimeField(auto_now_add=True, editable=False, help_text='Captura automaticamente a data de crição')
-    qtdParcelas = models.IntegerField(blank=False)
-    dataVencimento = models.DateField(blank=False, editable=True, help_text='Data de vencimento da primeira parcela')
-    valor = models.FloatField(blank=False, help_text='Insira o valor em R$')
+    dataHoraCriacao = models.DateTimeField(auto_now_add=True, editable=False, help_text='Captura automaticamente a data de criação', verbose_name='Data e hora de criação')
+    qtdParcelas = models.IntegerField(blank=False, verbose_name='Quantidade de parcelas')
+    dataVencimento = models.DateField(blank=False, editable=True, verbose_name='Data de vencimento da primeira parcela')
+    valor = models.FloatField(blank=False, verbose_name='Insira o valor total do serviço contratado', help_text='O vencimento e valor das parcelas serão calculados pelo sistema')
 
-    servico = models.ForeignKey(Servico, blank=False, default=None, on_delete=models.PROTECT)
-    cliente = models.ForeignKey(Cliente, blank=False, default=None, on_delete=models.PROTECT)
-    status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT)
-    vendedor = models.ForeignKey(Vendedor, blank=False, default=None, null=False, on_delete=models.PROTECT)
+    servico = models.ForeignKey(Servico, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Serviço contratado')
+    cliente = models.ForeignKey(Cliente, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Cliente que contratou')
+    status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Status do serviço')
+    vendedor = models.ForeignKey(Vendedor, blank=False, default=None, null=False, on_delete=models.PROTECT, verbose_name='Vendedor que realizou a venda')
 
 
     @property

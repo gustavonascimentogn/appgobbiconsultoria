@@ -6,12 +6,12 @@ from apps.tiposServicos.models import TiposServico
 
 
 class Servico(models.Model):
-		nome = models.CharField(max_length=100, blank=False, help_text='Nome do serviço/processo a ser oferecido')
-		descricao = models.CharField(max_length=100, blank=False, help_text='Descrição ou exemplo do serviço/processo')
-		valor = models.FloatField(blank=False, help_text='Insira o valor em R$')
+		nome = models.CharField(max_length=100, blank=False, verbose_name='Nome do serviço a ser oferecido')
+		descricao = models.CharField(max_length=100, blank=False, verbose_name='Descrição ou exemplo do serviço a ser oferecido')
+		valor = models.FloatField(blank=False, verbose_name='Valor do serviço a ser oferecido')
 
-		empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT)
-		tipo = models.ForeignKey(TiposServico, blank=False, default=None, on_delete=models.PROTECT)
+		empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Empresa que oferece o serviço')
+		tipo = models.ForeignKey(TiposServico, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Tipo de serviço oferecido')
 
 
 		def __str__(self):

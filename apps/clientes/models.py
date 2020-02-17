@@ -5,20 +5,20 @@ from apps.empresas.models import Empresa
 from apps.campanhas.models import Campanha
 
 class Cliente(models.Model):
-        nome = models.CharField(max_length=100, blank=False, help_text='Quando for Empresa, digitar NomeFantasia')
-        razao_social = models.CharField(max_length=100, blank=True, null=True)
-        cpf_cnpj = models.CharField(max_length=50, blank=True, null=False , help_text='Incluindo pontos e traço.')
-        nomeContato = models.CharField(max_length=100, blank=False, help_text='Nome da pessoa que será o contato principal')
-        emailContato = models.CharField(max_length=100, blank=False, help_text='E-mail que será utilizado nas comunicações')
-        cidade = models.CharField(max_length=100, blank=False)
-        estado = models.CharField(max_length=2, blank=False)
-        endereco = models.CharField(max_length=100, blank=False, help_text='Endereço contendo Rua e Número')
-        complemento = models.CharField(max_length=100, blank=True, help_text='Exemplo: Sala A, Apartamento 30')
-        bairro = models.CharField(max_length=100, blank=False)
-        cep = models.CharField(max_length=9, blank=False, help_text='Incluindo traço. Exemplo: 15000-000')
+        nome = models.CharField(max_length=100, blank=False, help_text='Quando for pessoa juridica, digitar o Nome Fantasia', verbose_name='Nome Fantasia')
+        razao_social = models.CharField(max_length=100, blank=True, null=True, verbose_name='Razão social')
+        cpf_cnpj = models.CharField(max_length=50, blank=True, null=False , help_text='Incluindo pontos e traço.', verbose_name='CPF / CNPJ')
+        nomeContato = models.CharField(max_length=100, blank=False, help_text='Nome da pessoa que será o contato principal', verbose_name='Nome da pessoa de contato')
+        emailContato = models.CharField(max_length=100, blank=False, help_text='E-mail que será utilizado nas comunicações', verbose_name='E-mail da pessoa de contato')
+        cidade = models.CharField(max_length=100, blank=False, verbose_name='Cidade')
+        estado = models.CharField(max_length=2, blank=False, verbose_name='Estado')
+        endereco = models.CharField(max_length=100, blank=False, help_text='Endereço contendo Rua e Número', verbose_name='Rua e número')
+        complemento = models.CharField(max_length=100, blank=True, help_text='Exemplo: Sala A, Apartamento 30', verbose_name='Complemento')
+        bairro = models.CharField(max_length=100, blank=False, verbose_name='Bairro')
+        cep = models.CharField(max_length=9, blank=False, help_text='Incluindo traço. Exemplo: 15000-000', verbose_name='CEP')
 
-        empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT)
-        campanha = models.ManyToManyField(Campanha, blank=True)
+        empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Empresa')
+        campanha = models.ManyToManyField(Campanha, blank=True, verbose_name='Campanhas que recebeu via sistema')
 
 
         def __str__(self):

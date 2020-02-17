@@ -2,17 +2,17 @@ from django.db import models
 
 
 class Empresa(models.Model):
-    nomeFantasia = models.CharField(max_length=100, blank=False, help_text='Nome Fantasia da empresas')
-    razaoSocial = models.CharField(max_length=100, blank=False, help_text='Razao Social da empresas')
-    cnpj = models.CharField(max_length=50, blank=False, help_text='CPNJ da empresas, com pontos e traços')
-    ruaNum = models.CharField(max_length=100, blank=False, help_text='Rua e Número do endereço da empresas')
-    complemento = models.CharField(max_length=50, blank=False, help_text='Exemplo: Sala 30 - Bloco A')
-    bairro = models.CharField(max_length=50, blank=False, help_text='Bairro da empresas')
-    cep = models.CharField(max_length=9, blank=False, help_text='CEP da empresas, com traço')
-    cidade = models.CharField(max_length=100, blank=False, help_text='Cidade sede da empresas')
-    estado = models.CharField(max_length=2, blank=False, help_text='UF da empresas')
-    email = models.CharField(max_length=100, blank=False, null=True, help_text='E-mail de contato da empresa')
-    logotipo = models.FileField(upload_to='logotipos', null=True)
+    nomeFantasia = models.CharField(max_length=100, blank=False, help_text='Nome Fantasia da empresas', verbose_name='Nome Fantasia')
+    razaoSocial = models.CharField(max_length=100, blank=False, help_text='Razao Social da empresas', verbose_name='Razão social')
+    cnpj = models.CharField(max_length=50, blank=False, help_text='CPNJ da empresas, com pontos e traços', verbose_name='CPF / CNPJ')
+    ruaNum = models.CharField(max_length=100, blank=False, help_text='Exemplo: Rua Francisco Chagas, 3434', verbose_name='Rua e Número do endereço da empresa')
+    complemento = models.CharField(max_length=50, blank=False, help_text='Exemplo: Sala 30 - Bloco A', verbose_name='Complemento')
+    bairro = models.CharField(max_length=50, blank=False, help_text='Bairro da empresas', verbose_name='Bairro')
+    cep = models.CharField(max_length=9, blank=False, help_text='CEP da empresas, com traço', verbose_name='CEP')
+    cidade = models.CharField(max_length=100, blank=False, help_text='Cidade sede da empresas', verbose_name='Cidade')
+    estado = models.CharField(max_length=2, blank=False, help_text='UF da empresas', verbose_name='Estado')
+    email = models.CharField(max_length=100, blank=False, null=True, help_text='E-mail de contato da empresa',verbose_name='E-mail de contato')
+    logotipo = models.FileField(upload_to='logotipos', null=True, verbose_name='Anexe a logotipo para ser exibido no topo da página')
 
 
     def __str__(self):

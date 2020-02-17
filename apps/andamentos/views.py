@@ -22,7 +22,7 @@ class AndamentoEdit(UpdateView):
         andamento = form.save(commit=False)
         andamento.save()
 
-        ## ALTERACAO NECESSARIA NO EDIT E NO CREATE
+        ## ESSE CODIGO SE REPETE NO EDIT E NO CREATE
         if andamento.disponivelCliente:
             ## enviando e-mail para o cliente, caso campo esteja marcado como True
             nomeFantasia = self.request.user.empregado.empresa.nomeFantasia ## da empresa que enviara o email
@@ -63,7 +63,7 @@ class AndamentoNovo(CreateView):
         andamento = form.save(commit=False)
         andamento.save()
 
-        ## ALTERACAO NECESSARIA NO EDIT E NO CREATE
+        ## ESSE CODIGO SE REPETE NO EDIT E NO CREATE
         if andamento.disponivelCliente:
             ## enviando e-mail para o cliente, caso campo esteja marcado como True
             nomeFantasia = self.request.user.empregado.empresa.nomeFantasia ## da empresa que enviara o email
