@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from .models import Vendedor
 from apps.clientes.models import Cliente
+from bootstrap_datepicker_plus import DatePickerInput
 
 
 class VendedorForm(ModelForm):
@@ -15,3 +16,6 @@ class VendedorForm(ModelForm):
         fields = ['nome','razao_social','cpf_cnpj','nomeContato','emailContato',
               'cidade', 'estado','endereco','complemento','bairro','cep',
               'percentual_bonificacao','duracao_em_meses','cliente']
+        widgets = {
+            'dataVencimento': DatePickerInput(format='%d/%m/%Y')
+        }

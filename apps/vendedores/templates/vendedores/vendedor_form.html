@@ -2,6 +2,7 @@
 {% load bootstrap %}
 
 {% block main %}
+<div class="col-sm-12 col-form-label col-form-label-sm" style="text-align:left;" >
     <br>
     <div class="card bg-light mb-3" >
         <div class="card-header">
@@ -10,9 +11,8 @@
       <div class="card-body">
 
         <p class="card-text">
-            <form method="post">
+            <form method="post" >
                 {% csrf_token %}
-
                 {{ form|bootstrap }}
 
                 </div>
@@ -22,5 +22,6 @@
                 </div>
             </form>
         </p>
+</div>
 {% endblock %}
 

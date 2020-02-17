@@ -7,7 +7,6 @@
         <h1>Clientes cadastrados</h1>
          <a href="{% url 'create_cliente' %}" class="btn btn-info">Cadastrar novo cliente</a>
     </p><br>
-
     <div class="row">
         {%  for cliente in object_list %}
         <div class="col-md-3">
