@@ -45,4 +45,30 @@ apps/vendedores/__pycache__/models.cpython-37.pyc
 apps/vendedores/__pycache__/views.cpython-37.pyc
 apps/arquivos/__pycache__/models.cpython-37.pyc
 
+apps/arquivos/__pycache__/__init__.cpython-37.pyc
+apps/arquivos/__pycache__/admin.cpython-37.pyc
+apps/arquivos/__pycache__/models.cpython-37.pyc
+apps/arquivos/__pycache__/urls.cpython-37.pyc
+apps/arquivos/__pycache__/views.cpython-37.pyc
+apps/comissoes/__pycache__/__init__.cpython-37.pyc
+apps/comissoes/__pycache__/admin.cpython-37.pyc
+apps/comissoes/__pycache__/models.cpython-37.pyc
+apps/core/api/__pycache__/__init__.cpython-37.pyc
+apps/core/api/__pycache__/serializers.cpython-37.pyc
+apps/core/api/__pycache__/views.cpython-37.pyc
+apps/planos_contas/__pycache__/__init__.cpython-37.pyc
+apps/planos_contas/__pycache__/admin.cpython-37.pyc
+apps/planos_contas/__pycache__/models.cpython-37.pyc
+apps/tipos_contas/__pycache__/__init__.cpython-37.pyc
+apps/tipos_contas/__pycache__/admin.cpython-37.pyc
+apps/tipos_contas/__pycache__/models.cpython-37.pyc
+apps/vendedores/__pycache__/__init__.cpython-37.pyc
+apps/vendedores/__pycache__/admin.cpython-37.pyc
+apps/vendedores/__pycache__/models.cpython-37.pyc
+apps/vendedores/__pycache__/urls.cpython-37.pyc
+apps/vendedores/__pycache__/views.cpython-37.pyc
+gobbiconsultoria/__pycache__/__init__.cpython-37.pyc
+gobbiconsultoria/__pycache__/settings.cpython-37.pyc
+gobbiconsultoria/__pycache__/urls.cpython-37.pyc
+
 
