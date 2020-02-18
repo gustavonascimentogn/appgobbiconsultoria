@@ -18,8 +18,33 @@
                         Responsável: <br>
                         {{ vendedor.nomeContato }} <br>
                         {{ vendedor.emailContato }}<br><br>
-                        Qtd. vendas: {{ vendedor.total_pedidos }}
+                        Qtd. vendas: {{ vendedor.qtd_total_pedidos }}<br>
+                        Valor vendido: {{ vendedor.valor_total_pedidos }}
                     </p>
+                    <!-- Accordion -->
+                    <div id="accordionComissao{{ pedido.id }}">
+                      <div class="card">
+                        <div class="card-header" id="headingOne">
+                          <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOneComissao{{ pedido.id }}" aria-expanded="false" aria-controls="collapseOneComissao{{ pedido.id }}">
+                              Pedidos e Comissões
+                            </button>
+                          </h5>
+                        </div>
+
+                        <div id="collapseOneComissao{{ pedido.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordionComissao{{ pedido.id }}">
+                            <div class="card text-white bg-secondary mb-3" >
+                                <div class="card-header" style="font-size: small;">
+                                {% for pedido in vendedor.pedido_set.all  %}
+                                    Pedido {{ pedido.id }} | R$ {{  pedido.valor|floatformat:2 }} <br>
+                                    Comissao: {{  pedido.total_comissao|floatformat:2   }} <br><br>
+                                 {%  endfor  %}
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- fim accordion -->
                 </div>
                 <div class="card-footer bg-transparent" align="center">
                     <a href="{% url 'update_vendedor' vendedor.id %}" ><img src="{% static 'images/edit.png'%}" alt="Editar" ></a>

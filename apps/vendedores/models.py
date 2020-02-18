@@ -27,12 +27,16 @@ class Vendedor(models.Model):
                 return self.nome
 
         @property
-        def total_pedidos(self):
+        def qtd_total_pedidos(self):
                 return self.pedido_set.all().count()
 
         @property
         def valor_total_pedidos(self):
-                return self.pedido_set.all().aggregate(Sum('valor')) ## Nao funciona :-(
+                return sum(pedido.valor for pedido in self.pedido_set.all())
+
+
+
+
 
 
 

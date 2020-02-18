@@ -29,6 +29,7 @@ urlpatterns = [
     path('andamentos/', include('apps.andamentos.urls')),
     path('parcelas/', include('apps.parcelas.urls')),
     path('vendedores/', include('apps.vendedores.urls')),
+    path('comissoes/', include('apps.comissoes.urls')),
 
     #API REST
     #url(r'^api-auth/', include('rest_framework.urls')),

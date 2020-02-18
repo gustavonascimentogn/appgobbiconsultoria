@@ -22,6 +22,10 @@ class Pedido(models.Model):
     def total_andamentos(self):
         return self.andamento_set.all().count()
 
+    @property
+    def total_comissao(self):
+        return sum(comissao.valor for comissao in self.comissao_set.all())
+
 
     def __str__(self):
         return self.cliente.nome + ' | Serviço: ' + self.servico.nome + ' | Em: ' + str(self.dataHoraCriacao.strftime('%d-%m-%Y  ')) + ' | Parcelas: ' + str(self.qtdParcelas) + ' x  R$ ' + str(self.valor/self.qtdParcelas)

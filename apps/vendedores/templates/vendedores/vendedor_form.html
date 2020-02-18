@@ -1,27 +1,50 @@
 {% extends 'base.html' %}
 {% load bootstrap %}
+{% load static %}
 
 {% block main %}
-<div class="col-sm-12 col-form-label col-form-label-sm" style="text-align:left;" >
+
     <br>
-    <div class="card bg-light mb-3" >
+    <div class="card bg-light mb-3">
         <div class="card-header">
         <h1>Vendedor</h1>
-      </div>
-      <div class="card-body">
-
-        <p class="card-text">
-            <form method="post" >
-                {% csrf_token %}
-                {{ form|bootstrap }}
-
+        </div>
+        <!-- Accordion -->
+            <div id="accordion{{ object.id }}">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne{{ object.id }}" aria-expanded="false" aria-controls="collapseOne{{ object.id }}">
+                      Vendas realizadas<br>
+                    </button>
+                  </h5>
                 </div>
-                    <div class="card-footer bg-transparent" align="center">
-                            <button type="submit" class="btn btn-info">Salvar</button>
+
+                <div id="collapseOne{{ object.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordion">
+                    <div class="card text-white bg-secondary mb-3" >
+                        <div class="card-header" style="font-size: small;">
+                        {% for pedido in object.pedido_set.all  %}
+                            <a href="{% url 'update_pedido' pedido.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="16px"></a>
+                            Pedido {{  pedido.id }} | R$ {{ pedido.valor|floatformat:2 }} | Comissão R$ {{  pedido.total_comissao|floatformat:2  }}
+                            <br>
+                         {%  endfor  %}
+                        </div>
                     </div>
                 </div>
-            </form>
-        </p>
-</div>
+              </div>
+            </div>
+        <!-- fim accordion -->
+        <div class="card-body">
+            <p class="card-text">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|bootstrap }}
+                        <div class="card-footer bg-transparent" align="center">
+                                <button type="submit" class="btn btn-info">Salvar</button>
+                        </div>
+                </form>
+            </p>
+        </div>
+    </div>
 {% endblock %}
 

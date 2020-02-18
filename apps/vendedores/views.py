@@ -26,6 +26,12 @@ class VendedorEdit(UpdateView):
         from django.shortcuts import redirect
         return redirect('list_vendedores')
 
+    ## Methodo para filtrar o campo "VENDEDOR", trazendo somente os status da empresa do user logado
+    def get_form_kwargs(self):
+        kwargs = super(VendedorEdit, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
+        kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
+        return kwargs
+
 class VendedorDelete(DeleteView):
     model = Vendedor
     success_url = reverse_lazy('list_vendedores')

@@ -3,7 +3,7 @@ from .models import Pedido
 from apps.clientes.models import Cliente
 from ..status.models import Status
 from bootstrap_datepicker_plus import DatePickerInput
-from ..vendedores.models import Vendedor
+from apps.vendedores.models import Vendedor
 
 
 class PedidoForm(ModelForm):
