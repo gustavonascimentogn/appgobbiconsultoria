@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'apps.comissoes',
     'apps.vendedores',
     'apps.planos_contas',
-    'apps.tipos_contas',
 
     'bootstrapform',
     'rest_framework',

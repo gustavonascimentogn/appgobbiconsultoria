@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+    <p>
+        <h1>Plano de contas</h1>
+        <a href="{% url 'create_plano_contas' %}" class="btn btn-info">Cadastrar novo Plano de Contas</a>
+    </p><br>
+
+
+    <div class="row">
+        {%  for plano in object_list %}
+        <div class="col-md-4">
+            {% if plano.ativo %}
+                <div class="card text-white bg-info mb-3" >
+            {% else  %}
+                <div class="card text-white bg-dark mb-3" >
+            {% endif %}
+                <div class="card-header"><h5>{{ plano.nome }} </h5></div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ plano.nome }}</h5>
+                    <p class="card-text">
+                        Plano ativo? {{ plano.ativo }}<br>
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent" align="center">
+                    <a href="{% url 'update_plano_contas' plano.id %}" ><img src="{% static 'images/edit.png'%}" alt="Editar" ></a>
+                    <a href="{% url 'delete_plano_contas' plano.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div><br>
+
+{% endblock %}

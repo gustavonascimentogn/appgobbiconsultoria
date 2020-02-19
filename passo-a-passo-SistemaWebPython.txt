@@ -38,6 +38,15 @@ python -m venv nomevenv
 
 16. git checkout -b NOVABRANCH #cria novabranch e troca para la
 
+17. Fazendo marge da branch hotfix para a branch master
+
+	$ git checkout master
+	$ git merge hotfix 
+
+git branch -d the_local_branch ## deleter branch local
+
+git push origin :the_remote_branch # deletar branch remota
+
 ------------------ CRIANDO APLICATIVOS ------
 
 1. Criar Python Package chamado "app" dentro do projeto 

@@ -30,6 +30,7 @@ urlpatterns = [
     path('parcelas/', include('apps.parcelas.urls')),
     path('vendedores/', include('apps.vendedores.urls')),
     path('comissoes/', include('apps.comissoes.urls')),
+    path('planos_contas/', include('apps.planos_contas.urls')),
 
     #API REST
     #url(r'^api-auth/', include('rest_framework.urls')),
