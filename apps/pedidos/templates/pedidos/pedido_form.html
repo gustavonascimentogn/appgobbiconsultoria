@@ -8,13 +8,14 @@
         <div class="card-header">
         <h1>Venda de serviços</h1>
       </div>
+         {% if object.valor > 0 %}
          <!-- Accordion -->
             <div id="accordion{{ object.id }}">
               <div class="card">
                 <div class="card-header" id="headingOne">
                   <h5 class="mb-0">
                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne{{ object.id }}" aria-expanded="false" aria-controls="collapseOne{{ object.id }}">
-                      Valor R$ {{ object.valor|floatformat:2 }} ({{ object.qtdParcelas }} parcelas)<br>
+                      Valor R$ {{ object.valor|floatformat:2 }} ({{ object.qtdParcelas }} cobranças)<br>
                     </button>
                   </h5>
                 </div>
@@ -22,7 +23,7 @@
                 <div id="collapseOne{{ object.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordion">
                     <div class="card text-white bg-secondary mb-3" >
                         <div class="card-header" style="font-size: small;">
-                        {% for parcela in object.parcela_set.all  %}
+                        {% for parcela in object.contareceber_set.all  %}
                             {%  if parcela.numParcela < 10 %}
                                 Parcela 0{{ parcela.numParcela }}:
                             {%  else %}
@@ -44,6 +45,7 @@
               </div>
             </div>
         <!-- fim accordion -->
+         {% endif %}
       <div class="card-body">
         <p class="card-text">
             <form method="post">

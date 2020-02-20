@@ -45,7 +45,7 @@
                         <div id="collapseOne{{ pedido.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordionParcela{{ pedido.id }}">
                             <div class="card text-white bg-secondary mb-3" >
                                 <div class="card-header" style="font-size: small;">
-                                {% for parcela in pedido.parcela_set.all  %}
+                                {% for parcela in pedido.contareceber_set.all  %}
                                     {%  if parcela.numParcela < 10 %}
                                         Parcela 0{{ parcela.numParcela }}:
                                     {%  else %}
@@ -83,7 +83,7 @@
                         <div id="collapseOneComissao{{ pedido.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordionComissao{{ pedido.id }}">
                             <div class="card text-white bg-secondary mb-3" >
                                 <div class="card-header" style="font-size: small;">
-                                {% for comissao in pedido.comissao_set.all  %}
+                                {% for comissao in pedido.contapagar_set.all  %}
                                     {%  if comissao.numParcelaComissao < 10 %}
                                         Mês 0{{ comissao.numParcelaComissao }}:
                                     {%  else %}

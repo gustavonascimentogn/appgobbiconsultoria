@@ -27,10 +27,11 @@ urlpatterns = [
     path('campanhas/', include('apps.campanhas.urls')),
     path('arquivos/', include('apps.arquivos.urls')),
     path('andamentos/', include('apps.andamentos.urls')),
-    path('parcelas/', include('apps.parcelas.urls')),
+    path('contasReceber/', include('apps.contasReceber.urls')),
     path('vendedores/', include('apps.vendedores.urls')),
-    path('comissoes/', include('apps.comissoes.urls')),
+    path('contasPagar/', include('apps.contasPagar.urls')),
     path('planos_contas/', include('apps.planos_contas.urls')),
+    path('planos_contas_grupos/', include('apps.planos_contas_grupos.urls')),
 
     #API REST
     #url(r'^api-auth/', include('rest_framework.urls')),

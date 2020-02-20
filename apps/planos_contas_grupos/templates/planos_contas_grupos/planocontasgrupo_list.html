@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% load static %}
+
+{% block main %}
+    <p>
+        <h1>Grupo de contas</h1>
+    </p><br>
+
+
+    <div class="row">
+        {%  for grupo in object_list %}
+        <div class="col-md-3">
+            {% if grupo.ativo %}
+                <div class="card text-white bg-info mb-3" >
+            {% else  %}
+                <div class="card text-white bg-dark mb-3" >
+            {% endif %}
+                    <div class="card-header"><h5>{{ grupo.nome }}</h5><h6>({{ grupo.natureza }}) </h6></div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ grupo.nome }}</h5>
+                    <p class="card-text">
+                        Grupo superior: Nenhum<br>
+                        Grupo ativo? {{ grupo.ativo }}
+
+                    </p>
+
+                    <!-- Accordion -->
+                    <div id="accordionGrupo{{ grupo.id }}">
+                      <div class="card">
+                        <div class="card-header" id="headingOne">
+                          <h5 class="mb-0" align="center">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne{{ grupo.id }}" aria-expanded="false" aria-controls="collapseOne{{ grupo.id }}">
+                              Estrutura de contas
+                                <!-- <a href="{% url 'create_plano_contas_grupo' grupo.id %}"><img src="{% static 'images/add.png'%}" width="16px" alt="Add" ></a> -->
+                            </button>
+                          </h5>
+                        </div>
+
+                        <div id="collapseOne{{ grupo.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordionGrupo{{ grupo.id }}">
+                            <div class="card text-white bg-secondary mb-3" >
+                                <div class="card-header" style="font-size: small;">
+                                    <!-- o FOR retorna todos os filhos do grupo selecionado -->
+                                    <img src="{% static 'images/edit_disabled.png'%}" alt="Editar" width="7%">
+                                    <a href="{% url 'create_plano_contas_grupo' grupo.id %}"><img src="{% static 'images/add.png'%}" alt="Add" ></a>
+                                    <b>{{ grupo.nome }} (Padrão)</b><br>
+                                    {% for subgrupo in grupo.planocontasgrupo_set.all  %}
+                                        <a href="{% url 'update_plano_contas_grupo' subgrupo.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
+                                        <a href="{% url 'create_plano_contas_grupo' subgrupo.id %}"><img src="{% static 'images/add.png'%}" alt="Add" ></a>
+                                        <s>&nbsp;&nbsp;</s>&nbsp;
+                                        {% if subgrupo.ativo %}
+                                            {{  subgrupo.nome  }}
+                                        {% else %}
+                                            <s>{{  subgrupo.nome  }} (inativo)</s>
+                                        {% endif %}
+                                        <br>
+                                        <!-- Inicio Nivel 2 de subgrupos -->
+                                        {% for subgrupo2 in subgrupo.planocontasgrupo_set.all  %}
+                                            <a href="{% url 'update_plano_contas_grupo' subgrupo2.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
+                                            <a href="{% url 'create_plano_contas_grupo' subgrupo2.id %}"><img src="{% static 'images/add.png'%}" alt="Add" ></a>
+                                            <s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;
+                                            {% if subgrupo2.ativo %}
+                                                {{  subgrupo2.nome  }}
+                                            {% else %}
+                                                <s>{{  subgrupo2.nome  }} (inativo)</s>
+                                            {% endif %}
+                                            <br>
+                                            <!-- Inicio Nivel 3 de subgrupos -->
+                                            {% for subgrupo3 in subgrupo2.planocontasgrupo_set.all  %}
+                                                <a href="{% url 'update_plano_contas_grupo' subgrupo3.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
+                                                <a href="{% url 'create_plano_contas_grupo' subgrupo3.id %}"><img src="{% static 'images/add.png'%}" alt="Add" ></a>
+                                                <s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;
+                                                {% if subgrupo3.ativo %}
+                                                    {{  subgrupo3.nome  }}
+                                                {% else %}
+                                                    <s>{{  subgrupo3.nome  }} (inativo)</s>
+                                                {% endif %}
+                                                <br>
+                                                <!-- Inicio Nivel 4 de subgrupos -->
+                                                {% for subgrupo4 in subgrupo3.planocontasgrupo_set.all  %}
+                                                    <a href="{% url 'update_plano_contas_grupo' subgrupo4.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
+                                                    <a href="{% url 'create_plano_contas_grupo' subgrupo4.id %}"><img src="{% static 'images/add.png'%}" alt="Add" ></a>
+                                                    <s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;
+                                                    {% if subgrupo4.ativo %}
+                                                        {{  subgrupo4.nome  }}
+                                                    {% else %}
+                                                        <s>{{  subgrupo4.nome  }} (inativo)</s>
+                                                    {% endif %}
+                                                    <br>
+                                                    <!-- Inicio Nivel 5 de subgrupos -->
+                                                    {% for subgrupo5 in subgrupo4.planocontasgrupo_set.all  %}
+                                                        <a href="{% url 'update_plano_contas_grupo' subgrupo5.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
+                                                        <a href="{% url 'create_plano_contas_grupo' subgrupo5.id %}"><img src="{% static 'images/add.png'%}" alt="Add" ></a>
+                                                        <s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;
+                                                        {% if subgrupo5.ativo %}
+                                                            {{  subgrupo5.nome  }}
+                                                        {% else %}
+                                                            <s>{{  subgrupo5.nome  }} (inativo)</s>
+                                                        {% endif %}
+                                                        <br>
+                                                        <!-- Inicio Nivel 6 de subgrupos -->
+                                                        {% for subgrupo6 in subgrupo5.planocontasgrupo_set.all  %}
+                                                            <a href="{% url 'update_plano_contas_grupo' subgrupo6.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
+                                                            <a href="{% url 'create_plano_contas_grupo' subgrupo6.id %}"><img src="{% static 'images/add.png'%}" alt="Add" ></a>
+                                                            <s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;<s>&nbsp;&nbsp;</s>&nbsp;
+                                                            {% if subgrupo6.ativo %}
+                                                                {{  subgrupo6.nome  }}
+                                                            {% else %}
+                                                                <s>{{  subgrupo6.nome  }} (inativo)</s>
+                                                            {% endif %}
+                                                            <br>
+                                                            <!-- Inicio Nivel 7 de subgrupos -->
+                                                                {% for subgrupo7 in subgrupo6.planocontasgrupo_set.all  %}
+                                                                    <a href="{% url 'update_plano_contas_grupo' subgrupo7.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
+                                                                    <a href="{% url 'create_plano_contas_grupo' subgrupo7.id %}"><img src="{% static 'images/add.png'%}" alt="Add" ></a>
+                                                                    <s>&nbsp;&nbsp;</s>&nbsp; <s>&nbsp;&nbsp;</s>&nbsp; <s>&nbsp;&nbsp;</s>&nbsp; <s>&nbsp;&nbsp;</s>&nbsp; <s>&nbsp;&nbsp;</s>&nbsp; <s>&nbsp;&nbsp;</s>&nbsp; <s>&nbsp;&nbsp;</s>&nbsp;
+                                                                    {% if subgrupo7.ativo %}
+                                                                        {{  subgrupo7.nome  }}
+                                                                    {% else %}
+                                                                        <s>{{  subgrupo7.nome  }} (inativo)</s>
+                                                                    {% endif %}
+                                                                    <br>
+                                                                {%  endfor  %} <!-- Fim Nivel 7 de subgrupos -->
+                                                        {%  endfor  %} <!-- Fim Nivel 6 de subgrupos -->
+                                                    {%  endfor  %} <!-- Fim Nivel 5 de subgrupos -->
+                                                {%  endfor  %} <!-- Fim Nivel 4 de subgrupos -->
+                                            {%  endfor  %} <!-- Fim Nivel 3 de subgrupos -->
+                                        {%  endfor  %} <!-- Fim Nivel 2 de subgrupos -->
+                                    {%  endfor  %}
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- fim accordion -->
+                </div>
+                <div class="card-footer bg-transparent" align="center">
+                    <!-- <a href="{% url 'update_plano_contas_grupo' grupo.id %}" ><img src="{% static 'images/edit.png'%}" alt="Editar" ></a>
+                    <a href="{% url 'delete_plano_contas_grupo' grupo.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a> -->
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div><br>
+
+{% endblock %}
