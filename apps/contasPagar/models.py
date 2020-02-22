@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from apps.pedidos.models import Pedido
+from apps.planos_contas_grupos.models import PlanoContasGrupo
 
 
 class ContaPagar(models.Model):
@@ -11,6 +12,7 @@ class ContaPagar(models.Model):
         paga = models.BooleanField(default=False, verbose_name='Comissão está paga?')
         valorPago = models.FloatField(blank=True, null=True, verbose_name='Valor pago em R$')
 
+        grupoConta = models.ForeignKey(PlanoContasGrupo, blank=False, null=False, on_delete=models.PROTECT, verbose_name='Lançar conta em qual grupo do Plano de Contas' )
         pedido = models.ForeignKey(Pedido, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Referente a qual serviço contratado?')
 
         def __str__(self):

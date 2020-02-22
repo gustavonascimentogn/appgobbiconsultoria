@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from apps.pedidos.models import Pedido
+from apps.planos_contas_grupos.models import PlanoContasGrupo
 
 
 class ContaReceber(models.Model):
@@ -14,6 +15,7 @@ class ContaReceber(models.Model):
         dataPagamento = models.DateField(editable=True, default=None, null=True, verbose_name='Data de efetivação do recebimento')
         descricaoConta = models.CharField(max_length=100, blank=False, null=False, verbose_name='Descrição da conta a receber')
 
+        grupoConta = models.ForeignKey(PlanoContasGrupo, blank=False, null=False, on_delete=models.PROTECT, verbose_name='Lançar conta em qual grupo do Plano de Contas' )
         pedido = models.ForeignKey(Pedido, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Referente a qual serviço?')
 
         def __str__(self):
