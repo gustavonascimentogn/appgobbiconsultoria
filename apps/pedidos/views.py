@@ -58,13 +58,13 @@ class PedidoEdit(UpdateView):
         duracao_em_meses = vendedor.duracao_em_meses
         empresa_logada = self.request.user.empregado.empresa
         plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
-        grupo_contas_pagar = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado,nome=empresa_logada.comissao_nome_plano_contas_grupo)
+        grupo_contas_pagar = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado[0],nome=empresa_logada.comissao_nome_plano_contas_grupo)
 
         for i in range(1+qtd_comissoes_pagas, duracao_em_meses+1):
             nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
             insert_list_comissao.append(ContaPagar(numParcelaComissao=i, dataVencimento=nova_data_vencimento,
                                                    valor=(pedidoN.valor / pedidoN.qtdParcelas) * (vendedor.percentual_bonificacao / 100),
-                                                   pedido=pedidoN, grupoConta = grupo_contas_pagar))
+                                                   pedido=pedidoN, grupoConta = grupo_contas_pagar[0]))
 
         ContaPagar.objects.bulk_create(insert_list_comissao)
 
@@ -101,7 +101,7 @@ class PedidoNovo(CreateView):
             nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
             insert_list.append(ContaReceber(numParcela=i, dataVencimento=nova_data_vencimento,
                                             valor=pedidoN.valor / pedidoN.qtdParcelas,
-                                            pedido=pedidoN, grupoConta=grupo_contas_receber))
+                                            pedido=pedidoN, grupoConta=grupo_contas_receber[0]))
 
         ContaReceber.objects.bulk_create(insert_list)
 
