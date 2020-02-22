@@ -17,13 +17,15 @@ class PlanoContasGruposList(ListView):
 ## Classe para edição dos registros
 class PlanoContasGrupoEdit(UpdateView):
     model = PlanoContasGrupo
-    fields = ['nome','ativo']
+    fields = ['nome','natureza','ativo']
 
     def form_valid(self, form):
         grupo = form.save(commit=False)
         empresa_logada = self.request.user.empregado.empresa
         grupo.planoContas = PlanoContas.objects.get(empresa=empresa_logada,ativo=True) ## herdando empresa do user
-        grupo.natureza = grupo.grupoPai.natureza ## herdando a natureza do pai
+        ## caso o grupo Pai nao esteja cadastrado como natureza=Todas, entao herda natureza do pai
+        if not (grupo.grupoPai.natureza == 'Todas'):
+            grupo.natureza = grupo.grupoPai.natureza ## herdando a natureza do pai
         grupo.save()
 
         from django.shortcuts import redirect
@@ -38,7 +40,7 @@ class PlanoContasGrupoDelete(DeleteView):
 
 class PlanoContasGrupoNovo(CreateView):
     model = PlanoContasGrupo
-    fields = ['nome','ativo']
+    fields = ['nome','natureza','ativo']
 
 
     ## Sobrescrevendo o método form_valid para vincular o Cliente a empresa que o atende
@@ -48,7 +50,8 @@ class PlanoContasGrupoNovo(CreateView):
         empresa_logada = self.request.user.empregado.empresa
         grupo.planoContas = PlanoContas.objects.get(empresa=empresa_logada,ativo=True) ## herdando empresa do user
         grupo.grupoPai = PlanoContasGrupo.objects.get(pk=self.kwargs['grupoPai']) ## setando o Grupo Pai
-        grupo.natureza = grupo.grupoPai.natureza
+        if not (grupo.grupoPai.natureza == 'Todas'):
+            grupo.natureza = grupo.grupoPai.natureza
         grupo.save()
 
         from django.shortcuts import redirect

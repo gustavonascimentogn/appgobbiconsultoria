@@ -50,6 +50,12 @@ apps/contasPagar/migrations/__pycache__/*
 apps/planos_contas/migrations/__pycache__/*
 apps/tipos_contas/migrations/__pycache__/*
 apps/vendedores/migrations/__pycache__/*
+local_settings.py
+*.bak
+*.bat
+*.pid
+*.dir
+*__pycache__*
 
 
 

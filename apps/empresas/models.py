@@ -14,6 +14,8 @@ class Empresa(models.Model):
     email = models.CharField(max_length=100, blank=False, null=True, help_text='E-mail de contato da empresa',verbose_name='E-mail de contato')
     logotipo = models.FileField(upload_to='logotipos', null=True, verbose_name='Anexe a logotipo para ser exibido no topo da página')
 
+    parcela_nome_plano_contas_grupo = models.CharField(max_length=50, blank='False',null=False, verbose_name='Nome do grupo de contas (credoras), no Plano de Contas, onde as parcelas devem ser lançadas')
+    comissao_nome_plano_contas_grupo = models.CharField(max_length=50, blank='False',null=False, verbose_name='Nome do grupo de contas (devedoras), no Plano de Contas, onde as comissões devem ser lançadas')
 
     def __str__(self):
         return self.nomeFantasia

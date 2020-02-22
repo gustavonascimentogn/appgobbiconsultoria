@@ -14,7 +14,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['3.10.251.190','127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -80,17 +79,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'gobbiconsultoria.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -114,13 +102,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 LANGUAGE_CODE = 'pt-br'
-
 TIME_ZONE = 'America/Sao_Paulo'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
@@ -157,9 +141,4 @@ BOOTSTRAP4 = {
     'include_jquery': True,
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'solutudosjrp@gmail.com'
-EMAIL_HOST_PASSWORD = 'Linssp@123'
+from .local_settings import  *
