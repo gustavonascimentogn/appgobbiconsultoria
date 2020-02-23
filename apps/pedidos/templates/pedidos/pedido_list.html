@@ -19,7 +19,7 @@
             {% else %}
                 <div class="card bg-light mb-3" >
             {% endif %}
-                <div class="card-header"><h5>{{ pedido.cliente.nome }} <br> Pedido {{ pedido.id }}</h5></div>
+                <div class="card-header"><h5>{{ pedido.cliente.nome }} <br> Pedido.ID: {{ pedido.id }}</h5></div>
                 <div class="card-body">
                     <h5 class="card-title">Solicitado em {{ pedido.dataHoraCriacao|date:'d/m/Y' }}</h5>
                     <p class="card-text">
@@ -32,17 +32,17 @@
                     </p>
                     <!-- Accordion -->
                     <div id="accordionParcela{{ pedido.id }}">
-                      <div class="card">
-                        <div class="card-header" id="headingOne">
+                      <div class="card" align="center">
+                        <div class="card-header" id="headingOne{{ pedido.id }}">
                           <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne{{ pedido.id }}" aria-expanded="false" aria-controls="collapseOne{{ pedido.id }}">
-                              Pedido R$ {{ pedido.valor|floatformat:2 }} ({{ pedido.qtdParcelas }} parcelas)<br>
+                              Pedido R$ {{ pedido.valor|floatformat:2 }} ({{ pedido.qtdParcelas }}x)<br>
 
                             </button>
                           </h5>
                         </div>
 
-                        <div id="collapseOne{{ pedido.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordionParcela{{ pedido.id }}">
+                        <div id="collapseOne{{ pedido.id }}" class="collapse" aria-labelledby="headingOne{{ pedido.id }}"  data-parent="#accordionParcela{{ pedido.id }}">
                             <div class="card text-white bg-secondary mb-3" >
                                 <div class="card-header" style="font-size: small;">
                                 {% for parcela in pedido.contareceber_set.all  %}
@@ -56,7 +56,7 @@
                                         <img src="{% static 'images/check.png'%}" alt="Editar" >
                                     {%  else %}
                                         <img src="{% static 'images/not.png'%}" alt="Editar" >
-                                        <a href="{% url 'update_parcela' parcela.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
+                                        <a href="{% url 'update_contareceber' parcela.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
                                     {%  endif%}
 
                                     <br>
@@ -70,17 +70,17 @@
 
                     <!-- Accordion -->
                     <div id="accordionComissao{{ pedido.id }}">
-                      <div class="card">
-                        <div class="card-header" id="headingOne">
+                      <div class="card" align="center">
+                        <div class="card-header" id="headingTwo{{ pedido.id }}">
                           <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOneComissao{{ pedido.id }}" aria-expanded="false" aria-controls="collapseOneComissao{{ pedido.id }}">
-                              Comissão R$ {{ pedido.total_comissao|floatformat:2 }} ({{ pedido.vendedor.duracao_em_meses }} parcelas)<br>
+                              Comissão R$ {{ pedido.total_comissao|floatformat:2 }} ({{ pedido.vendedor.duracao_em_meses }}x)<br>
 
                             </button>
                           </h5>
                         </div>
 
-                        <div id="collapseOneComissao{{ pedido.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordionComissao{{ pedido.id }}">
+                        <div id="collapseOneComissao{{ pedido.id }}" class="collapse" aria-labelledby="headingTwo{{ pedido.id }}"  data-parent="#accordionComissao{{ pedido.id }}">
                             <div class="card text-white bg-secondary mb-3" >
                                 <div class="card-header" style="font-size: small;">
                                 {% for comissao in pedido.contapagar_set.all  %}
@@ -94,7 +94,7 @@
                                         <img src="{% static 'images/check.png'%}" alt="Editar" >
                                     {%  else %}
                                         <img src="{% static 'images/not.png'%}" alt="Editar" >
-                                        <a href="{% url 'update_comissao' comissao.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
+                                        <a href="{% url 'update_contapagar' comissao.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
                                     {%  endif%}
 
                                     <br>

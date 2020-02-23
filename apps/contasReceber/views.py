@@ -3,9 +3,9 @@ from django.views.generic import UpdateView
 from .models import ContaReceber
 
 ## Classe para edição dos registros
-class ParcelaEdit(UpdateView):
+class ContaReceberEdit(UpdateView):
     model = ContaReceber
-    fields = ['numParcela','dataVencimento','valor','paga','dataPagamento','valorPago']
+    fields = ['numParcela','descricaoConta','dataVencimento','valor','paga','dataPagamento','valorPago']
 
     def form_valid(self, form):
         parcela = form.save(commit=False)
