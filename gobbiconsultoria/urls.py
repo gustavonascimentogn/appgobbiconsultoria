@@ -27,9 +27,9 @@ urlpatterns = [
     path('campanhas/', include('apps.campanhas.urls')),
     path('arquivos/', include('apps.arquivos.urls')),
     path('andamentos/', include('apps.andamentos.urls')),
-    path('contasReceber/', include('apps.contasReceber.urls')),
+    path('contasreceber/', include('apps.contasreceber.urls')),
     path('vendedores/', include('apps.vendedores.urls')),
-    path('contasPagar/', include('apps.contasPagar.urls')),
+    path('contaspagar/', include('apps.contaspagar.urls')),
     path('planos_contas/', include('apps.planos_contas.urls')),
     path('planos_contas_grupos/', include('apps.planos_contas_grupos.urls')),
 
