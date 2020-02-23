@@ -4,8 +4,8 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Pedido
 from .models import Cliente
-from apps.contasReceber.models import ContaReceber
-from apps.contasPagar.models import ContaPagar
+from apps.contasreceber.models import ContaReceber
+from apps.contaspagar.models import ContaPagar
 from apps.vendedores.models import Vendedor
 from .form import PedidoForm
 from apps.planos_contas_grupos.models import PlanoContasGrupo

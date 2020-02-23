@@ -17,8 +17,8 @@ gobbivenv
 /apps/pedidos/migrations/__pycache__/*
 /apps/status/__pycache__/*
 /apps/status/migrations/__pycache__/*
-/apps/contasReceber/__pycache__/*
-/apps/contasReceber/migrations/__pycache__/*
+/apps/contasreceber/__pycache__/*
+/apps/contasreceber/migrations/__pycache__/*
 /apps/solicitacoes/__pycache__/*
 /apps/solicitacoes/migrations/__pycache__/*
 /apps/campanhas/__pycache__/*
@@ -30,8 +30,8 @@ gobbivenv
 /apps/core/__pycache__/*
 /apps/core/migrations/__pycache__/*
 gobbiconsultoria/__pycache__/*
-/apps/contasPagar/migrations/__pycache__/*
-/apps/contasPagar/__pycache__/*
+/apps/contaspagar/migrations/__pycache__/*
+/apps/contaspagar/__pycache__/*
 /apps/plano_contas/migrations/__pycache__/*
 /apps/plano_contas/__pycache__/*
 /apps/tipos_contas/migrations/__pycache__/*
@@ -41,12 +41,12 @@ gobbiconsultoria/__pycache__/*
 db.sqlite3
 apps/vendedores/__pycache__/*
 apps/arquivos/__pycache__/*
-apps/contasPagar/__pycache__/*
+apps/contaspagar/__pycache__/*
 apps/core/api/__pycache__/*
 apps/planos_contas/__pycache__/*
 apps/tipos_contas/__pycache__/*
 apps/arquivos/migrations/__pycache__/*
-apps/contasPagar/migrations/__pycache__/*
+apps/contaspagar/migrations/__pycache__/*
 apps/planos_contas/migrations/__pycache__/*
 apps/tipos_contas/migrations/__pycache__/*
 apps/vendedores/migrations/__pycache__/*
