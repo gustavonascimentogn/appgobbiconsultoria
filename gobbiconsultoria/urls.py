@@ -6,11 +6,15 @@ from django.conf.urls import url, include
 from django.urls import path
 from rest_framework import routers
 from apps.core.api.views import UserViewSet
+from apps.clientes.api.views import ClienteViewSet, ClienteList
 
 # API REST
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'api/users', UserViewSet)
+router.register(r'api/clientes', ClienteViewSet)
+##router.register(r'api/clientes_detail/<int:pk>/', ClienteDetail)
+## router.register(r'api/clientes_list', ClienteList)
 
 urlpatterns = [
     path('', include('apps.core.urls')),
