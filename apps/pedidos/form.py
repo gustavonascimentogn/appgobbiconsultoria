@@ -16,7 +16,8 @@ class PedidoForm(ModelForm):
 
     class Meta:
         model = Pedido
-        fields = ['cliente','vendedor','servico','valor','qtdParcelas','dataVencimento','status']
+        fields = ['cliente','vendedor','servico','valor','qtdParcelas','dataVencimento','dataVencimentoVendedor','status']
         widgets = {
-            'dataVencimento': DatePickerInput(format='%d/%m/%Y')
+            'dataVencimento': DatePickerInput(format='%d/%m/%Y'),
+            'dataVencimentoVendedor': DatePickerInput(format='%d/%m/%Y'),
         }

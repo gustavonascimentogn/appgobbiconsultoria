@@ -13,6 +13,9 @@ class Empresa(models.Model):
     estado = models.CharField(max_length=2, blank=False, help_text='UF da empresas', verbose_name='Estado')
     email = models.CharField(max_length=100, blank=False, null=True, help_text='E-mail de contato da empresa',verbose_name='E-mail de contato')
     logotipo = models.FileField(upload_to='logotipos', null=True, verbose_name='Anexe a logotipo para ser exibido no topo da página')
+    inscricaoEstadual = models.CharField(max_length=50, blank=False, null=False, help_text='Caso seja isenta, preencha com a palavra ˜Isenta˜', verbose_name='Inscrição estadual')
+    inscricaoMunicipal = models.CharField(max_length=50, blank=False, null=False, help_text='Caso seja isenta, preencha com a palavra ˜Isenta˜', verbose_name='Inscrição municipal')
+    telefone = models.CharField(max_length=12, blank=True, null=True)
 
     parcela_nome_plano_contas_grupo = models.CharField(max_length=50, blank='False',null=False, verbose_name='Nome do grupo de contas (credoras), no Plano de Contas, onde as parcelas devem ser lançadas')
     comissao_nome_plano_contas_grupo = models.CharField(max_length=50, blank='False',null=False, verbose_name='Nome do grupo de contas (devedoras), no Plano de Contas, onde as comissões devem ser lançadas')

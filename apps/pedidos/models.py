@@ -15,6 +15,7 @@ class Pedido(models.Model):
     servico = models.ForeignKey(Servico, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Serviço contratado')
     cliente = models.ForeignKey(Cliente, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Cliente que contratou')
     status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Status do serviço contratado')
+    dataVencimentoVendedor = models.DateField(blank=False, editable=True, verbose_name='Data para pagamento da primeira comissão do vendedor', help_text='As demais contas serão provisionadas mensalmente, respeitando o tempo de duração definido para o vendedor')
     vendedor = models.ForeignKey(Vendedor, blank=False, default=None, null=False, on_delete=models.PROTECT, verbose_name='Vendedor que realizou a venda')
 
 

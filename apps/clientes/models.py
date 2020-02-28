@@ -19,6 +19,11 @@ class Cliente(models.Model):
         appPassword = models.CharField(max_length=12, blank=True, null=True, help_text='Senha para acesso ao App', verbose_name='Password para acesso ao App')
         appHabilitado = models.BooleanField(default=False, blank=True, null=True, verbose_name='Habilitar cliente a utilizar o App?')
 
+        inscricaoEstadual = models.CharField(max_length=50, blank=False, null=False, help_text='Caso seja isenta, preencha com a palavra ˜Isenta˜', verbose_name='Inscrição estadual')
+        inscricaoMunicipal = models.CharField(max_length=50, blank=False, null=False, help_text='Caso seja isenta, preencha com a palavra ˜Isenta˜', verbose_name='Inscrição municipal')
+        telefone = models.CharField(max_length=12, blank=True, null=True)
+
+
         empresa = models.ForeignKey(Empresa, blank=False, null=False, default=None, on_delete=models.PROTECT, verbose_name='Empresa')
         campanha = models.ManyToManyField(Campanha, blank=True, null=True, verbose_name='Campanhas que recebeu via sistema')
 

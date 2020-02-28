@@ -15,7 +15,7 @@ class ClientesList(ListView):
 ## Classe para edição dos registros
 class ClienteEdit(UpdateView):
     model = Cliente
-    fields = ['nome','razao_social','cpf_cnpj','nomeContato','emailContato','cidade','estado',
+    fields = ['nome','razao_social','cpf_cnpj','inscricaoMunicipal','inscricaoEstadual','nomeContato','emailContato','telefone','cidade','estado',
               'endereco','complemento','bairro','cep','appPassword','appHabilitado']
 
     def form_valid(self, form):
@@ -31,7 +31,7 @@ class ClienteDelete(DeleteView):
 
 class ClienteNovo(CreateView):
     model = Cliente
-    fields = ['nome','razao_social','cpf_cnpj','nomeContato','emailContato','cidade','estado',
+    fields = ['nome','razao_social','cpf_cnpj','inscricaoMunicipal','inscricaoEstadual','nomeContato','emailContato','telefone','cidade','estado',
               'endereco','complemento','bairro','cep','appPassword','appHabilitado']
 
     ## Sobrescrevendo o método form_valid para vincular o Cliente a empresa que o atende
