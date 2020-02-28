@@ -4,6 +4,7 @@ from apps.clientes.models import Cliente
 from ..status.models import Status
 from bootstrap_datepicker_plus import DatePickerInput
 from apps.vendedores.models import Vendedor
+from apps.servicos.models import Servico
 
 
 class PedidoForm(ModelForm):
@@ -13,6 +14,7 @@ class PedidoForm(ModelForm):
         self.fields['cliente'].queryset = Cliente.objects.filter(empresa=user.empregado.empresa)
         self.fields['vendedor'].queryset = Vendedor.objects.filter(empresa=user.empregado.empresa)
         self.fields['status'].queryset = Status.objects.filter(empresa=user.empregado.empresa)
+        self.fields['servico'].queryset = Servico.objects.filter(empresa=user.empregado.empresa)
 
     class Meta:
         model = Pedido
