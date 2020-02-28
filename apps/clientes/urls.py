@@ -7,7 +7,4 @@ urlpatterns = [
     path('delete/<int:pk>', ClienteDelete.as_view(), name='delete_cliente'),
     path('novo', ClienteNovo.as_view(), name='create_cliente'),
 
- ##   path('api/list_clientes/', views.ClienteList.as_view()),
- ##   path('api/cliente/<int:pk>/', views.ClienteDetail.as_view()),
-
 ]

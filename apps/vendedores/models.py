@@ -24,7 +24,7 @@ class Vendedor(models.Model):
 
 
         def __str__(self):
-                return self.nome
+                return self.nome + '(Pessoa de contato: ' + self.nomeContato + ')'
 
         @property
         def qtd_total_pedidos(self):

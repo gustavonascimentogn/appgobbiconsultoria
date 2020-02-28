@@ -34,7 +34,7 @@
                                 <img src="{% static 'images/check.png'%}" alt="Editar" >
                             {%  else %}
                                 <img src="{% static 'images/not.png'%}" alt="Nao pago" width="16px">
-                                <a href="{% url 'update_parcela' parcela.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="16px"></a>
+                                <a href="{% url 'update_contareceber' parcela.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="16px"></a>
                             {%  endif%}
 
                             <br>

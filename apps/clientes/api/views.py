@@ -12,8 +12,24 @@ class ClienteViewSet(viewsets.ModelViewSet):
         queryset = Cliente.objects.all()
         serializer_class = ClienteSerializer
 
-        def get(self, request, *args, **kwargs):
-            return self.retrieve(request, *args, **kwargs)
+        #def get(self, request, *args, **kwargs):
+        #    return self.retrieve(request, *args, **kwargs)
+
+        def get_queryset(self):
+            """
+            This view should return a list of all the purchases for
+            the user as determined by the username portion of the URL.
+        """
+
+            cpfcnpj = self.request.query_params.get('cpfcnpj')
+            pwd = self.request.query_params.get('password')
+            if cpfcnpj and pwd:
+                return Cliente.objects.filter(cpf_cnpj=cpfcnpj,appPassword=pwd,appHabilitado=True)
+            else:
+                return Cliente.objects.all()
+            ##senha = self.kwargs['password']
+            #return Cliente.objects.filter(cpf_cnpj=cpfcnpj,appPassword='',appHabilitado=True)
+
 
 
         '''

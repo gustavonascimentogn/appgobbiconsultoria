@@ -13,8 +13,13 @@ from apps.clientes.api.views import ClienteViewSet, ClienteList
 router = routers.DefaultRouter()
 router.register(r'api/users', UserViewSet)
 router.register(r'api/clientes', ClienteViewSet)
-##router.register(r'api/clientes_detail/<int:pk>/', ClienteDetail)
-## router.register(r'api/clientes_list', ClienteList)
+router.register(r'api/clientes/<slug:cpfcnpj>/<slug:password>', ClienteViewSet)
+#router.register(r'api/clientes/(?P<cpfcnpj>.+)/(?P<password>.+)/$', ClienteViewSet, 'Cliente')
+##router.register(r'api/clientes/<int:cpfcnpj>/$', ClienteViewSet, 'clientes-list')
+#router = routers.DefaultRouter()
+##router.register(r'clientes', ClienteViewSet, ['cpfcnpj','password'])
+
+
 
 urlpatterns = [
     path('', include('apps.core.urls')),
@@ -41,5 +46,6 @@ urlpatterns = [
     #url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/', include(router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
