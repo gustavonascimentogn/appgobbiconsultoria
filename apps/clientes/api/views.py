@@ -20,15 +20,22 @@ class ClienteViewSet(viewsets.ModelViewSet):
             This view should return a list of all the purchases for
             the user as determined by the username portion of the URL.
         """
-
+            empresa = self.request.query_params.get('empresa')
             cpfcnpj = self.request.query_params.get('cpfcnpj')
             pwd = self.request.query_params.get('password')
-            if cpfcnpj and pwd:
-                return Cliente.objects.filter(cpf_cnpj=cpfcnpj,appPassword=pwd,appHabilitado=True)
-            else:
-                return Cliente.objects.all()
+            return Cliente.objects.filter(empresa=empresa,cpf_cnpj=cpfcnpj,appPassword=pwd,appHabilitado=True)
+
+            #if cpfcnpj and pwd and empresa:
+            #    return Cliente.objects.filter(empresa=empresa,cpf_cnpj=cpfcnpj,appPassword=pwd,appHabilitado=True)
+            #else:
+            #    return Cliente.objects.all()
             ##senha = self.kwargs['password']
             #return Cliente.objects.filter(cpf_cnpj=cpfcnpj,appPassword='',appHabilitado=True)
+
+        def perform_create(self, serializer):
+            nome = self.request.query_params('nome')
+            email = self.request.query_params('email')
+            serializer.save(emailContato=email)
 
 
 

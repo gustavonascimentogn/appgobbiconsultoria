@@ -13,7 +13,7 @@ from apps.clientes.api.views import ClienteViewSet, ClienteList
 router = routers.DefaultRouter()
 router.register(r'api/users', UserViewSet)
 router.register(r'api/clientes', ClienteViewSet)
-router.register(r'api/clientes/<slug:cpfcnpj>/<slug:password>', ClienteViewSet)
+router.register(r'api/clientes/<slug:empresa>/<slug:cpfcnpj>/<slug:password>/<slug:nome>/<slug:email>', ClienteViewSet)
 #router.register(r'api/clientes/(?P<cpfcnpj>.+)/(?P<password>.+)/$', ClienteViewSet, 'Cliente')
 ##router.register(r'api/clientes/<int:cpfcnpj>/$', ClienteViewSet, 'clientes-list')
 #router = routers.DefaultRouter()
