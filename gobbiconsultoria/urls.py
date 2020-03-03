@@ -6,18 +6,16 @@ from django.conf.urls import url, include
 from django.urls import path
 from rest_framework import routers
 from apps.core.api.views import UserViewSet
-from apps.clientes.api.views import ClienteViewSet, ClienteList
+from apps.clientes.api.views import ClienteViewSet
 
 # API REST
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'api/users', UserViewSet)
 router.register(r'api/clientes', ClienteViewSet)
-router.register(r'api/clientes/<slug:empresa>/<slug:cpfcnpj>/<slug:password>/<slug:nome>/<slug:email>', ClienteViewSet)
-#router.register(r'api/clientes/(?P<cpfcnpj>.+)/(?P<password>.+)/$', ClienteViewSet, 'Cliente')
-##router.register(r'api/clientes/<int:cpfcnpj>/$', ClienteViewSet, 'clientes-list')
-#router = routers.DefaultRouter()
-##router.register(r'clientes', ClienteViewSet, ['cpfcnpj','password'])
+router.register(r'api/clientes/<slug:function>/<slug:empresa>/<slug:cpfcnpj>/<slug:senhaAtual>/<slug:novaSenha>', ClienteViewSet)
+router.register(r'api/clientes/<slug:function>/<slug:empresa>/<slug:cpfcnpj>/<slug:senha>', ClienteViewSet)
+
 
 
 
