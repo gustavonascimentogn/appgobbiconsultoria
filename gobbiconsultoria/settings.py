@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'bootstrapform',
     'rest_framework',
     'bootstrap_datepicker_plus',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,20 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+## Configuracoes para acesso do APP a API
+CORS_ORIGIN_ALLOW_ALL = True ## ativa/inativa o acesso para qualquer dominio
+
+''' Configuracao necessaria caso CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = [
+    'localhost:80',
+    'localhost:8000',
+    '127.0.0.1:8000',
+    'localhost:8100', ## Liberando acesso ao APP
+]
+'''
 
 ROOT_URLCONF = 'gobbiconsultoria.urls'
 
@@ -143,5 +157,7 @@ REST_FRAMEWORK = {
 BOOTSTRAP4 = {
     'include_jquery': True,
 }
+
+
 
 from .local_settings import  *

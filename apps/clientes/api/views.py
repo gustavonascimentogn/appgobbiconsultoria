@@ -31,7 +31,7 @@ class ClienteViewSet(viewsets.ModelViewSet):
                 return cliente
             elif function == 'login':
                 '''
-                api/clientes/?function=login&empresa=1&cpfcnpj=11111&senha=111111
+                /api/clientes/?function=login&empresa=1&cpfcnpj=29404832804&senha=29404832804
                 '''
                 ##paramestros do login
                 empresa = self.request.query_params.get('empresa')
@@ -45,6 +45,9 @@ class ClienteViewSet(viewsets.ModelViewSet):
                 empresa = self.request.query_params.get('empresa')
                 return Cliente.objects.filter(empresa=empresa)
             else:
+                '''
+                Retorna sempre uma lista vazia
+                '''
                 return Cliente.objects.filter(empresa=0)
 
 
