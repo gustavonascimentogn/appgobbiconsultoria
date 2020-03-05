@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'bootstrapform',
     'rest_framework',
+    'rest_framework.authtoken',
     'bootstrap_datepicker_plus',
     'corsheaders',
 ]

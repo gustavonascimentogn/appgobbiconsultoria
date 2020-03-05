@@ -13,7 +13,7 @@ class SolicitacoesList(ListView):
     def get_queryset(self):
         empresa_logada = self.request.user.empregado.empresa
         clientes_da_empresa = Cliente.objects.filter(empresa=empresa_logada)
-        return Solicitacao.objects.filter(cliente__in=clientes_da_empresa)
+        return Solicitacao.objects.filter(cliente__in=clientes_da_empresa).order_by('-pk')
 
 ## Classe para edição dos registros
 class SolicitacaoEdit(UpdateView):

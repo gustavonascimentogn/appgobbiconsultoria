@@ -10,7 +10,14 @@
     <div class="row">
         {%  for solicitacao in object_list %}
                 <div class="col-md-3">
-                    <div class="card bg-light mb-3" >
+                    {% if solicitacao.fechada %}
+                            <div class="card text-white bg-dark mb-3" >
+                    {% elif solicitacao.atendida  %}
+                            <div class="card bg-light mb-3" >
+                    {% else %}
+                            <div class="card text-white bg-info mb-3" >
+                    {% endif %}
+
                         <div class="card-header"><h5>{{ solicitacao.cliente.nome }} </h5></div>
                         <div class="card-body">
                             <h5 class="card-title">Solicitado em {{ solicitacao.dataHoraCriacao|date:'d/m/Y' }}</h5>
