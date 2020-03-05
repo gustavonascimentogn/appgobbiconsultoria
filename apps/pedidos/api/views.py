@@ -27,7 +27,7 @@ class PedidoViewSet(viewsets.ModelViewSet):
                 empresa = self.request.query_params.get('empresa')
                 cpfcnpj = self.request.query_params.get('cpfcnpj')
                 cliente_da_empresa = Cliente.objects.filter(empresa=empresa,cpf_cnpj=cpfcnpj)
-                pedido = Pedido.objects.filter(cliente__in=cliente_da_empresa)
+                pedido = Pedido.objects.filter(cliente__in=cliente_da_empresa).order_by('-pk')
                 return pedido
             elif function == 'list':
                 '''

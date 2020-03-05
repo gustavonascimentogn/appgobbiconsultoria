@@ -28,7 +28,8 @@ class ClienteViewSet(viewsets.ModelViewSet):
                 senhaAtual = self.request.query_params.get('senhaAtual')
                 novaSenha = self.request.query_params.get('novaSenha')
                 atualizou = Cliente.objects.filter(cpf_cnpj=cpfcnpj,empresa=empresa,appPassword=senhaAtual).update(appPassword=novaSenha)
-                cliente = Cliente.objects.filter(cpf_cnpj=cpfcnpj,empresa=empresa,appPassword=novaSenha) ## se nao atualizou, retorna lista vazia
+                ## se nao atualizou, retorna lista vazia
+                cliente = Cliente.objects.filter(cpf_cnpj=cpfcnpj,empresa=empresa,appPassword=novaSenha)
                 return cliente
             elif function == 'login':
                 '''

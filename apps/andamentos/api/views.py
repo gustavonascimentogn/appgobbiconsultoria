@@ -24,7 +24,7 @@ class AndamentoViewSet(viewsets.ModelViewSet):
                 /api/andamentos/?function=getStatus&idPedido=1&format=json
                 '''
                 idPedido = self.request.query_params.get('idPedido')
-                andamentos = Andamento.objects.filter(pedido__pk=idPedido,disponivelCliente=True)
+                andamentos = Andamento.objects.filter(pedido__pk=idPedido,disponivelCliente=True).order_by('-pk')
                 return andamentos
             elif function == 'list':
                 '''

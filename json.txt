@@ -1,0 +1,107 @@
+URL BASE
+http://3.10.251.190/
+
+Token: xxx
+
+#################
+Update Senha
+
+	/api/clientes/?function=updateSenha&empresa=1&cpfcnpj=11111&senhaAtual=111111&novaSenha=22222&format=json
+	
+	Retorna o registro se a atualizacao funcionou, caso contrario, retorna vazio
+	[
+    {
+        "cpf_cnpj": "11111",
+        "appPassword": "22222",
+        "nomeContato": null,
+        "emailContato": "gustavonascimento.gn@gmail.com",
+        "empresa": 1
+    }
+	]
+
+#####################
+Login
+
+	/api/clientes/?function=login&empresa=1&cpfcnpj=29404832804&senha=29404832804&format=json
+	
+	Retorno os dados do cliente se login der certo.
+	[
+    {
+        "cpf_cnpj": "11111",
+        "appPassword": "22222",
+        "nomeContato": null,
+        "emailContato": "gustavonascimento.gn@gmail.com",
+        "empresa": 1
+    }
+	]
+
+
+################
+Lista dos serviços do cliente
+
+	/api/pedidos/?function=getServicos&empresa=1&cpfcnpj=22222&format=json
+	
+	Retorna lista de servicos do cliente
+	
+	[
+    {
+        "id": 1,
+        "servico": {
+            "id": 1,
+            "descricao": "Plataforma iLabora"
+        }
+    }
+	]
+	
+	
+#################
+Lista dos status do serviço do cliente
+
+	/api/andamentos/?function=getStatus&idPedido=1&format=json
+	
+	Retorna o historico de atualizacao do status
+	
+	[
+    {
+        "pedido": 1,
+        "dataHoraCriacao": "2020-03-05T09:38:52.185924-03:00",
+        "comentario": "Novo comentario",
+        "status": {
+            "nome": "Novo"
+        }
+    },
+    {
+        "pedido": 1,
+        "dataHoraCriacao": "2020-03-05T09:42:12.824950-03:00",
+        "comentario": "Deve estar disponivel",
+        "status": {
+            "nome": "Novo"
+        }
+    }
+	]
+	
+#############
+Soliticar boleto
+
+	/api/solicitacoes/?function=solicitaBoleto&empresa=1&cpfcnpj=22222&mes=1&ano=2020&format=json
+	
+	Retorna registro da solicitacao registrada.
+	
+	[
+    {
+        "id": 47,
+        "solicitacao": "Favor enviar 2a via do boleto com vencimento em 1/2020",
+        "cliente": 1,
+        "atendida": false,
+        "fechada": false
+    }
+]
+	
+	
+	
+	
+	
+	
+	
+	
+	
