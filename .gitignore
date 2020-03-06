@@ -1,6 +1,7 @@
 .idea
 *.sqlite3
 gobbivenv
+*__pycache__*
 /apps/__pycache__/*
 /__pycache__/*
 /apps/clientes/__pycache__/*

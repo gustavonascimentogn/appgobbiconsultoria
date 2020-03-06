@@ -19,3 +19,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'solutudosjrp@gmail.com'
 EMAIL_HOST_PASSWORD = 'Linssp@123'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
