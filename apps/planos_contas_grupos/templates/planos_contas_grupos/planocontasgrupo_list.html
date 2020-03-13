@@ -50,7 +50,13 @@
                                             <b>{{ grupo.nome }} (grupo padrão)</b><br>
                                         </div>
                                         <div class="col-1 border-bottom" align="center" >
-                                          <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                            {%   if grupo.natureza == 'Contas devedoras'    %}
+                                                <a href="{% url 'create_contaspagar' grupo.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                            {%   elif grupo.natureza == 'Contas credoreas' %}
+                                                <a href="{% url 'create_contasreceber' grupo.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                            {%  else %}
+                                                <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                            {%  endif  %}
                                         </div>
                                     </div>
                                     <!-- o FOR retorna todos os filhos do grupo selecionado -->
@@ -74,7 +80,13 @@
                                                 {%  endif  %}
                                             </div>
                                             <div class="col-1 border-bottom" align="center" >
-                                              <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                                {%   if subgrupo.natureza == 'Contas devedoras'    %}
+                                                    <a href="{% url 'create_contapagar' subgrupo.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                {%   elif subgrupo.natureza == 'Contas credoras' %}
+                                                    <a href="{% url 'create_contareceber' subgrupo.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                {%  else %}
+                                                    <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                                {%  endif  %}
                                             </div>
                                         </div>
                                         <!-- Inicio Nivel 2 de subgrupos -->
@@ -98,7 +110,13 @@
                                                     {%  endif  %}
                                                 </div>
                                                 <div class="col-1 border-bottom">
-                                                    <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                                    {%   if subgrupo2.natureza == 'Contas devedoras'    %}
+                                                        <a href="{% url 'create_contapagar' subgrupo2.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                    {%   elif subgrupo2.natureza == 'Contas credoras' %}
+                                                        <a href="{% url 'create_contareceber' subgrupo2.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                    {%  else %}
+                                                        <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                                    {%  endif  %}
                                                 </div>
                                             </div>
                                             <!-- Inicio Nivel 3 de subgrupos -->
@@ -122,7 +140,13 @@
                                                         {%  endif  %}
                                                     </div>
                                                     <div class="col-1 border-bottom">
-                                                        <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                                        {%   if subgrupo3.natureza == 'Contas devedoras'    %}
+                                                            <a href="{% url 'create_contapagar' subgrupo3.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                        {%   elif subgrupo3.natureza == 'Contas credoras' %}
+                                                            <a href="{% url 'create_contareceber' subgrupo3.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                        {%  else %}
+                                                            <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                                        {%  endif  %}
                                                     </div>
                                                 </div>
 
@@ -147,7 +171,13 @@
                                                             {%  endif  %}
                                                         </div>
                                                         <div class="col-1 border-bottom">
-                                                            <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                                            {%   if subgrupo4.natureza == 'Contas devedoras'    %}
+                                                                <a href="{% url 'create_contapagar' subgrupo4.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                            {%   elif subgrupo4.natureza == 'Contas credoras' %}
+                                                                <a href="{% url 'create_contareceber' subgrupo4.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                            {%  else %}
+                                                                <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                                            {%  endif  %}
                                                         </div>
                                                     </div>
                                                     <!-- Inicio Nivel 5 de subgrupos -->
@@ -171,7 +201,13 @@
                                                                 {%  endif  %}
                                                             </div>
                                                             <div class="col-1 border-bottom">
-                                                                <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                                                {%   if subgrupo5.natureza == 'Contas devedoras'    %}
+                                                                    <a href="{% url 'create_contapagar' subgrupo5.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                                {%   elif subgrupo5.natureza == 'Contas credoras' %}
+                                                                    <a href="{% url 'create_contareceber' subgrupo5.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                                {%  else %}
+                                                                    <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                                                {%  endif  %}
                                                             </div>
                                                         </div>
                                                         <!-- Inicio Nivel 6 de subgrupos -->
@@ -195,7 +231,13 @@
                                                                     {%  endif  %}
                                                                 </div>
                                                                 <div class="col-1 border-bottom">
+                                                                {%   if subgrupo6.natureza == 'Contas devedoras'    %}
+                                                                    <a href="{% url 'create_contapagar' subgrupo6.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                                {%   elif subgrupo6.natureza == 'Contas credoras' %}
+                                                                    <a href="{% url 'create_contareceber' subgrupo6.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                                {%  else %}
                                                                     <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                                                {%  endif  %}
                                                                 </div>
                                                             </div>
                                                             <!-- Inicio Nivel 7 de subgrupos -->
@@ -219,7 +261,13 @@
                                                                             {%  endif  %}
                                                                         </div>
                                                                         <div class="col-1 border-bottom">
-                                                                            <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                                                            {%   if subgrupo7.natureza == 'Contas devedoras'    %}
+                                                                                <a href="{% url 'create_contapagar' subgrupo7.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                                            {%   elif subgrupo7.natureza == 'Contas credoras' %}
+                                                                                <a href="{% url 'create_contareceber' subgrupo7.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                                            {%  else %}
+                                                                                <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
+                                                                            {%  endif  %}
                                                                         </div>
                                                                     </div>
                                                                 {%  endfor  %} <!-- Fim Nivel 7 de subgrupos -->

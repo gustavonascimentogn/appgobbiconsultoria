@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Andamento
@@ -11,7 +12,6 @@ from django.conf import settings
 class AndamentosList(ListView):
     model = Andamento
     paginate_by = 20
-
 
 ## Classe para edição dos registros
 class AndamentoEdit(UpdateView):
@@ -70,21 +70,30 @@ class AndamentoNovo(CreateView):
             subject = '['+ nomeFantasia + '] Novidade referente ao seu atendimento'
             if andamento.pedido:
                 emailContato = andamento.pedido.cliente.emailContato ## para quem vai a mensagem
-                message = 'Referente ao serviço ' + andamento.pedido.servico.nome + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
-                html_message= 'Este e-mail refere-se ao serviço <b>' + andamento.pedido.servico.nome + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
+                message = 'Referente ao serviço ' + andamento.pedido.servico.nome + ' | Atualização de status: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
+                html_message= 'Este e-mail refere-se ao serviço <b>' + andamento.pedido.servico.nome + '</b><br>Atualização de status: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
             else: #elif (self.kwargs['origem'] is 'solicitacao'):
                 emailContato = andamento.solicitacao.cliente.emailContato ## para quem vai a mensagem
-                message = 'Referente a solicitação ' + andamento.solicitacao.solicitacao + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
-                html_message= 'Este e-mail refere-se a solicitação <b>' + andamento.solicitacao.solicitacao + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
+                message = 'Referente a solicitação ' + andamento.solicitacao.solicitacao + ' | Atualização de status: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
+                html_message= 'Este e-mail refere-se a solicitação <b>' + andamento.solicitacao.solicitacao + '</b><br>Atualização de status: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [emailContato, email_from,]
-            send_mail( subject, message, email_from, recipient_list,html_message=html_message )
+            send_mail( subject, message, email_from, recipient_list,html_message=html_message)
 
-        if (str(self.kwargs['origem']) == 'pedido'):
-            return redirect('list_pedidos')
-        else: #elif (self.kwargs['origem'] is 'solicitacao'):
-            return redirect('list_solicitacoes')
-
+        ## enviando mensagem via whatsapp
+        if self.request.POST['salvar'] == 'sem_whats':
+            if (str(self.kwargs['origem']) == 'pedido'):
+                return redirect('list_pedidos')
+            else: #elif (self.kwargs['origem'] is 'solicitacao'):
+                return redirect('list_solicitacoes')
+        elif self.request.POST['salvar'] == 'com_whats':
+            fone = str(andamento.pedido.cliente.telefone).replace('(','')
+            fone = fone.replace(')','')
+            fone = fone.replace(' ','')
+            fone = fone.replace('-','')
+            fone = fone.replace('+','')
+            fone = fone.replace('*','')
+            return HttpResponseRedirect("https://api.whatsapp.com/send?phone="+ fone +"&text="+ message)
 
 
     def post(self, request, *args, **kwargs):

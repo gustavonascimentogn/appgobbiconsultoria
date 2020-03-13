@@ -1,27 +1,33 @@
 {% extends 'base.html' %}
 {% load bootstrap %}
+{% load static %}
 
 {% block main %}
     <br>
     <div class="card bg-light mb-3" >
         <div class="card-header">
-        <h1>Movimentação</h1>
+            {{  request.pk     }}
+        <h1>Andamento </h1>
+             <img src="{% static 'images/whatsapp.png'%}" alt="Whats" >Para enviar Whatsapp para o cliente, clique no botão da direita
+
       </div>
       <div class="card-body">
 
         <p class="card-text">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-
                 {{ form|bootstrap }}
-
-                </div>
                     <div class="card-footer bg-transparent" align="center">
-                            <button type="submit" class="btn btn-info">Salvar</button>
+                            <button type="submit" class="btn btn-info" name="salvar" value="sem_whats">Salvar e NÃO enviar Whatsapp</button>
+                            <button type="submit" class="btn btn-info" name="salvar" value="com_whats">
+                                <img src="{% static 'images/whatsapp.png'%}" alt="Whats"> Salvar e enviar Whatsapp
+                            </button><br><br>Clique no botão com a tecla Ctrl pressionada para não sair do Sistema.
+                            <br>O andamento será armazenado. Não salve-o novamente, evite duplicação.
+
                     </div>
-                </div>
             </form>
         </p>
+      </div>
 
 {% endblock %}
 

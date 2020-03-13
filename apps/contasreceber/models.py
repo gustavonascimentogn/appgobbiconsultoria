@@ -16,7 +16,7 @@ class ContaReceber(models.Model):
         descricaoConta = models.CharField(max_length=100, blank=False, null=False, verbose_name='Descrição da conta a receber')
 
         grupoConta = models.ForeignKey(PlanoContasGrupo, blank=False, null=False, on_delete=models.PROTECT, verbose_name='Lançar conta em qual grupo do Plano de Contas' )
-        pedido = models.ForeignKey(Pedido, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Referente a qual serviço?')
+        pedido = models.ForeignKey(Pedido, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Referente a qual pedido?')
 
         def __str__(self):
                 return 'Parcela número '+ str(self.numParcela) + ', Vencimento em ' + str(self.dataVencimento)
