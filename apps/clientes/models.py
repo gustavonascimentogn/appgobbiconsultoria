@@ -37,13 +37,16 @@ class Cliente(models.Model):
 
         @property
         def phonewhatts(self):
-                fone = self.telefone.replace('(','')
-                fone = fone.replace(')','')
-                fone = fone.replace(' ','')
-                fone = fone.replace('+','')
-                fone = fone.replace('-','')
-                fone = fone.replace('*','')
-                return fone
+                if self.telefone():
+                        fone = self.telefone.replace('(','')
+                        fone = fone.replace(')','')
+                        fone = fone.replace(' ','')
+                        fone = fone.replace('+','')
+                        fone = fone.replace('-','')
+                        fone = fone.replace('*','')
+                        return fone
+                else:
+                        return self.telefone
 
         @property
         def total_pedidos(self):
