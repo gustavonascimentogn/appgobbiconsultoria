@@ -4,9 +4,11 @@ from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Andamento
 from .form import AndamentoForm
 from django.shortcuts import redirect
+from apps.pedidos.models import Pedido
 
 from django.core.mail import send_mail
 from django.conf import settings
+
 
 
 class AndamentosList(ListView):
@@ -80,20 +82,11 @@ class AndamentoNovo(CreateView):
             recipient_list = [emailContato, email_from,]
             send_mail( subject, message, email_from, recipient_list,html_message=html_message)
 
-        ## enviando mensagem via whatsapp
-        if self.request.POST['salvar'] == 'sem_whats':
-            if (str(self.kwargs['origem']) == 'pedido'):
-                return redirect('list_pedidos')
-            else: #elif (self.kwargs['origem'] is 'solicitacao'):
-                return redirect('list_solicitacoes')
-        elif self.request.POST['salvar'] == 'com_whats':
-            fone = str(andamento.pedido.cliente.telefone).replace('(','')
-            fone = fone.replace(')','')
-            fone = fone.replace(' ','')
-            fone = fone.replace('-','')
-            fone = fone.replace('+','')
-            fone = fone.replace('*','')
-            return HttpResponseRedirect("https://api.whatsapp.com/send?phone="+ fone +"&text="+ message)
+
+        if (str(self.kwargs['origem']) == 'pedido'):
+            return redirect('list_pedidos')
+        else: #elif (self.kwargs['origem'] is 'solicitacao'):
+            return redirect('list_solicitacoes')
 
 
     def post(self, request, *args, **kwargs):
@@ -113,5 +106,6 @@ class AndamentoNovo(CreateView):
     def get_form_kwargs(self):
         kwargs = super(AndamentoNovo, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
         kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
+
         return kwargs
 

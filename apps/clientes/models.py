@@ -36,6 +36,16 @@ class Cliente(models.Model):
                 return self.nome
 
         @property
+        def phonewhatts(self):
+                fone = self.telefone.replace('(','')
+                fone = fone.replace(')','')
+                fone = fone.replace(' ','')
+                fone = fone.replace('+','')
+                fone = fone.replace('-','')
+                fone = fone.replace('*','')
+                return fone
+
+        @property
         def total_pedidos(self):
                 return self.pedido_set.all().count()
 
