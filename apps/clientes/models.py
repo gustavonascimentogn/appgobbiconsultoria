@@ -37,7 +37,7 @@ class Cliente(models.Model):
 
         @property
         def phonewhatts(self):
-                if self.telefone():
+                if self.telefone:
                         fone = self.telefone.replace('(','')
                         fone = fone.replace(')','')
                         fone = fone.replace(' ','')
@@ -46,7 +46,7 @@ class Cliente(models.Model):
                         fone = fone.replace('*','')
                         return fone
                 else:
-                        return self.telefone
+                        return '00000000' #self.telefone
 
         @property
         def total_pedidos(self):

@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{%  load static %}
+{% block head %}
+<script>
+function filter(){
+
+    var mes = document.getElementsByName('optmes');
+    var ano = document.getElementsByName('optano');
+
+    var mes_checked = '0';
+    var ano_checked = '0';
+    for (var i=0;i<mes.length;i++){
+      if ( mes[i].checked ) {
+        mes_checked = mes[i].value;
+      }
+    }
+
+    for (var j=0;j<ano.length;j++){
+      if ( ano[j].checked ) {
+        ano_checked = ano[j].value;
+      }
+    }
+
+    var getUrl = window.location;
+    var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1] + "/" + mes_checked + "/" + ano_checked;
+    window.open(baseUrl, "_self")
+
+    document.getElementsByName("form_filter").submit();
+}
+</script>
+{% endblock %}
+
+{% block main %}
+    <p>
+        <h1>Contas a receber</h1>
+    </p>
+    <div class="container">
+        <div class="row">
+            <form action="{{ request.path }}" method="post" name="form_filter" id="form_filter">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">
+                          <div>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                              <label class="btn btn-secondary {% if view.kwargs.ano == 2020 %}active{% endif %}">
+                                <input type="radio" name="optano" id="optano" value="2020" autocomplete="off" onfocus="filter();" {% if view.kwargs.ano == 2020 %}checked{% endif %}> 2020
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.ano == 2021 %}active{% endif %}">
+                                <input type="radio" name="optano" id="optano" value="2021" autocomplete="off" onfocus="filter();" {% if view.kwargs.ano == 2021 %}checked{% endif %}> 2021
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.ano == 2022 %}active{% endif %}">
+                                <input type="radio" name="optano" id="optano" value="2022" autocomplete="off" onfocus="filter();" {% if view.kwargs.ano == 2022 %}checked{% endif %}> 2022
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.ano == 2023 %}active{% endif %}">
+                                <input type="radio" name="optano" id="optano" value="2023" autocomplete="off" onfocus="filter();" {% if view.kwargs.ano == 2023 %}checked{% endif %}> 2023
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.ano == 2024 %}active{% endif %}">
+                                <input type="radio" name="optano" id="optano" value="2024" autocomplete="off" onfocus="filter();" {% if view.kwargs.ano == 2024 %}checked{% endif %}> 2024
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.ano == 2025 %}active{% endif %}">
+                                <input type="radio" name="optano" id="optano" value="2025" autocomplete="off" onfocus="filter();" {% if view.kwargs.ano == 2025 %}checked{% endif %}> 2025
+                              </label>
+                            </div>
+                        </div>
+                      </th>
+                      <th scope="col">
+                        <div>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                              <label class="btn btn-secondary {% if view.kwargs.mes == 1 %}active{% endif %}">
+                                <input type="radio" name="optmes" id="optmes" value="1" autocomplete="off" onfocus="filter();" {% if view.kwargs.mes == 1 %}checked{% endif %}> Jan
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.mes == 2 %}active{% endif %}">
+                                <input type="radio" name="optmes" id="optmes" value="2" autocomplete="off" onfocus="filter();" {% if view.kwargs.mes == 2 %}checked{% endif %}> Fev
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.mes == 3 %}active{% endif %}">
+                                <input type="radio" name="optmes" id="optmes" value="3" autocomplete="off" onfocus="filter();" {% if view.kwargs.mes == 3 %}checked{% endif %}> Mar
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.mes == 4 %}active{% endif %}">
+                                <input type="radio" name="optmes" id="optmes" value="4" autocomplete="off" onfocus="filter();" {% if view.kwargs.mes == 4 %}checked{% endif %}> Abr
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.mes == 5 %}active{% endif %}">
+                                <input type="radio" name="optmes" id="optmes" value="5" autocomplete="off" onfocus="filter();" {% if view.kwargs.mes == 5 %}checked{% endif %}> Mai
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.mes == 6 %}active{% endif %}">
+                                <input type="radio" name="optmes" id="optmes" value="6" autocomplete="off" onfocus="filter();" {% if view.kwargs.mes == 6 %}checked{% endif %}> Jun
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.mes == 7 %}active{% endif %}">
+                                <input type="radio" name="optmes" id="optmes" value="7" autocomplete="off" onfocus="filter();" {% if view.kwargs.mes == 7 %}checked{% endif %}> Jul
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.mes == 8 %}active{% endif %}">
+                                <input type="radio" name="optmes" id="optmes" value="8" autocomplete="off" onfocus="filter();" {% if view.kwargs.mes == 8 %}checked{% endif %}> Ago
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.mes == 9 %}active{% endif %}">
+                                <input type="radio" name="optmes" id="optmes" value="9" autocomplete="off" onfocus="filter();" {% if view.kwargs.mes == 9 %}checked{% endif %}> Set
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.mes == 10 %}active{% endif %}">
+                                <input type="radio" name="optmes" id="optmes" value="10" autocomplete="off" onfocus="filter();" {% if view.kwargs.mes == 10 %}checked{% endif %}> Out
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.mes == 11 %}active{% endif %}">
+                                <input type="radio" name="optmes" id="optmes" value="11" autocomplete="off" onfocus="filter();" {% if view.kwargs.mes == 11 %}checked{% endif %}> Nov
+                              </label>
+                              <label class="btn btn-secondary {% if view.kwargs.mes == 12 %}active{% endif %}">
+                                <input type="radio" name="optmes" id="optmes" value="12" autocomplete="off" onfocus="filter();" {% if view.kwargs.mes == 12 %}checked{% endif %}> Dez
+                              </label>
+                            </div>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                </table>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Dt. Vencimento</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Natureza</th>
+              <th scope="col">N. Parcela</th>
+              <th scope="col">Descrição</th>
+              <th scope="col">Valor R$</th>
+              <th scope="col">Pago?</th>
+              <th scope="col">R$ Pago</th>
+              <th scope="col">Dt. Pagamento</th>
+              <th scope="col">Dt. registro</th>
+              <th scope="col">#</th>
+            </tr>
+          </thead>
+          <tbody>
+          {%  for conta in object_list %}
+            <tr>
+              <th scope="row">{{ conta.dataVencimento|date:'d/m/Y' }}</th>
+              <td>{{ conta.pedido.cliente.nome }}</td>
+              <td>{{ conta.grupoConta.natureza }}</td>
+              <td>{{ conta.numParcelaComissao }}</td>
+              <td>{{ conta.descricaoConta }}</td>
+              <td>{{ conta.valor|floatformat:2 }}</td>
+              <td>{% if conta.paga %}Sim{% else %}Não{% endif %}</td>
+              <td>{% if conta.valorPago %} {{ conta.valorPago|floatformat:2}}{% else %}-{% endif %}</td>
+              <td>{% if conta.dataPagamento %} {{ conta.dataPagamento|date:'d/m/Y' }}{% else %}-{% endif %}</td>
+              <td>{{ conta.dataHoraCriacao|date:'d/m/Y' }}</td>
+              <td>{% if conta.paga %}
+                        {% if conta.valorPago  %}
+                            {% if conta.dataPagamento %}
+                                <img src="{% static 'images/check.png'%}" alt="Editar">
+                            {% else %}
+                                <a href="{% url 'update_contareceber' conta.id %}" target="contapagar"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
+                            {% endif %}
+                        {% else %}
+                            <a href="{% url 'update_contareceber' conta.id %}" target="contapagar"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
+                        {% endif %}
+                  {% else %}
+                    <a href="{% url 'update_contareceber' conta.id %}" target="contapagar"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
+                  {% endif %}</td>
+            </tr>
+           {% endfor %}
+          </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}
