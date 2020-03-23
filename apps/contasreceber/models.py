@@ -19,4 +19,5 @@ class ContaReceber(models.Model):
         pedido = models.ForeignKey(Pedido, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Referente a qual pedido?')
 
         def __str__(self):
-                return 'Parcela número '+ str(self.numParcela) + ', Vencimento em ' + str(self.dataVencimento)
+                return 'Parcela '+ str(self.numParcela) + ' | Vencimento em ' + str(self.dataVencimento) + ' | Valor: ' + str(self.valor)
+

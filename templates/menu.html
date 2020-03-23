@@ -48,6 +48,10 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{% url 'list_servicos' %}">Portifólio de serviços oferecidos</a>
           <a class="dropdown-item" href="{% url 'list_plano_contas_grupos' %}">Plano de contas</a>
+          {% now "Y" as current_year %}
+          {% now "m" as current_month %}
+          <a class="dropdown-item" href="{% url 'list_contaspagar' current_month current_year %}">Contas a pagar</a>
+          <a class="dropdown-item" href="{% url 'list_contasreceber' current_month current_year %}">Contas a receber</a>
           <a class="dropdown-item" href="{% url 'list_templates_mensagens' %}">Mensagens padrão</a>
           <a class="dropdown-item" href="{% url 'list_tiposServicos' %}">Tipos de serviços oferecidos</a>
           <a class="dropdown-item" href="{% url 'list_status' %}">Status possíveis</a>
