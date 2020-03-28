@@ -12,6 +12,9 @@ from apps.planos_contas_grupos.models import PlanoContasGrupo
 from apps.planos_contas.models import PlanoContas
 
 ## Classe para listagem dos registros
+from ..servicos.models import Servico
+
+
 class PedidosList(ListView):
     model = Pedido
     paginate_by = 20
@@ -30,6 +33,14 @@ class PedidoEdit(UpdateView):
 
     def form_valid(self, form):
         pedidoN = form.save(commit=False)
+        ## atualizando a lista de servicos do pedido
+
+        servicos = self.request.POST.getlist('servico')
+        for item in servicos:
+            servico = Servico.objects.get(pk = item)
+            servico_atual = Pedido.objects.filter(pk = pedidoN.pk, servico__pk = servico.pk)
+            if not servico_atual:
+                pedidoN.servico.add(item)
         pedidoN.save()
 
         ## deletando parcelas nao pagas
@@ -62,7 +73,7 @@ class PedidoEdit(UpdateView):
 
         for i in range(1+qtd_comissoes_pagas, duracao_em_meses+1):
             nova_data_vencimento = pedidoN.dataVencimentoVendedor + timedelta(days=((i-1)*31))
-            insert_list_comissao.append(ContaPagar(numParcelaComissao=i, dataVencimento=nova_data_vencimento,
+            insert_list_comissao.append(ContaPagar(numParcela=i, dataVencimento=nova_data_vencimento,
                                                    valor=(pedidoN.valor / pedidoN.qtdParcelas) * (vendedor.percentual_bonificacao / 100),
                                                    pedido=pedidoN, grupoConta = grupo_contas_pagar))
 
@@ -115,7 +126,7 @@ class PedidoNovo(CreateView):
         grupo_contas_pagar = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado, nome=empresa_logada.comissao_nome_plano_contas_grupo)
         for i in range(1, duracao_em_meses+1):
             nova_data_vencimento = pedidoN.dataVencimentoVendedor + timedelta(days=((i-1)*31))
-            insert_list_comissao.append(ContaPagar(numParcelaComissao=i, dataVencimento=nova_data_vencimento,
+            insert_list_comissao.append(ContaPagar(numParcela=i, dataVencimento=nova_data_vencimento,
                                                    valor=(pedidoN.valor / pedidoN.qtdParcelas) * (vendedor.percentual_bonificacao / 100),
                                                    pedido=pedidoN, grupoConta = grupo_contas_pagar))
 

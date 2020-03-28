@@ -6,7 +6,7 @@
 function function_whats(){
     var text = document.getElementById("id_comentario").value;
     var phone = document.getElementById("phonenumber").value;
-    message = 'Olá, tudo bem? O status do seu serviço foi atualizado. Segue o comentário feito pelo atendente: ' + text;
+    message = 'Olá, tudo bem? O status do seu pedido foi atualizado. Segue o comentário feito por nosso atendente: ' + text;
 
     if (text) {
         url = 'https://api.whatsapp.com/send?phone='+phone+'&text='+message

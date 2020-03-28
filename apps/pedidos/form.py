@@ -13,8 +13,8 @@ class PedidoForm(ModelForm):
         super(PedidoForm, self).__init__(*args, **kwargs)
         self.fields['cliente'].queryset = Cliente.objects.filter(empresa=user.empregado.empresa)
         self.fields['vendedor'].queryset = Vendedor.objects.filter(empresa=user.empregado.empresa)
-        self.fields['status'].queryset = Status.objects.filter(empresa=user.empregado.empresa)
-        self.fields['servico'].queryset = Servico.objects.filter(empresa=user.empregado.empresa)
+        self.fields['status'].queryset = Status.objects.filter(empresa=user.empregado.empresa, ativo=True)
+        self.fields['servico'].queryset = Servico.objects.filter(empresa=user.empregado.empresa, ativo=True)
 
     class Meta:
         model = Pedido

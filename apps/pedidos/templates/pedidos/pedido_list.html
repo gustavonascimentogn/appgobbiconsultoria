@@ -25,8 +25,12 @@
                     <p class="card-text">
                         {{ pedido.cliente.nome }}<br>
                         {{ pedido.servico.nome }}<br>
-                        Vendidor por:<br> {{ pedido.vendedor.nome }}<br>
-
+                        <b>Vendidor por:</b><br>
+                        &nbsp;&nbsp;&nbsp;{{ pedido.vendedor.nome }}<br>
+                        <b>Serviços contratados</b><br>
+                        {%  for item in pedido.servico.all  %}
+                            &nbsp;&nbsp;&nbsp;{{  item.nome  }}<br>
+                        {%  endfor  %}
                         Movimentações: {{ pedido.total_andamentos }}<br>
                         <b>{{ pedido.status }}</b>
                     </p>

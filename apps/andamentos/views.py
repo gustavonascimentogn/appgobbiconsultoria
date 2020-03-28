@@ -32,8 +32,8 @@ class AndamentoEdit(UpdateView):
             ##if (str(self.kwargs['origem']) == 'pedido'):
             if andamento.pedido:
                 emailContato = andamento.pedido.cliente.emailContato ## para quem vai a mensagem
-                message = 'Referente ao serviço ' + andamento.pedido.servico.nome + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
-                html_message= 'Este e-mail refere-se ao serviço <b>' + andamento.pedido.servico.nome + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
+                message = 'Referente ao Pedido ' + str(andamento.pedido.pk) + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
+                html_message= 'Este e-mail refere-se ao Pedido <b>' + str(andamento.pedido.pk) + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
             else: #elif (self.kwargs['origem'] is 'solicitacao'):
                 emailContato = andamento.solicitacao.cliente.emailContato ## para quem vai a mensagem
                 message = 'Referente a solicitação ' + andamento.solicitacao.solicitacao + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
@@ -72,8 +72,8 @@ class AndamentoNovo(CreateView):
             subject = '['+ nomeFantasia + '] Novidade referente ao seu atendimento'
             if andamento.pedido:
                 emailContato = andamento.pedido.cliente.emailContato ## para quem vai a mensagem
-                message = 'Referente ao serviço ' + andamento.pedido.servico.nome + ' | Atualização de status: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
-                html_message= 'Este e-mail refere-se ao serviço <b>' + andamento.pedido.servico.nome + '</b><br>Atualização de status: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
+                message = 'Referente ao Pedido ' + str(andamento.pedido.pk) + ' | Atualização de status: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
+                html_message= 'Este e-mail refere-se ao Pedido <b>' + str(andamento.pedido.pk) + '</b><br>Atualização de status: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
             else: #elif (self.kwargs['origem'] is 'solicitacao'):
                 emailContato = andamento.solicitacao.cliente.emailContato ## para quem vai a mensagem
                 message = 'Referente a solicitação ' + andamento.solicitacao.solicitacao + ' | Atualização de status: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario

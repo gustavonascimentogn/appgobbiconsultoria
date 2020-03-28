@@ -101,44 +101,47 @@ a {
 
 {% block main %}
 
-    <div class="d-flex justify-content-center h-100">
-        <div class="card">
-			<div class="card-header">
-				<h3 align="center">Informações de acesso</h3>
-			</div>
-			<div class="card-body">
-				<form method="post" >
-                    {% csrf_token %}
-					<div class="input-group form-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="far fa-user"></i></span>
-						</div>
-						<input name="username" id="username" type="text" class="form-control" placeholder="Usu&aacute;rio" autocomplete="username">
+<div class="d-flex justify-content-center h-100">
+	<div class="card">
+		<div class="card-header">
+			<h3 align="center">Informações de acesso</h3>
+		</div>
+		<div class="card-body">
+			<form method="post" >
+				{% csrf_token %}
+				<div class="input-group form-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="far fa-user"></i></span>
 					</div>
-					<div class="input-group form-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="far fa-key"></i></span>
-						</div>
-						<input type="password" name="password" id="password" class="form-control" placeholder="Senha" autocomplete="current-password">
-					</div>
-					<div class="row align-items-center remember">
-						<input type="checkbox" name="rememberusername" id="rememberusername" value="1" checked>Lembrar identifica&ccedil;&atilde;o de usu&aacute;rio
-					</div>
-					<br/>
-                    <div class="form-group" style="text-align: center;">
-                    	<input type="submit" value="Login" class="btn btn-info">
-                    </div>
-				</form>
-			</div>
-			<div class="card-footer">
-				<div class="d-flex justify-content-center">
-					<a href="/login/forgot_password.php">Desenvolvido por ®Conecta</a>
+					<input name="username" id="username" type="text" class="form-control" placeholder="Usu&aacute;rio" autocomplete="username">
 				</div>
+				<div class="input-group form-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="far fa-user"></i></span>
+					</div>
+					<input type="password" name="password" id="password" class="form-control" placeholder="Senha" autocomplete="current-password">
+				</div>
+				<div class="row align-items-center remember">
+					<input type="checkbox" name="rememberusername" id="rememberusername" value="1" checked>Lembrar identifica&ccedil;&atilde;o de usu&aacute;rio
+				</div>
+				<br/>
+				<div class="form-group" style="text-align: center;">
+					<input type="submit" value="Login" class="btn btn-info">
+				</div>
+			</form>
+		</div>
+		<div class="card-footer">
+			<div align="center">
+				<div class="p-3 mb-2 bg-dark text-white">
+					<img src="{% static 'images/logo-tabo-50px.png'%}" alt="Logo"><br><br>
+					<b>Suas contas na ponta dos dedos!</b>
+				</div><br>
 			</div>
 		</div>
 	</div>
-
-
+</div>
+<script src="{% static 'jquery/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 
 
 {% endblock %}
