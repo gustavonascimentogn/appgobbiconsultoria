@@ -1,6 +1,5 @@
 import os
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -9,8 +8,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '_(x(*#k_x5hvh0=jp=^xg-svpfp&@b8-evtjx_$ozufppgpsc!'
-
-ALLOWED_HOSTS = ['3.10.251.190','127.0.0.1','tabo.com.br']
 
 # Application definition
 

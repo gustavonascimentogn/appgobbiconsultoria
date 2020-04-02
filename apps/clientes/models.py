@@ -24,7 +24,7 @@ class Cliente(models.Model):
         telefone = models.CharField(max_length=17, blank=True, null=True, help_text='Exemplo: +55(11)99999-9999')
 
         empresa = models.ForeignKey(Empresa, blank=False, null=False, default=None, on_delete=models.PROTECT, verbose_name='Empresa')
-        campanha = models.ManyToManyField(Campanha, blank=True, null=True, verbose_name='Campanhas que recebeu via sistema')
+        campanha = models.ManyToManyField(Campanha, blank=True, verbose_name='Campanhas que recebeu via sistema')
 
         class Meta:
             ## db_table = 'app_version'
