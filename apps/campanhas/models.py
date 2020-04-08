@@ -9,7 +9,7 @@ class Campanha(models.Model):
     dataHoraInativacao = models.DateTimeField(editable=True, blank=False, help_text='Quando a campanha deve tornar-se inativa. Ex: 12/12/2020 10:00:00', verbose_name='Quando a campanha deve parar de ser exibida?')
     arquivo = models.FileField(upload_to='campanhas', verbose_name='Anexe uma imagem caso deseje')
     empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Empresa')
-
+    texto_campanha = models.CharField(max_length=140, blank=False, null=False, verbose_name='Texto da campanha (em até 140 caracteres)')
     def __str__(self):
         return self.nome
 

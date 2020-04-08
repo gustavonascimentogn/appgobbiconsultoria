@@ -7,7 +7,7 @@ from apps.campanhas.models import Campanha
 class CampanhaForm(forms.ModelForm):
     class Meta:
         model = Campanha
-        fields = ['nome','dataHoraAtivacao','dataHoraInativacao','arquivo']
+        fields = ['nome','dataHoraAtivacao','dataHoraInativacao','arquivo','texto_campanha']
         widgets = {
             'dataHoraAtivacao': DateTimePickerInput(format='%d/%m/%Y HH:mm'),
             'dataHoraInativacao': DateTimePickerInput(format='%d/%m/%Y HH:mm'),
