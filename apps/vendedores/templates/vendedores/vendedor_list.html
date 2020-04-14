@@ -9,14 +9,14 @@
 
     <div class="row">
         {%  for vendedor in object_list %}
-        <div class="col-md-3">
-            <div class="card bg-light mb-3" >
+        <div class="col-md-4">
+            <div class="card bg-light mb-4" >
                 <div class="card-header"><h5>{{ vendedor.nome }} (Id. {{ vendedor.id }}) </h5></div>
                 <div class="card-body">
                     <h5 class="card-title">{{ vendedor.razao_social }}</h5>
                     <p class="card-text">
-                        Responsável: <br>
-                        {{ vendedor.nomeContato }} <br>
+                        Contato: <br>
+                        <strong>{{ vendedor.nomeContato }}</strong> <br>
                         {{ vendedor.emailContato }}<br><br>
                         Qtd. vendas: {{ vendedor.qtd_total_pedidos }}<br>
                         Valor vendido: {{ vendedor.valor_total_pedidos }}
@@ -25,9 +25,9 @@
                     <div id="accordionComissao{{ pedido.id }}">
                       <div class="card">
                         <div class="card-header" id="headingOne">
-                          <h5 class="mb-0">
+                          <h5 class="mb-0" align="center">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOneComissao{{ pedido.id }}" aria-expanded="false" aria-controls="collapseOneComissao{{ pedido.id }}">
-                              Pedidos e Comissões
+                                <div align="center">Pedidos e Comissões</div>
                             </button>
                           </h5>
                         </div>
