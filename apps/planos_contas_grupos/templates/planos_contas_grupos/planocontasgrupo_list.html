@@ -32,8 +32,7 @@
                           <h5 class="mb-0" align="center">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne{{ grupo.id }}" aria-expanded="true" aria-controls="collapseOne{{ grupo.id }}">
                                 <b>Estrutura do grupo de contas</b>
-                                <!-- <a href="{% url 'create_plano_contas_grupo' grupo.id %}"><img src="{% static 'images/add.png'%}" width="16px" alt="Add" ></a> -->
-                            </button>
+                                 </button>
                           </h5>
                         </div>
 
@@ -51,9 +50,9 @@
                                         </div>
                                         <div class="col-1 border-bottom" align="center" >
                                             {%   if grupo.natureza == 'Contas devedoras'    %}
-                                                <a href="{% url 'create_contaspagar' grupo.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                <a href="{% url 'create_contapagar' grupo.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
                                             {%   elif grupo.natureza == 'Contas credoreas' %}
-                                                <a href="{% url 'create_contasreceber' grupo.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
+                                                <a href="{% url 'create_contareceber' grupo.id %}"><img src="{% static 'images/credit-card.png'%}" alt="lançar conta'"></a>
                                             {%  else %}
                                                 <img src="{% static 'images/credit-card.png'%}" alt="lançar conta'">
                                             {%  endif  %}
