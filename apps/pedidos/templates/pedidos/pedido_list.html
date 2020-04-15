@@ -4,7 +4,7 @@
 {% block main %}
 
     <p>
-        <h1>Contratos</h1>
+        <h1>Contratos / Serviços</h1>
         <a href="{% url 'create_pedido' %}" class="btn btn-info">Cadastrar nova venda</a>
     </p><br>
 
@@ -12,7 +12,7 @@
     <div class="row">
         {%  for pedido in object_list %}
         <div class="col-md-4">
-            {% if not pedido.contrato_ativo %}
+            {% if not pedido.contrato_ativo and not pedido.status.nome == 'Finalizado' %}
                 <div class="card text-white bg-danger mb-3">
             {% elif pedido.status.nome == 'novo' %}
                 <div class="card text-white bg-info mb-3">
