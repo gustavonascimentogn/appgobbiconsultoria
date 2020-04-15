@@ -1,4 +1,7 @@
+import datetime
+
 from django.db import models
+from django.utils import timezone
 
 from apps.servicos.models import Servico
 from apps.clientes.models import Cliente
@@ -16,6 +19,7 @@ class Pedido(models.Model):
     status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Status do serviço contratado')
     dataVencimentoVendedor = models.DateField(blank=False, editable=True, verbose_name='Data para pagamento da primeira comissão do vendedor', help_text='As demais contas serão provisionadas mensalmente, respeitando o tempo de duração definido para o vendedor')
     vendedor = models.ForeignKey(Vendedor, blank=False, default=None, null=False, on_delete=models.PROTECT, verbose_name='Vendedor que realizou a venda')
+    dataVencimentoContrato = models.DateField(blank=False, null=False, editable=True, verbose_name='Data de vencimento do contrato', help_text='O sistema utilizará o mês a ano indicado para alertá-lo do vencimento')
 
 
     @property
@@ -25,6 +29,22 @@ class Pedido(models.Model):
     @property
     def total_comissao(self):
         return sum(comissao.valor for comissao in self.contapagar_set.all())
+
+    @property
+    def contrato_vencido(self):
+        if self.dataVencimentoContrato <= timezone.now():
+            return True
+        else:
+            return False
+
+    @property
+    def contrato_vencendo_mes(self):
+        mes_atual = str(timezone.now().month) + '/' + str(timezone.now().year)
+        mes_venc = str(self.dataVencimentoContrato.month) + '/' + str(self.dataVencimentoContrato.year)
+        if (mes_atual == mes_venc):
+            return True
+        else:
+            return False
 
 
     def __str__(self):

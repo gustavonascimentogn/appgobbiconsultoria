@@ -6,48 +6,48 @@
 <div class="row">
     <div class="col-md-3">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header" align="center"><h3>Clientes</h3></div>
+            <div class="card-header" align="center"><h4>Clientes cadastrados</h4></div>
             <div class="card-body">
                 <h3 class="card-title"><h1 align="center">{{   total_clientes   }}</h1></h3>
             </div>
             <div class="card-footer bg-transparent" align="center">
-                Total de cadastros
+                <a href="{% url 'list_clientes' %}">Total de cadastros realizados</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header" align="center"><h3>Sem serviços</h3></div>
+            <div class="card-header" align="center"><h4>Clientes sem contrato</h4></div>
             <div class="card-body">
                 <h3 class="card-title"><h1 align="center">{{   total_clientes_sem_pedidos   }}</h1></h3>
             </div>
             <div class="card-footer bg-transparent" align="center">
-                Total de clientes sem serviços
+                <a href="{% url 'list_clientes_semcontrato' %}">Total de clientes sem serviços prestados</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header" align="center"><h3>Vendas</h3></div>
+            <div class="card-header" align="center"><h4>Vendas realizadas</h4></div>
             <div class="card-body">
                 <h3 class="card-title"><h1 align="center">{{   total_pedidos   }} </h1></h3>
             </div>
             <div class="card-footer bg-transparent" align="center">
-                Total de serviços vendidos
+                <a href="{% url 'list_pedidos' %}">Total de contratos vendidos</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header" align="center"><h3>Campanhas</h3></div>
+            <div class="card-header" align="center"><h4>Contratos vencendo</h4></div>
             <div class="card-body">
-                <h3 class="card-title"><h1 align="center">{{  total_campanhas }}</h1></h3>
+                <h3 class="card-title"><h1 align="center">{{  total_contratos_vencendo }}</h1></h3>
             </div>
             <div class="card-footer bg-transparent" align="center">
-                Total de cadastros
+                <a href="{% url 'list_pedidos_vencendo' %}">Total de contratos vencendo neste mês</a>
             </div>
         </div>
     </div>

@@ -14,8 +14,18 @@ def home(request):
     data['total_campanhas'] = empresa.total_campanhas
     data['total_clientes_sem_pedidos'] = empresa.total_clientes_sem_pedido
 
+    ## Total de contratos cadastrados pela empresa
     clientes_da_empresa = Cliente.objects.filter(empresa=empresa)
     data['total_pedidos'] = Pedido.objects.filter(cliente__in=clientes_da_empresa).count()
+
+    ## total de contratos vencendo este mês
+    cont = 0
+    contratos = Pedido.objects.filter(cliente__in=clientes_da_empresa)
+    for pedido in contratos :
+        if pedido.contrato_vencendo_mes:
+            cont = cont + 1
+    data['total_contratos_vencendo'] = cont
+
 
     from django.contrib.sites.shortcuts import get_current_site
     ## request = None

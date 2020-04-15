@@ -3,6 +3,9 @@ from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Cliente
 
 ## Classe para listagem dos registros
+from ..empresas.models import Empresa
+
+
 class ClientesList(ListView):
     model = Cliente
     paginate_by = 20
@@ -11,6 +14,18 @@ class ClientesList(ListView):
     def get_queryset(self):
         empresa_logada = self.request.user.empregado.empresa
         return Cliente.objects.filter(empresa=empresa_logada).order_by('nome')
+
+## Classe para listagem dos registros
+class ClientesListSemContrato(ListView):
+    model = Cliente
+    paginate_by = 20
+
+    template_name = "clientes/cliente_list_semcontrato.html"
+
+    ## Listando somente clientes sem contrato da empresa do funcionario logado
+    def get_queryset(self):
+        empresa_logada = self.request.user.empregado.empresa
+        return Cliente.objects.filter(empresa=empresa_logada, pedido=None).order_by('nome')
 
 ## Classe para edição dos registros
 class ClienteEdit(UpdateView):
