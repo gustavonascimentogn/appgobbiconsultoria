@@ -39,7 +39,14 @@
        }
     </style>
 
-    <title>{% block title %}{{  request.user.empregado.empresa     }} - {{ request.user.empregado.nome }} {%  endblock %} </title>
+    <title>
+        {% block title %}
+            {%  if request.user.empregado.empresa %}
+                {{  request.user.empregado.empresa  }} - {{ request.user.empregado.nome }}
+            {%  else %}
+                Tabô - Gestão de serviços
+            {%  endif %}
+        {%  endblock %} </title>
 
     {{ form.media }}
 
