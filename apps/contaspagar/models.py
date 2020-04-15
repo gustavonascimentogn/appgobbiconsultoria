@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from apps.pedidos.models import Pedido
 from apps.planos_contas_grupos.models import PlanoContasGrupo
+from apps.vendedores.models import Vendedor
 
 
 class ContaPagar(models.Model):
@@ -16,6 +17,7 @@ class ContaPagar(models.Model):
 
         grupoConta = models.ForeignKey(PlanoContasGrupo, blank=False, null=False, on_delete=models.PROTECT, verbose_name='Lançar conta em qual grupo do Plano de Contas' )
         pedido = models.ForeignKey(Pedido, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Referente a qual pedido?')
+        vendedor = models.ForeignKey(Vendedor, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Referente a qual vendedor?')
 
         def __str__(self):
                 return 'Parcela '+ str(self.numParcela) + ' | Vencimento em ' + str(self.dataVencimento) + ' | Valor: ' + str(self.valor)

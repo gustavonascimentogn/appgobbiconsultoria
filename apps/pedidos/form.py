@@ -25,4 +25,3 @@ class PedidoForm(ModelForm):
             'dataVencimentoVendedor': DatePickerInput(format='%d/%m/%Y'),
         }
 
-

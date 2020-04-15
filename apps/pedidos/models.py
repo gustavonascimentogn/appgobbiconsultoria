@@ -14,12 +14,13 @@ class Pedido(models.Model):
     qtdParcelas = models.IntegerField(blank=False, verbose_name='Quantidade de cobranças a serem geradas (parcelamento)')
     dataVencimento = models.DateField(blank=False, editable=True, verbose_name='Data de vencimento da primeira cobrança', help_text='As demais cobranças serão provisionadas mensalmente, respeitando a quantidade de cobranças definida')
     valor = models.FloatField(blank=False, verbose_name='Insira o valor total do serviço contratado', help_text='O valor de cada vencimento (em caso de parcelamento) será calculado pelo sistema')
-    servico = models.ManyToManyField(Servico, blank=False, default=None, verbose_name='Serviços contratados')
+    dataVencimentoVendedor = models.DateField(blank=False, editable=True, verbose_name='Data para pagamento da primeira comissão do vendedor', help_text='As demais contas serão provisionadas mensalmente, respeitando o tempo de duração definido para o vendedor')
+    dataVencimentoContrato = models.DateField(blank=False, null=False, editable=True, verbose_name='Data de vencimento do contrato', help_text='O sistema utilizará o mês a ano indicado para alertá-lo do vencimento')
     cliente = models.ForeignKey(Cliente, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Cliente que contratou')
     status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Status do serviço contratado')
-    dataVencimentoVendedor = models.DateField(blank=False, editable=True, verbose_name='Data para pagamento da primeira comissão do vendedor', help_text='As demais contas serão provisionadas mensalmente, respeitando o tempo de duração definido para o vendedor')
-    vendedor = models.ForeignKey(Vendedor, blank=False, default=None, null=False, on_delete=models.PROTECT, verbose_name='Vendedor que realizou a venda')
-    dataVencimentoContrato = models.DateField(blank=False, null=False, editable=True, verbose_name='Data de vencimento do contrato', help_text='O sistema utilizará o mês a ano indicado para alertá-lo do vencimento')
+
+    servico = models.ManyToManyField(Servico, blank=False, default=None, verbose_name='Serviços contratados')
+    vendedor = models.ManyToManyField(Vendedor, blank=False, default=None, verbose_name='Vendedor que realizou a venda (para cálculo de comissão)')
 
 
     @property

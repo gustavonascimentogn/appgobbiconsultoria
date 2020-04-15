@@ -117,16 +117,14 @@ function filter(){
         <table class="table table-striped">
           <thead>
             <tr>
-              <th scope="col">Dt. Vencimento</th>
+              <th scope="col">Vencimento</th>
               <th scope="col">Cliente</th>
-              <th scope="col">Natureza</th>
-              <th scope="col">N. Parcela</th>
               <th scope="col">Descrição</th>
-              <th scope="col">Valor R$</th>
+              <th scope="col">Valor</th>
               <th scope="col">Pago?</th>
-              <th scope="col">R$ Pago</th>
-              <th scope="col">Dt. Pagamento</th>
-              <th scope="col">Dt. registro</th>
+              <th scope="col">R$.Pago</th>
+              <th scope="col">Dt.Pagamento</th>
+              <th scope="col">Dt.Cadastro</th>
               <th scope="col">#</th>
             </tr>
           </thead>
@@ -135,9 +133,7 @@ function filter(){
             <tr>
               <th scope="row">{{ conta.dataVencimento|date:'d/m/Y' }}</th>
               <td>{{ conta.pedido.cliente.nome }}</td>
-              <td>{{ conta.grupoConta.natureza }}</td>
-              <td>{{ conta.numParcelaComissao }}</td>
-              <td>{{ conta.descricaoConta }}</td>
+              <td>{% if conta.pedido %}Ped. {{ conta.pedido.pk }} - {% endif %}{{ conta.descricaoConta }}</td>
               <td>{{ conta.valor|floatformat:2 }}</td>
               <td>{% if conta.paga %}Sim{% else %}Não{% endif %}</td>
               <td>{% if conta.valorPago %} {{ conta.valorPago|floatformat:2}}{% else %}-{% endif %}</td>

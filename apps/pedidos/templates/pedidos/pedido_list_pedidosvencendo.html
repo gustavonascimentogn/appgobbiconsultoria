@@ -12,21 +12,18 @@
     <div class="row">
         {%  for pedido in object_list %}
         <div class="col-md-4">
-            {% if pedido.status.nome == 'Novo' %}
-                <div class="card text-white bg-info mb-3" >
-            {% elif pedido.status.nome == 'Finalizado' %}
-                <div class="card text-white bg-dark mb-3" >
-            {% else %}
-                <div class="card bg-light mb-3" >
-            {% endif %}
+                <div class="card text-white bg-danger mb-3">
+
                 <div class="card-header"><h5>{{ pedido.cliente.nome }} <br> Pedido.ID: {{ pedido.id }}</h5></div>
                 <div class="card-body">
                     <h5 class="card-title">Solicitado em {{ pedido.dataHoraCriacao|date:'d/m/Y' }}</h5>
                     <p class="card-text">
                         {{ pedido.cliente.nome }}<br>
-                        Vencimento do contrato: {{ dataVencimentoContrato|date:'d/m/Y' }}<br><br>
+                        Vencimento do contrato: {{ pedido.dataVencimentoContrato|date:'d/m/Y' }}<br><br>
                         <b>Vendidor por:</b><br>
-                        &nbsp;&nbsp;&nbsp;{{ pedido.vendedor.nome }}<br>
+                        {%  for vendedor in pedido.vendedor.all  %}
+                        &nbsp;&nbsp;&nbsp;{{ vendedor.nome }} - {{ vendedor.percentual_bonificacao }}%<br>
+                        {%  endfor %}
                         <b>Serviços contratados</b><br>
                         {%  for item in pedido.servico.all  %}
                             &nbsp;&nbsp;&nbsp;{{  item.nome  }}<br>
@@ -51,9 +48,9 @@
                                 <div class="card-header" style="font-size: small;">
                                 {% for parcela in pedido.contareceber_set.all  %}
                                     {%  if parcela.numParcela < 10 %}
-                                        Parcela 0{{ parcela.numParcela }}:
+                                        0{{ parcela.numParcela }}:
                                     {%  else %}
-                                        Parcela {{ parcela.numParcela }}:
+                                        {{ parcela.numParcela }}:
                                     {% endif %}
                                             {{ parcela.dataVencimento|date:'d/m/Y'  }} | R$ {{ parcela.valor|floatformat:2 }}
                                     {%  if parcela.paga %}
@@ -89,18 +86,19 @@
                                 <div class="card-header" style="font-size: small;">
                                 {% for comissao in pedido.contapagar_set.all  %}
                                     {%  if comissao.numParcelaComissao < 10 %}
-                                        Mês 0{{ comissao.numParcelaComissao }}:
+                                        0{{ comissao.numParcelaComissao }}
                                     {%  else %}
-                                        Mês {{ comissao.numParcelaComissao }}:
+                                        {{ comissao.numParcelaComissao }}
                                     {% endif %}
-                                            {{ comissao.dataVencimento|date:'d/m/Y'  }} | R$ {{ comissao.valor|floatformat:2 }}
+                                            {{ comissao.dataVencimento|date:'m/Y'  }} | R$ {{ comissao.valor|floatformat:2 }}
                                     {%  if comissao.paga %}
                                         <img src="{% static 'images/check.png'%}" alt="Editar" >
                                     {%  else %}
                                         <img src="{% static 'images/not.png'%}" alt="Editar" >
                                         <a href="{% url 'update_contapagar' comissao.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
                                     {%  endif%}
-
+                                    <br>
+                                    <b>{{ comissao.vendedor.nome }}</b>
                                     <br>
                                  {%  endfor  %}
                                 </div>

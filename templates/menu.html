@@ -25,9 +25,9 @@
           Cadastros
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'list_pedidos' %}">Registro de vendas / contratos</a>
           <a class="dropdown-item" href="{% url 'list_clientes' %}">Cadastro de clientes</a>
           <a class="dropdown-item" href="{% url 'list_vendedores' %}">Cadastro de vendedores</a>
-          <a class="dropdown-item" href="{% url 'list_pedidos' %}">Venda de serviços</a>
           <a class="dropdown-item" href="{% url 'list_campanhas' %}">Cadastro de campanhas</a>
         </div>
       </li>
@@ -45,13 +45,13 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Manutenção e configuração
         </a>
+        {% now "Y" as current_year %}
+        {% now "m" as current_month %}
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="{% url 'list_servicos' %}">Portifólio de serviços oferecidos</a>
-          <a class="dropdown-item" href="{% url 'list_plano_contas_grupos' %}">Plano de contas</a>
-          {% now "Y" as current_year %}
-          {% now "m" as current_month %}
           <a class="dropdown-item" href="{% url 'list_contaspagar' current_month current_year %}">Contas a pagar</a>
           <a class="dropdown-item" href="{% url 'list_contasreceber' current_month current_year %}">Contas a receber</a>
+          <a class="dropdown-item" href="{% url 'list_plano_contas_grupos' %}">Plano de contas</a>
+          <a class="dropdown-item" href="{% url 'list_servicos' %}">Portifólio de serviços oferecidos</a>
           <a class="dropdown-item" href="{% url 'list_tiposServicos' %}">Tipos de serviços oferecidos</a>
         </div>
       </li>

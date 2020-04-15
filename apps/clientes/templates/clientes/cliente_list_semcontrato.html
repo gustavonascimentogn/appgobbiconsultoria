@@ -4,13 +4,13 @@
 {% block main %}
 
     <p>
-        <h1>Clientes cadastrados</h1>
+        <h1>Clientes sem contratos</h1>
          <a href="{% url 'create_cliente' %}" class="btn btn-info">Cadastrar novo cliente</a>
     </p><br>
     <div class="row">
         {%  for cliente in object_list %}
         <div class="col-md-3">
-            <div class="card bg-light mb-3" >
+            <div class="card text-white bg-danger mb-3" >
                 <div class="card-header"><h5>{{ cliente.nome }} <br> Id.Cliente: {{ cliente.id }}</h5></div>
                 <div class="card-body">
                     <p class="card-text">

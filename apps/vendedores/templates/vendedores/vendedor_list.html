@@ -11,12 +11,13 @@
         {%  for vendedor in object_list %}
         <div class="col-md-4">
             <div class="card bg-light mb-4" >
-                <div class="card-header"><h5>{{ vendedor.nome }} (Id. {{ vendedor.id }}) </h5></div>
+                <div class="card-header"><h5>{{ vendedor.nome }}<br>(Id. {{ vendedor.id }}) </h5></div>
                 <div class="card-body">
                     <h5 class="card-title">{{ vendedor.razao_social }}</h5>
                     <p class="card-text">
                         Contato: <br>
                         <strong>{{ vendedor.nomeContato }}</strong> <br>
+                        Bonificação: {{ vendedor.percentual_bonificacao }} %
                         {{ vendedor.emailContato }}<br><br>
                         Qtd. vendas: {{ vendedor.qtd_total_pedidos }}<br>
                         Valor vendido: {{ vendedor.valor_total_pedidos }}

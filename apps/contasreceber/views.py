@@ -1,6 +1,8 @@
 from django.db.models.functions import datetime
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, CreateView, ListView
+
+from .form import ContaReceberForm
 from .models import ContaReceber
 from apps.planos_contas_grupos.models import PlanoContasGrupo
 from ..planos_contas.models import PlanoContas
@@ -26,7 +28,7 @@ class ContasReceberList(ListView):
 ## Classe para edição dos registros
 class ContaReceberEdit(UpdateView):
     model = ContaReceber
-    fields = ['numParcela','descricaoConta','dataVencimento','valor','paga','dataPagamento','valorPago']
+    form_class = ContaReceberForm
 
     def form_valid(self, form):
         parcela = form.save(commit=False)
@@ -45,9 +47,15 @@ class ContaReceberEdit(UpdateView):
         from django.shortcuts import redirect
         return redirect('list_pedidos')
 
+    ## Methodo para usar o arquivo form.py
+    def get_form_kwargs(self):
+        kwargs = super(ContaReceberEdit, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
+        kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
+        return kwargs
+
 class ContaReceberNovo(CreateView):
     model = ContaReceber
-    fields = ['descricaoConta','dataVencimento','valor','paga','dataPagamento','valorPago']
+    form_class = ContaReceberForm
 
     ## Sobrescrevendo o método form_valid para vincular o Cliente a empresa que o atende
     ## Ao final, chamo o método da super classe para prosseguir com a gravação
@@ -69,3 +77,9 @@ class ContaReceberNovo(CreateView):
         conta.save()
         from django.shortcuts import redirect
         return redirect('list_plano_contas_grupos')
+
+    ## Methodo para usar o arquivo form.py
+    def get_form_kwargs(self):
+        kwargs = super(ContaReceberNovo, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
+        kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
+        return kwargs

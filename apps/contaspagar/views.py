@@ -1,5 +1,7 @@
 from django.db.models.functions import datetime
 from django.views.generic import UpdateView, CreateView, ListView
+
+from .form import ContaPagarForm
 from .models import ContaPagar
 
 ## Classe para edição dos registros
@@ -37,7 +39,7 @@ class ContasPagarList(ListView):
 
 class ContaPagarEdit(UpdateView):
     model = ContaPagar
-    fields = ['numParcelaComissao','descricaoConta','dataVencimento','valor','paga','dataPagamento','valorPago']
+    form_class = ContaPagarForm
 
     def form_valid(self, form):
         comissaoN = form.save(commit=False)
@@ -54,9 +56,15 @@ class ContaPagarEdit(UpdateView):
         from django.shortcuts import redirect
         return redirect('list_pedidos')
 
+    ## Methodo para usar o arquivo form.py
+    def get_form_kwargs(self):
+        kwargs = super(ContaPagarEdit, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
+        kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
+        return kwargs
+
 class ContaPagarNovo(CreateView):
     model = ContaPagar
-    fields = ['descricaoConta','dataVencimento','valor','paga','dataPagamento','valorPago']
+    form_class = ContaPagarForm
 
     ## Sobrescrevendo o método form_valid para vincular o Cliente a empresa que o atende
     ## Ao final, chamo o método da super classe para prosseguir com a gravação
@@ -78,3 +86,9 @@ class ContaPagarNovo(CreateView):
         conta.save()
         from django.shortcuts import redirect
         return redirect('list_plano_contas_grupos')
+
+    ## Methodo para usar o arquivo form.py
+    def get_form_kwargs(self):
+        kwargs = super(ContaPagarNovo, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
+        kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
+        return kwargs
