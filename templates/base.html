@@ -39,7 +39,7 @@
        }
     </style>
 
-    <title>{% block title %}{{  request.user.empregado.empresa     }} {%  endblock %} </title>
+    <title>{% block title %}{{  request.user.empregado.empresa     }} - {{ request.user.empregado.nome }} {%  endblock %} </title>
 
     {{ form.media }}
 
