@@ -44,6 +44,25 @@ class PedidosListVencendo(ListView):
 
         return result_list
 
+class PedidosListAtivos(ListView):
+    model = Pedido
+    paginate_by = 20
+
+    template_name = "pedidos/pedido_list_pedidosativos.html"
+
+    ## Listando somente clientes da empresa do funcionario logado
+    def get_queryset(self):
+        empresa_logada = self.request.user.empregado.empresa
+        clientes_da_empresa = Cliente.objects.filter(empresa=empresa_logada)
+        pedidos_empresa = Pedido.objects.filter(cliente__in=clientes_da_empresa).order_by('status__id','-pk')
+
+        result_list = []
+        for pedido in pedidos_empresa :
+            if pedido.contrato_ativo :
+                result_list.append(pedido)
+
+        return result_list
+
 
 ## Classe para edição dos registros
 class PedidoEdit(UpdateView):

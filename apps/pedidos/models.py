@@ -47,6 +47,17 @@ class Pedido(models.Model):
         else:
             return False
 
+    @property
+    def contrato_ativo(self):
+        mes_atual = timezone.now().month
+        ano_atual = timezone.now().year
+        mes_venc = self.dataVencimentoContrato.month
+        ano_venc = self.dataVencimentoContrato.year
+        if (ano_atual <= ano_venc) and (mes_atual <= mes_venc):
+            return True
+        else:
+            return False
+
 
     def __str__(self):
         return self.cliente.nome + ' | Em: ' + str(self.dataHoraCriacao.strftime('%d-%m-%Y  ')) + ' | Parcelas: ' + str(self.qtdParcelas) + ' x  R$ ' + str(self.valor/self.qtdParcelas)

@@ -16,7 +16,14 @@ def home(request):
 
     ## Total de contratos cadastrados pela empresa
     clientes_da_empresa = Cliente.objects.filter(empresa=empresa)
-    data['total_pedidos'] = Pedido.objects.filter(cliente__in=clientes_da_empresa).count()
+
+    ## total de contratos ativos
+    cont = 0
+    contratos = Pedido.objects.filter(cliente__in=clientes_da_empresa)
+    for pedido in contratos :
+        if pedido.contrato_ativo:
+            cont = cont + 1
+    data['total_contratos_ativos'] = cont
 
     ## total de contratos vencendo este mês
     cont = 0

@@ -4,7 +4,7 @@
 {% block main %}
 
     <p>
-        <h1>Contratos</h1>
+        <h1>Contratos ativos</h1>
         <a href="{% url 'create_pedido' %}" class="btn btn-info">Cadastrar nova venda</a>
     </p><br>
 
@@ -12,34 +12,21 @@
     <div class="row">
         {%  for pedido in object_list %}
         <div class="col-md-4">
-            {% if not pedido.contrato_ativo %}
-                <div class="card text-white bg-danger mb-3">
-            {% elif pedido.status.nome == 'novo' %}
-                <div class="card text-white bg-info mb-3">
-            {% elif pedido.status.nome == 'Finalizado' %}
-                <div class="card text-white bg-dark mb-3">
-            {% else %}
-                <div class="card bg-light mb-3" >
-            {% endif %}
+                <div class="card text-white bg-success mb-3">
+
                 <div class="card-header"><h5>{{ pedido.cliente.nome }} <br> Pedido.ID: {{ pedido.id }}</h5></div>
                 <div class="card-body">
                     <h5 class="card-title">Solicitado em {{ pedido.dataHoraCriacao|date:'d/m/Y' }}</h5>
                     <p class="card-text">
                         {{ pedido.cliente.nome }}<br>
-                        Vencimento do contrato:
-                        {%  if not pedido.contrato_ativo %}
-                            <a class="text-white bg-primary">{{ pedido.dataVencimentoContrato|date:'d/m/Y' }}</a>
-                        {%  else %}
-                            {{ pedido.dataVencimentoContrato|date:'d/m/Y' }}
-                        {%  endif %}
-                        <br><br>
+                        Vencimento do contrato: {{ pedido.dataVencimentoContrato|date:'d/m/Y' }}<br><br>
                         <b>Vendedor:</b><br>
                         {%  for vendedor in pedido.vendedor.all  %}
                         &nbsp;&nbsp;&nbsp;{{ vendedor.nome }} - {{ vendedor.percentual_bonificacao }}%<br>
                         {%  endfor %}
                         <b>Serviços contratados</b><br>
-                        {%  for servico in pedido.servico.all  %}
-                            &nbsp;&nbsp;&nbsp;{{  servico.nome  }}<br>
+                        {%  for item in pedido.servico.all  %}
+                            &nbsp;&nbsp;&nbsp;{{  item.nome  }}<br>
                         {%  endfor  %}<br>
                         Movimentações: {{ pedido.total_andamentos }}<br>
                         Status: {{ pedido.status }}</b>
@@ -88,7 +75,7 @@
                         <div class="card-header" id="headingTwo{{ pedido.id }}">
                           <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOneComissao{{ pedido.id }}" aria-expanded="false" aria-controls="collapseOneComissao{{ pedido.id }}">
-                              Comissão R$ {{ pedido.total_comissao|floatformat:2 }}<br>
+                              Comissão R$ {{ pedido.total_comissao|floatformat:2 }} ({{ pedido.vendedor.duracao_em_meses }}x)<br>
 
                             </button>
                           </h5>
