@@ -9,5 +9,8 @@ class Arquivo(models.Model):
 
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT, verbose_name='Cliente')
 
+    class Meta:
+        ordering = ["nome"]
+
     def __str__(self):
         return self.nome

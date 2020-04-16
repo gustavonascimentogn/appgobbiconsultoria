@@ -27,10 +27,10 @@ class Cliente(models.Model):
         campanha = models.ManyToManyField(Campanha, blank=True, verbose_name='Campanhas que recebeu via sistema')
 
         class Meta:
-            ## db_table = 'app_version'
-            constraints = [
-                models.UniqueConstraint(fields=['cpf_cnpj', 'empresa'], name='unique_cpf_por_empresa')
-            ]
+                constraints = [
+                        models.UniqueConstraint(fields=['cpf_cnpj', 'empresa'], name='unique_cpf_por_empresa')
+                ]
+                ordering = ["nome"]
 
         def __str__(self):
                 return self.nome

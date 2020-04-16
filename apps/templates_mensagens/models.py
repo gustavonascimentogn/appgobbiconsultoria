@@ -24,6 +24,8 @@ class Template_mensagem(models.Model):
 
     empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT)
 
+    class Meta:
+        ordering = ["dataHoraCriacao"]
 
     def __str__(self):
         return 'Tipo: ' + self.tipo + ' | ' + self.texto

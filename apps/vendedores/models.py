@@ -22,6 +22,8 @@ class Vendedor(models.Model):
         empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Empresa a qual pertence')
         cliente = models.ForeignKey(Cliente, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Vendedor é um cliente? Selecione o cliente, para que a comissão seja abatida dos próximos pagamentos')
 
+        class Meta:
+                ordering = ["nome"]
 
         def __str__(self):
                 return self.nome + ' (Contato: ' + self.nomeContato + ' - ' + str(self.percentual_bonificacao) + '%)'

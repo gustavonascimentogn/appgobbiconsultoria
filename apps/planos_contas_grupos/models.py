@@ -19,6 +19,9 @@ class PlanoContasGrupo(models.Model):
 		grupoPai = models.ForeignKey('self', blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Selecione o grupo ao qual pertence (grupo pai)')
 		planoContas = models.ForeignKey(PlanoContas, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Selecione o plano de contas ao qual pertence')
 
+		class Meta:
+			ordering = ["nome"]
+
 		def __str__(self):
 			if self.grupoPai:
 				return 'ID: ' + str(self.pk) + ' | ' + self.grupoPai.nome + ' >> ' + self.nome

@@ -9,5 +9,8 @@ class PlanoContas(models.Model):
 
 		empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Empresa a qual pertence o Plano de Contas')
 
+		class Meta:
+			ordering = ["nome"]
+
 		def __str__(self):
 			return self.nome

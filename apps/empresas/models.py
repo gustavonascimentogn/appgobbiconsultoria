@@ -21,6 +21,9 @@ class Empresa(models.Model):
     parcela_nome_plano_contas_grupo = models.CharField(max_length=50, blank='False',null=False, default='4.1.1.001 – Venda de Serviços', verbose_name='Nome do grupo de contas (credoras), no Plano de Contas, onde as parcelas devem ser lançadas')
     comissao_nome_plano_contas_grupo = models.CharField(max_length=50, blank='False',null=False, default='3.3.1.001 - Comissões sobre Vendas', verbose_name='Nome do grupo de contas (devedoras), no Plano de Contas, onde as comissões devem ser lançadas')
 
+    class Meta:
+        ordering = ["nomeFantasia"]
+
     def __str__(self):
         return self.nomeFantasia
 

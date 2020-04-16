@@ -7,5 +7,8 @@ class Empregado(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT, null=False, blank=False, verbose_name='User')
     empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT, null=False, blank=False, verbose_name='Empresa ao qual pertence')
 
+    class Meta:
+        ordering = ["nome"]
+
     def __str__(self):
         return self.nome

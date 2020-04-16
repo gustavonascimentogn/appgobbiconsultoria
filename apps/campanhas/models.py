@@ -11,5 +11,9 @@ class Campanha(models.Model):
     empresa = models.ForeignKey(Empresa, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Empresa')
     texto_campanha = models.CharField(max_length=140, blank=True, null=True, verbose_name='Texto da campanha (em até 140 caracteres)')
 
+    class Meta:
+        ordering = ["dataHoraAtivacao"]
+
+
     def __str__(self):
         return self.nome

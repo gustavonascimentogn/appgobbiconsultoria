@@ -11,6 +11,9 @@ class Solicitacao(models.Model):
 
     cliente = models.ForeignKey(Cliente, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Cliente que fez a solicitação')
 
+    class Meta:
+        ordering = ["dataHoraCriacao"]
+
     @property
     def total_andamentos(self):
         return self.andamento_set.all().count()

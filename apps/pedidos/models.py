@@ -22,6 +22,8 @@ class Pedido(models.Model):
     servico = models.ManyToManyField(Servico, blank=False, default=None, verbose_name='Serviços contratados')
     vendedor = models.ManyToManyField(Vendedor, blank=False, default=None, verbose_name='Vendedor que realizou a venda (para cálculo de comissão)')
 
+    class Meta:
+        ordering = ["dataHoraCriacao"]
 
     @property
     def total_andamentos(self):

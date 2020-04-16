@@ -12,3 +12,6 @@ class Andamento(models.Model):
     status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Status')
     pedido = models.ForeignKey(Pedido, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Pedido relacionado')
     solicitacao = models.ForeignKey(Solicitacao, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Descreva a solicitação')
+
+    class Meta:
+        ordering = ["dataHoraCriacao"]

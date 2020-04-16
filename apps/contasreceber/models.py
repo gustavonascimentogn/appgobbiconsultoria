@@ -18,6 +18,9 @@ class ContaReceber(models.Model):
         grupoConta = models.ForeignKey(PlanoContasGrupo, blank=False, null=False, on_delete=models.PROTECT, verbose_name='Lançar conta em qual grupo do Plano de Contas' )
         pedido = models.ForeignKey(Pedido, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Referente a qual pedido?')
 
+        class Meta:
+                ordering = ["dataVencimento"]
+
         def __str__(self):
                 return 'Parcela '+ str(self.numParcela) + ' | Vencimento em ' + str(self.dataVencimento) + ' | Valor: ' + str(self.valor)
 
