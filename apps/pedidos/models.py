@@ -53,8 +53,13 @@ class Pedido(models.Model):
         ano_atual = timezone.now().year
         mes_venc = self.dataVencimentoContrato.month
         ano_venc = self.dataVencimentoContrato.year
-        if (ano_atual <= ano_venc) and (mes_atual <= mes_venc):
-            return True
+        if (ano_atual <= ano_venc):
+             return True
+        elif (ano_atual == ano_venc):
+            if (mes_atual <= mes_venc):
+                return True
+            else:
+                return False
         else:
             return False
 
