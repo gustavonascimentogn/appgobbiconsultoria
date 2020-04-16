@@ -121,24 +121,25 @@ class PedidoEdit(UpdateView):
         vendedores = self.request.POST.getlist('vendedor')
         for item in vendedores:
             vendedor = Vendedor.objects.get(pk = item)
-            insert_list_comissao = []
-            qtd_comissoes_pagas = ContaPagar.objects.filter(pedido=pedidoN, paga=True).count()
-            ## vendedor = Vendedor.objects.get(pk=pedidoN.vendedor.pk)
-            duracao_em_meses = vendedor.duracao_em_meses
-            empresa_logada = self.request.user.empregado.empresa
-            plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
-            grupo_contas_pagar = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado,nome=empresa_logada.comissao_nome_plano_contas_grupo,ativo=True)
+            if vendedor.percentual_bonificacao > 0:
+                insert_list_comissao = []
+                qtd_comissoes_pagas = ContaPagar.objects.filter(pedido=pedidoN, paga=True).count()
+                ## vendedor = Vendedor.objects.get(pk=pedidoN.vendedor.pk)
+                duracao_em_meses = vendedor.duracao_em_meses
+                empresa_logada = self.request.user.empregado.empresa
+                plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
+                grupo_contas_pagar = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado,nome=empresa_logada.comissao_nome_plano_contas_grupo,ativo=True)
 
-            for i in range(1+qtd_comissoes_pagas, duracao_em_meses+1):
-                day = pedidoN.dataVencimento.day
-                nova_data_vencimento = pedidoN.dataVencimentoVendedor + timedelta(days=((i-1)*31))
-                nova_data_vencimento = datetime(nova_data_vencimento.year, nova_data_vencimento.month, day)
-                ##nova_data_vencimento = pedidoN.dataVencimentoVendedor + relativedelta(months=1)
-                insert_list_comissao.append(ContaPagar(numParcela=i, dataVencimento=nova_data_vencimento,
-                                                       valor=(pedidoN.valor / pedidoN.qtdParcelas) * (vendedor.percentual_bonificacao / 100),
-                                                       pedido=pedidoN, grupoConta = grupo_contas_pagar, vendedor=vendedor, descricaoConta='Parcela ' + str(i) + '/' + str(duracao_em_meses)))
+                for i in range(1+qtd_comissoes_pagas, duracao_em_meses+1):
+                    day = pedidoN.dataVencimentoVendedor.day
+                    nova_data_vencimento = pedidoN.dataVencimentoVendedor + timedelta(days=((i-1)*31))
+                    nova_data_vencimento = datetime(nova_data_vencimento.year, nova_data_vencimento.month, day)
+                    ##nova_data_vencimento = pedidoN.dataVencimentoVendedor + relativedelta(months=1)
+                    insert_list_comissao.append(ContaPagar(numParcela=i, dataVencimento=nova_data_vencimento,
+                                                           valor=(pedidoN.valor / pedidoN.qtdParcelas) * (vendedor.percentual_bonificacao / 100),
+                                                           pedido=pedidoN, grupoConta = grupo_contas_pagar, vendedor=vendedor, descricaoConta='Parcela ' + str(i) + '/' + str(duracao_em_meses)))
 
-            ContaPagar.objects.bulk_create(insert_list_comissao)
+                ContaPagar.objects.bulk_create(insert_list_comissao)
 
         from django.shortcuts import redirect
         return redirect('list_pedidos')
@@ -170,7 +171,10 @@ class PedidoNovo(CreateView):
         plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
         grupo_contas_receber = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado, nome=empresa_logada.parcela_nome_plano_contas_grupo, ativo=True)
         for i in range(1, pedidoN.qtdParcelas+1):
+            #nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
+            day = pedidoN.dataVencimento.day
             nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
+            nova_data_vencimento = datetime(nova_data_vencimento.year, nova_data_vencimento.month, day)
             insert_list.append(ContaReceber(numParcela=i, dataVencimento=nova_data_vencimento,
                                             valor=pedidoN.valor / pedidoN.qtdParcelas,
                                             pedido=pedidoN, grupoConta=grupo_contas_receber, descricaoConta='Parcela ' + str(i) + '/' + str(pedidoN.qtdParcelas)))
@@ -181,18 +185,22 @@ class PedidoNovo(CreateView):
         vendedores = self.request.POST.getlist('vendedor')
         for item in vendedores:
             vendedor = Vendedor.objects.get(pk = item)
-            insert_list_comissao = []
-            duracao_em_meses = vendedor.duracao_em_meses
-            empresa_logada = self.request.user.empregado.empresa
-            plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
-            grupo_contas_pagar = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado, nome=empresa_logada.comissao_nome_plano_contas_grupo)
-            for i in range(1, duracao_em_meses+1):
-                nova_data_vencimento = pedidoN.dataVencimentoVendedor + timedelta(days=((i-1)*31))
-                insert_list_comissao.append(ContaPagar(numParcela=i, dataVencimento=nova_data_vencimento,
-                                                       valor=(pedidoN.valor / pedidoN.qtdParcelas) * (vendedor.percentual_bonificacao / 100),
-                                                       pedido=pedidoN, grupoConta = grupo_contas_pagar, vendedor=vendedor, descricaoConta='Parcela ' + str(i) + '/' + str(duracao_em_meses)))
+            if vendedor.percentual_bonificacao > 0:
+                insert_list_comissao = []
+                duracao_em_meses = vendedor.duracao_em_meses
+                empresa_logada = self.request.user.empregado.empresa
+                plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
+                grupo_contas_pagar = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado, nome=empresa_logada.comissao_nome_plano_contas_grupo)
+                for i in range(1, duracao_em_meses+1):
+                    #nova_data_vencimento = pedidoN.dataVencimentoVendedor + timedelta(days=((i-1)*31))
+                    day = pedidoN.dataVencimentoVendedor.day
+                    nova_data_vencimento = pedidoN.dataVencimentoVendedor + timedelta(days=((i-1)*31))
+                    nova_data_vencimento = datetime(nova_data_vencimento.year, nova_data_vencimento.month, day)
+                    insert_list_comissao.append(ContaPagar(numParcela=i, dataVencimento=nova_data_vencimento,
+                                                           valor=(pedidoN.valor / pedidoN.qtdParcelas) * (vendedor.percentual_bonificacao / 100),
+                                                           pedido=pedidoN, grupoConta = grupo_contas_pagar, vendedor=vendedor, descricaoConta='Parcela ' + str(i) + '/' + str(duracao_em_meses)))
 
-            ContaPagar.objects.bulk_create(insert_list_comissao)
+                ContaPagar.objects.bulk_create(insert_list_comissao)
 
         ## return super(PedidoNovo, self).form_valid(form)
         ## substituindo a chamada a superclasse, pois o get_absolute_url nao estava funcionando
