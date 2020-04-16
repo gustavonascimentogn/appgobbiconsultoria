@@ -22,19 +22,8 @@ class ContasPagarList(ListView):
         contas_pagar = ContaPagar.objects.filter(grupoConta__in=planoContasGrupo,dataVencimento__year=ano,
                                                  dataVencimento__month=mes).order_by('pedido__cliente__nome','dataVencimento',
                                                                                      'dataHoraCriacao')
-        #contas_receber = ContaReceber.objects.filter(grupoConta__in=planoContasGrupo,dataVencimento__year=ano,
-        #                                         dataVencimento__month=mes).order_by('pedido__cliente__nome','dataVencimento',
-        #                                                                             'dataHoraCriacao')
 
-        #contas_pagar.values_list('pedido','grupoConta','numParcela','descricaoConta','valor','paga','valorPago',
-        #                   'dataPagamento','dataHoraCriacao')\
-        #    .union(contas_receber.values_list('pedido','grupoConta','numParcela','descricaoConta','valor','paga','valorPago',
-        #                  'dataPagamento','dataHoraCriacao'), all=True)
-
-        # contas = ContaPagar.objects.none()
-        # contas.union(contas_pagar, contas_receber, all=True)
-        return contas_pagar ##ContaPagar.objects.filter(grupoConta__in=planoContasGrupo,dataVencimento__year=ano,dataVencimento__month=mes).order_by('pedido__cliente__nome','dataVencimento','dataHoraCriacao')
-
+        return contas_pagar
 
 
 class ContaPagarEdit(UpdateView):

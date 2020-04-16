@@ -1,4 +1,5 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
+from dateutil.relativedelta import relativedelta
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Pedido
@@ -105,11 +106,13 @@ class PedidoEdit(UpdateView):
         grupo_contas_receber = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado,nome=empresa_logada.parcela_nome_plano_contas_grupo)
 
         for i in range(1+qtd_parcelas_pagas, pedidoN.qtdParcelas+1):
+            day = pedidoN.dataVencimento.day
             nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
+            nova_data_vencimento = datetime(nova_data_vencimento.year, nova_data_vencimento.month, day)
+            #nova_data_vencimento = pedidoN.dataVencimento + relativedelta(months=1)
             insert_list.append(ContaReceber(numParcela=i, dataVencimento=nova_data_vencimento, valor=pedidoN.valor / pedidoN.qtdParcelas,
                                             pedido=pedidoN, descricaoConta='Parcela ' + str(i) + '/' + str(pedidoN.qtdParcelas), grupoConta=grupo_contas_receber))
         ContaReceber.objects.bulk_create(insert_list)
-
 
         ## deletando comissoes nao pagas
         ContaPagar.objects.filter(pedido=pedidoN, paga=False).delete()
@@ -127,7 +130,10 @@ class PedidoEdit(UpdateView):
             grupo_contas_pagar = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado,nome=empresa_logada.comissao_nome_plano_contas_grupo,ativo=True)
 
             for i in range(1+qtd_comissoes_pagas, duracao_em_meses+1):
+                day = pedidoN.dataVencimento.day
                 nova_data_vencimento = pedidoN.dataVencimentoVendedor + timedelta(days=((i-1)*31))
+                nova_data_vencimento = datetime(nova_data_vencimento.year, nova_data_vencimento.month, day)
+                ##nova_data_vencimento = pedidoN.dataVencimentoVendedor + relativedelta(months=1)
                 insert_list_comissao.append(ContaPagar(numParcela=i, dataVencimento=nova_data_vencimento,
                                                        valor=(pedidoN.valor / pedidoN.qtdParcelas) * (vendedor.percentual_bonificacao / 100),
                                                        pedido=pedidoN, grupoConta = grupo_contas_pagar, vendedor=vendedor, descricaoConta='Parcela ' + str(i) + '/' + str(duracao_em_meses)))
