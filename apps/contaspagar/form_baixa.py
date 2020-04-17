@@ -1,16 +1,16 @@
 from django.forms import ModelForm
-from .models import ContaReceber
+from .models import ContaPagar
 from bootstrap_datepicker_plus import DatePickerInput
 
 
-class ContaReceberForm(ModelForm):
+class ContaPagarFormBaixa(ModelForm):
 
     def __init__(self, user, *args, **kwargs):
-        super(ContaReceberForm, self).__init__(*args, **kwargs)
+        super(ContaPagarFormBaixa, self).__init__(*args, **kwargs)
 
     class Meta:
-        model = ContaReceber
-        fields = ['numParcela','descricaoConta','dataVencimento','valor','paga','dataPagamento','valorPago','arquivo']
+        model = ContaPagar
+        fields = ['numParcela','descricaoConta','dataVencimento','valor','paga','dataPagamento','valorPago']
         widgets = {
             'dataVencimento': DatePickerInput(format='%d/%m/%Y'),
             'dataPagamento': DatePickerInput(format='%d/%m/%Y'),

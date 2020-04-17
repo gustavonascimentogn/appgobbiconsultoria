@@ -139,7 +139,8 @@ function filter(){
               <td>{% if conta.valorPago %} {{ conta.valorPago|floatformat:2}}{% else %}-{% endif %}</td>
               <td>{% if conta.dataPagamento %} {{ conta.dataPagamento|date:'d/m/Y' }}{% else %}-{% endif %}</td>
               <td>{{ conta.dataHoraCriacao|date:'d/m/Y' }}</td>
-              <td>{% if conta.paga %}
+              <td>
+                  {% if conta.paga %}
                         {% if conta.valorPago  %}
                             {% if conta.dataPagamento %}
                                 <img src="{% static 'images/check.png'%}" alt="Editar">

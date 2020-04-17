@@ -2,6 +2,7 @@ from django.db.models.functions import datetime
 from django.views.generic import UpdateView, CreateView, ListView
 
 from .form import ContaPagarForm
+from .form_baixa import ContaPagarFormBaixa
 from .models import ContaPagar
 
 ## Classe para edição dos registros
@@ -48,6 +49,33 @@ class ContaPagarEdit(UpdateView):
     ## Methodo para usar o arquivo form.py
     def get_form_kwargs(self):
         kwargs = super(ContaPagarEdit, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
+        kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
+        return kwargs
+
+class ContaPagarEditBaixa(UpdateView):
+    model = ContaPagar
+    form_class = ContaPagarFormBaixa
+
+    template_name = "contaspagar/contapagar_form_baixa.html"
+
+    def form_valid(self, form):
+        comissaoN = form.save(commit=False)
+        if not comissaoN.valorPago == None:
+            comissaoN.paga = True
+            if comissaoN.dataPagamento == None:
+                comissaoN.dataPagamento = datetime.timezone.now()
+        else:
+            comissaoN.valorPago = None
+            comissaoN.dataPagamento = None
+            comissaoN.paga = False
+        comissaoN.save()
+
+        from django.shortcuts import redirect
+        return redirect('list_pedidos')
+
+    ## Methodo para usar o arquivo form.py
+    def get_form_kwargs(self):
+        kwargs = super(ContaPagarEditBaixa, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
         kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
         return kwargs
 

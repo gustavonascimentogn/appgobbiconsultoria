@@ -141,18 +141,19 @@ function filter(){
               <td>{% if contapagar.valorPago %} {{ contapagar.valorPago|floatformat:2}}{% else %}-{% endif %}</td>
               <td>{% if contapagar.dataPagamento %} {{ contapagar.dataPagamento|date:'d/m/Y' }}{% else %}-{% endif %}</td>
               <td>{{ contapagar.dataHoraCriacao|date:'d/m/Y' }}</td>
-              <td>{% if contapagar.paga %}
+              <td>
+                  {% if contapagar.paga %}
                         {% if contapagar.valorPago  %}
                             {% if contapagar.dataPagamento %}
                                 <img src="{% static 'images/check.png'%}" alt="Editar">
                             {% else %}
-                                <a href="{% url 'update_contapagar' contapagar.id %}" target="contapagar"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
+                                <a href="#" onclick="window.open('{% url 'update_contapagar' contapagar.id %}','contapagar');"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
                             {% endif %}
                         {% else %}
-                            <a href="{% url 'update_contapagar' contapagar.id %}" target="contapagar"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
+                            <a href="#" onclick="window.open('{% url 'update_contapagar' contapagar.id %}','contapagar');"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
                         {% endif %}
                   {% else %}
-                    <a href="{% url 'update_contapagar' contapagar.id %}" target="contapagar"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
+                    <a href="#" onclick="window.open('{% url 'update_contapagar' contapagar.id %}','contapagar');"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
                   {% endif %}</td>
             </tr>
            {% endfor %}

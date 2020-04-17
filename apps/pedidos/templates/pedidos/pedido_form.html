@@ -48,7 +48,7 @@
          {% endif %}
       <div class="card-body">
         <p class="card-text">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form|bootstrap }}
                 <div class="card-footer bg-transparent" align="center">

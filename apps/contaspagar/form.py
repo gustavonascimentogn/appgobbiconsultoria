@@ -10,7 +10,7 @@ class ContaPagarForm(ModelForm):
 
     class Meta:
         model = ContaPagar
-        fields = ['numParcela','descricaoConta','dataVencimento','valor','paga','dataPagamento','valorPago']
+        fields = ['numParcela','descricaoConta','dataVencimento','valor','paga','dataPagamento','valorPago','arquivo']
         widgets = {
             'dataVencimento': DatePickerInput(format='%d/%m/%Y'),
             'dataPagamento': DatePickerInput(format='%d/%m/%Y'),

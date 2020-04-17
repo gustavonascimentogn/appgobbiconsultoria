@@ -12,15 +12,19 @@ from apps.vendedores.models import Vendedor
 class Pedido(models.Model):
     dataHoraCriacao = models.DateTimeField(auto_now_add=True, editable=False, help_text='Captura automaticamente a data de criação', verbose_name='Data e hora de criação')
     qtdParcelas = models.IntegerField(blank=False, verbose_name='Quantidade de cobranças a serem geradas (parcelamento)')
-    dataVencimento = models.DateField(blank=False, editable=True, verbose_name='Data de vencimento da primeira cobrança', help_text='As demais cobranças serão provisionadas mensalmente, respeitando a quantidade de cobranças definida')
-    valor = models.FloatField(blank=False, verbose_name='Insira o valor total do serviço contratado', help_text='O valor de cada vencimento (em caso de parcelamento) será calculado pelo sistema')
-    dataVencimentoVendedor = models.DateField(blank=False, editable=True, verbose_name='Data para pagamento da primeira comissão do vendedor', help_text='As demais contas serão provisionadas mensalmente, respeitando o tempo de duração definido para o vendedor')
-    dataVencimentoContrato = models.DateField(blank=False, null=False, editable=True, verbose_name='Data de vencimento do contrato', help_text='O sistema utilizará o mês a ano indicado para alertá-lo do vencimento')
+    dataVencimento = models.DateField(blank=False, editable=True, verbose_name='Data de vencimento da primeira cobrança')
+    valor = models.FloatField(blank=True, null=True, verbose_name='Valor total do contrato', help_text='Caso preenchido, este campo será utilizado para calcular o valor de cada parcela do contrato')
+    valorParcela = models.FloatField(blank=True, verbose_name='Valor de cada parcela')
+    dataVencimentoVendedor = models.DateField(blank=False, editable=True, verbose_name='Data para pagamento da primeira comissão ao vendedor')
+    qtdParcelasComissao = models.IntegerField(blank=True, null=True, verbose_name='Quantidade de meses que será gerada comissão ao vendedor', help_text='Quando preenchido, este valor sobrepõe o valor informado do cadastro do vendedor')
+    percentualComissaoCadaVendedor = models.IntegerField(blank=True, null=True, verbose_name='Valor em % que será dada de comissão ao vendedor', help_text='Quando preenchido, este valor sobrepõe o valor informado do cadastro do vendedor')
+    dataVencimentoContrato = models.DateField(blank=False, null=False, editable=True, verbose_name='Data de vencimento do contrato')
     cliente = models.ForeignKey(Cliente, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Cliente que contratou')
     status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Status do serviço contratado')
+    arquivo = models.FileField(upload_to='documentos',verbose_name='Anexe o contrato', null=True, blank=True)
 
     servico = models.ManyToManyField(Servico, blank=False, default=None, verbose_name='Serviços contratados')
-    vendedor = models.ManyToManyField(Vendedor, blank=False, default=None, verbose_name='Vendedor que realizou a venda (para cálculo de comissão)')
+    vendedor = models.ManyToManyField(Vendedor, blank=False,  default=None, verbose_name='Vendedor que realizou a venda (para cálculo de comissão)')
 
     class Meta:
         ordering = ["dataHoraCriacao"]
