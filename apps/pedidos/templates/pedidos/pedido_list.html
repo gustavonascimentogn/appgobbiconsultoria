@@ -23,16 +23,15 @@
             {% endif %}
                 <div class="card-header"><h5>{{ pedido.cliente.nome }} <br> Pedido.ID: {{ pedido.id }}</h5></div>
                 <div class="card-body">
-                    <h5 class="card-title">Solicitado em {{ pedido.dataHoraCriacao|date:'d/m/Y' }}</h5>
-                    <p class="card-text">
-                        {{ pedido.cliente.nome }}<br>
+                    <h5 class="card-title">
                         Vencimento do contrato:
                         {%  if not pedido.contrato_ativo %}
                             <a class="text-white bg-primary">{{ pedido.dataVencimentoContrato|date:'d/m/Y' }}</a>
                         {%  else %}
                             {{ pedido.dataVencimentoContrato|date:'d/m/Y' }}
                         {%  endif %}
-                        <br><br>
+                    </h5>
+                    <p class="card-text">
                         <b>Vendedor:</b><br>
                         {%  for vendedor in pedido.vendedor.all  %}
                         &nbsp;&nbsp;&nbsp;{{ vendedor.nome }} - {{ vendedor.percentual_bonificacao }}%<br>
