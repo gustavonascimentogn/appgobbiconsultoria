@@ -60,6 +60,7 @@
                                             {{ parcela.dataVencimento|date:'d/m/Y'  }} | R$ {{ parcela.valor|floatformat:2 }}
                                     {%  if parcela.paga %}
                                         <img src="{% static 'images/check.png'%}" alt="Editar" >
+                                        <a onclick="window.open('{% url 'update_contareceber_documento' parcela.id %}','contapagar');"><img src="{% static 'images/document16px.png'%}" alt="Editar"></a>
                                     {%  else %}
                                         <img src="{% static 'images/not.png'%}" alt="Editar" >
                                         <a href="{% url 'update_contareceber' parcela.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
@@ -98,6 +99,7 @@
                                             {{ comissao.dataVencimento|date:'m/Y'  }} | R$ {{ comissao.valor|floatformat:2 }}
                                     {%  if comissao.paga %}
                                         <img src="{% static 'images/check.png'%}" alt="Editar" >
+                                        <a onclick="window.open('{% url 'update_contapagar_documento' comissao.id %}','contapagar');"><img src="{% static 'images/document16px.png'%}" alt="Editar"></a>
                                     {%  else %}
                                         <img src="{% static 'images/not.png'%}" alt="Editar" >
                                         <a href="{% url 'update_contapagar' comissao.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
