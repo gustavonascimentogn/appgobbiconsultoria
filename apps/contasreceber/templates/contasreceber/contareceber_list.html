@@ -140,6 +140,7 @@ function filter(){
               <td>{% if conta.dataPagamento %} {{ conta.dataPagamento|date:'d/m/Y' }}{% else %}-{% endif %}</td>
               <td>{{ conta.dataHoraCriacao|date:'d/m/Y' }}</td>
               <td>
+                  <a href="{% url 'update_contareceber_documento' conta.id %}" target="contapagar"><img src="{% static 'images/document16px.png'%}" alt="Editar"></a>
                   {% if conta.paga %}
                         {% if conta.valorPago  %}
                             {% if conta.dataPagamento %}

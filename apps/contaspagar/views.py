@@ -2,7 +2,7 @@ from django.db.models.functions import datetime
 from django.views.generic import UpdateView, CreateView, ListView
 
 from .form import ContaPagarForm
-from .form_baixa import ContaPagarFormBaixa
+from .form_documento import ContaPagarFormDocumento
 from .models import ContaPagar
 
 ## Classe para edição dos registros
@@ -52,30 +52,22 @@ class ContaPagarEdit(UpdateView):
         kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
         return kwargs
 
-class ContaPagarEditBaixa(UpdateView):
+class ContaPagarEditDocumento(UpdateView):
     model = ContaPagar
-    form_class = ContaPagarFormBaixa
+    form_class = ContaPagarFormDocumento
 
-    template_name = "contaspagar/contapagar_form_baixa.html"
+    template_name = "contaspagar/contapagar_form_documento.html"
 
     def form_valid(self, form):
         comissaoN = form.save(commit=False)
-        if not comissaoN.valorPago == None:
-            comissaoN.paga = True
-            if comissaoN.dataPagamento == None:
-                comissaoN.dataPagamento = datetime.timezone.now()
-        else:
-            comissaoN.valorPago = None
-            comissaoN.dataPagamento = None
-            comissaoN.paga = False
         comissaoN.save()
 
         from django.shortcuts import redirect
-        return redirect('list_pedidos')
+        return redirect('update_contapagar_documento',comissaoN.pk)
 
     ## Methodo para usar o arquivo form.py
     def get_form_kwargs(self):
-        kwargs = super(ContaPagarEditBaixa, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
+        kwargs = super(ContaPagarEditDocumento, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
         kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
         return kwargs
 

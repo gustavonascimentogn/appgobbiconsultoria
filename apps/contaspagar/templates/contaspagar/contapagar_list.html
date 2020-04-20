@@ -142,6 +142,7 @@ function filter(){
               <td>{% if contapagar.dataPagamento %} {{ contapagar.dataPagamento|date:'d/m/Y' }}{% else %}-{% endif %}</td>
               <td>{{ contapagar.dataHoraCriacao|date:'d/m/Y' }}</td>
               <td>
+                  <a href="#" onclick="window.open('{% url 'update_contapagar_documento' contapagar.id %}','contapagar');"><img src="{% static 'images/document16px.png'%}" alt="Editar"></a>
                   {% if contapagar.paga %}
                         {% if contapagar.valorPago  %}
                             {% if contapagar.dataPagamento %}

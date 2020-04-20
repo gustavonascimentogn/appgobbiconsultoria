@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView, CreateView, ListView
 
 from .form import ContaReceberForm
+from .form_documento import ContaReceberFormDocumento
 from .models import ContaReceber
 from apps.planos_contas_grupos.models import PlanoContasGrupo
 from ..planos_contas.models import PlanoContas
@@ -50,6 +51,27 @@ class ContaReceberEdit(UpdateView):
     ## Methodo para usar o arquivo form.py
     def get_form_kwargs(self):
         kwargs = super(ContaReceberEdit, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
+        kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
+        return kwargs
+
+
+
+class ContaReceberEditDocumento(UpdateView):
+    model = ContaReceber
+    form_class = ContaReceberFormDocumento
+
+    template_name = "contasreceber/contareceber_form_documento.html"
+
+    def form_valid(self, form):
+        parcela = form.save(commit=False)
+        parcela.save()
+
+        from django.shortcuts import redirect
+        return redirect('update_contareceber_documento',parcela.pk)
+
+    ## Methodo para usar o arquivo form.py
+    def get_form_kwargs(self):
+        kwargs = super(ContaReceberEditDocumento, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
         kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
         return kwargs
 
