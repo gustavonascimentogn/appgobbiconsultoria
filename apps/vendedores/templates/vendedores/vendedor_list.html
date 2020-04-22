@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block main %}
-<p>
+    <p>
         <h1>Vendedores cadastrados</h1>
         <a href="{% url 'create_vendedor' %}" class="btn btn-info">Cadastrar novo vendedor</a>
-    </p><br>
+    </p>
 
     <div class="row">
         {%  for vendedor in object_list %}
@@ -13,33 +12,34 @@
             <div class="card bg-light mb-4" >
                 <div class="card-header"><h5>{{ vendedor.nome }}<br>(Id. {{ vendedor.id }}) </h5></div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ vendedor.razao_social }}</h5>
+                    <!-- <h5 class="card-title">{{ vendedor.razao_social }}</h5> -->
                     <p class="card-text">
-                        Contato: <br>
+                        Contato <br>
                         <strong>{{ vendedor.nomeContato }}</strong> <br>
                         Bonificação: {{ vendedor.percentual_bonificacao }} %
-                        {{ vendedor.emailContato }}<br><br>
-                        Qtd. vendas: {{ vendedor.qtd_total_pedidos }}<br>
-                        Valor vendido: {{ vendedor.valor_total_pedidos }}
+                        {{ vendedor.emailContato }}<br>
+                        Qtd. contratos: {{ vendedor.qtd_total_pedidos }} (R$ {{ vendedor.valor_total_pedidos|floatformat:2 }})<br><br>
+                        Valor a receber em {{ view.kwargs.mes }}/{{ view.kwargs.ano }}: R$ {{ vendedor.valor_receber_mesatual|floatformat:2 }}<br>
+                        Valor a pagar &nbsp;em &nbsp;{{ view.kwargs.mes }}/{{ view.kwargs.ano }}: R$ {{ vendedor.valor_pagar_mesatual|floatformat:2 }}
                     </p>
                     <!-- Accordion -->
-                    <div id="accordionComissao{{ pedido.id }}">
+                    <div id="accordionComissao{{ vendedor.id }}">
                       <div class="card">
                         <div class="card-header" id="headingOne">
                           <h5 class="mb-0" align="center">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOneComissao{{ pedido.id }}" aria-expanded="false" aria-controls="collapseOneComissao{{ pedido.id }}">
-                                <div align="center">Pedidos e Comissões</div>
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOneComissao{{ vendedor.id }}" aria-expanded="false" aria-controls="collapseOneComissao{{ vendedor.id }}">
+                                <div align="center">Contratos</div>
                             </button>
                           </h5>
                         </div>
 
-                        <div id="collapseOneComissao{{ pedido.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordionComissao{{ pedido.id }}">
+                        <div id="collapseOneComissao{{ vendedor.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordionComissao{{ vendedor.id }}">
                             <div class="card text-white bg-secondary mb-3" >
                                 <div class="card-header" style="font-size: small;">
                                 {% for pedido in vendedor.pedido_set.all  %}
-                                    Pedido {{ pedido.id }} | R$ {{  pedido.valor|floatformat:2 }} <br>
-                                    Comissao: {{  pedido.total_comissao|floatformat:2   }} <br><br>
-                                 {%  endfor  %}
+                                    {{ pedido.cliente.nome }} (ID: {{ pedido.pk }}) | R$ {{  pedido.valor|floatformat:2 }} <br>
+                                    Válido até {{ pedido.dataVencimentoContrato|date:'d/m/Y' }}<br><br>
+                                {% endfor  %}
                                 </div>
                             </div>
                         </div>

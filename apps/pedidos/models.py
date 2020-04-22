@@ -1,5 +1,4 @@
-import datetime
-
+from datetime import datetime
 from django.db import models
 from django.utils import timezone
 
@@ -34,10 +33,6 @@ class Pedido(models.Model):
         return self.andamento_set.all().count()
 
     @property
-    def total_comissao(self):
-        return sum(comissao.valor for comissao in self.contapagar_set.all())
-
-    @property
     def contrato_vencido(self):
         if self.dataVencimentoContrato <= timezone.now():
             return True
@@ -68,6 +63,19 @@ class Pedido(models.Model):
                 return False
         else:
             return False
+
+    @property
+    def total_comissao(self):
+        return sum(contapagar.valor for contapagar in self.contapagar_set.all())
+
+    @property
+    def total_pagar_mesatual(self):
+        mes = datetime.now().month
+        ano = datetime.now().year
+        ## return sum(contapagar.valor for contapagar in self.contapagar_set.all())
+        return sum(contareceber.valor for contareceber in self.contareceber_set.
+                   filter(dataVencimento__year=ano,dataVencimento__month=mes))
+
 
 
     def __str__(self):

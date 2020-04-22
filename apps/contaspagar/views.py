@@ -22,7 +22,7 @@ class ContasPagarList(ListView):
         planoContasGrupo = PlanoContasGrupo.objects.filter(planoContas = planoContas, ativo = True)
         contas_pagar = ContaPagar.objects.filter(grupoConta__in=planoContasGrupo,dataVencimento__year=ano,
                                                  dataVencimento__month=mes)\
-            .order_by('vendedor__nome','pedido__cliente__nome','dataVencimento','dataHoraCriacao')
+            .order_by('dataVencimento','vendedor__nome','pedido__cliente__nome','dataHoraCriacao')
         return contas_pagar
 
 

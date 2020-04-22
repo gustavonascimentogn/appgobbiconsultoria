@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 
@@ -5,6 +7,11 @@ from .form import VendedorForm
 from .models import Vendedor
 
 ## Classe para listagem dos registros
+from ..contasreceber.models import ContaReceber
+from ..planos_contas.models import PlanoContas
+from ..planos_contas_grupos.models import PlanoContasGrupo
+
+
 class VendedoresList(ListView):
     model = Vendedor
     paginate_by = 20
@@ -12,6 +19,7 @@ class VendedoresList(ListView):
     ## Listando somente vendedores da empresa do funcionario logado
     def get_queryset(self):
         empresa_logada = self.request.user.empregado.empresa
+
         return Vendedor.objects.filter(empresa=empresa_logada)
 
 ## Classe para edição dos registros
@@ -23,8 +31,10 @@ class VendedorEdit(UpdateView):
         vendedor = form.save(commit=False)
         vendedor.save()
 
+        mes = datetime.now().month
+        ano = datetime.now().year
         from django.shortcuts import redirect
-        return redirect('list_vendedores')
+        return redirect('list_vendedores', mes, ano)
 
     ## Methodo para filtrar o campo "VENDEDOR", trazendo somente os status da empresa do user logado
     def get_form_kwargs(self):

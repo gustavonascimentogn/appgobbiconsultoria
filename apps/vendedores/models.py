@@ -1,8 +1,9 @@
+from datetime import datetime
 from django.db import models
 from django.db.models import Sum, Avg
-
 from apps.empresas.models import Empresa
 from apps.clientes.models import Cliente
+
 
 class Vendedor(models.Model):
         nome = models.CharField(max_length=100, blank=False, help_text='Quando for Empresa, digitar NomeFantasia', verbose_name='Nome completo')
@@ -36,10 +37,26 @@ class Vendedor(models.Model):
         def valor_total_pedidos(self):
                 return sum(pedido.valor for pedido in self.pedido_set.all())
 
+        @property
+        def valor_receber_mesatual(self):
+                mes = datetime.now().month
+                ano = datetime.now().year
+                return sum(contapagar.valor for contapagar in self.contapagar_set.
+                           filter(dataVencimento__year=ano,dataVencimento__month=mes))
 
+        ## Esta property é válida para o Vendedor que é também um cliente
+        @property
+        def valor_pagar_mesatual(self):
+                mes = datetime.now().month
+                ano = datetime.now().year
+                soma = 0
+                pedidos_vendedor = self.pedido_set.all()
+                pedidos_vendedor = pedidos_vendedor.filter(cliente=self.cliente) # retorna os pedidos que o vendedor também é cliente
+                for pedido in pedidos_vendedor:
+                    contas_receber = pedido.contareceber_set.filter(dataVencimento__year=ano,dataVencimento__month=mes)
+                    for conta in contas_receber:
+                            soma = soma + conta.valor
 
-
-
-
-
+                #return sum(contareceber.valor for contareceber in pedidos_vendedor.contareceber_set.filter(dataVencimento__year=ano,dataVencimento__month=mes))
+                return soma
 
