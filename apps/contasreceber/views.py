@@ -20,8 +20,8 @@ class ContasReceberList(ListView):
         planoContas = PlanoContas.objects.get(empresa=empresa_logada,ativo=True)
         planoContasGrupo = PlanoContasGrupo.objects.filter(planoContas = planoContas, ativo = True)
         contas_receber = ContaReceber.objects.filter(grupoConta__in=planoContasGrupo,dataVencimento__year=ano,
-                                                 dataVencimento__month=mes).order_by('pedido__cliente__nome','dataVencimento',
-                                                                                     'dataHoraCriacao')
+                                                 dataVencimento__month=mes)\
+            .order_by('dataVencimento','dataHoraCriacao')
 
         return contas_receber ##ContaPagar.objects.filter(grupoConta__in=planoContasGrupo,dataVencimento__year=ano,dataVencimento__month=mes).order_by('pedido__cliente__nome','dataVencimento','dataHoraCriacao')
 
