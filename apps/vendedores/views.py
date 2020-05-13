@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
@@ -44,7 +44,9 @@ class VendedorEdit(UpdateView):
 
 class VendedorDelete(DeleteView):
     model = Vendedor
-    success_url = reverse_lazy('list_vendedores')
+    mes = datetime.now().month
+    ano = datetime.now().year
+    success_url = reverse_lazy('list_vendedores', mes, ano)
 
 class VendedorNovo(CreateView):
     model = Vendedor
@@ -56,9 +58,11 @@ class VendedorNovo(CreateView):
         vendedor = form.save(commit=False)
         vendedor.empresa = self.request.user.empregado.empresa
         vendedor.save()
+        mes = datetime.now().month
+        ano = datetime.now().year
         #return super(CampanhaNovo, self).form_valid(form) ## substituindo a chamada a superclasse, pois o get_absolute_url nao estava funcionando
         from django.shortcuts import redirect
-        return redirect('list_vendedores')
+        return redirect('list_vendedores',mes, ano)
 
     ## Methodo para filtrar o campo "VENDEDOR", trazendo somente os status da empresa do user logado
     def get_form_kwargs(self):
