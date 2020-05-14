@@ -13,5 +13,9 @@ class Andamento(models.Model):
     pedido = models.ForeignKey(Pedido, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Pedido relacionado')
     solicitacao = models.ForeignKey(Solicitacao, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Descreva a solicitação')
 
+    @property
+    def servicos_pedido(self):
+        return self.pedido.servico_set.all()
+
     class Meta:
         ordering = ["dataHoraCriacao"]

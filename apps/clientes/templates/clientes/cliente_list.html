@@ -25,7 +25,7 @@
                         <div class="card-header" id="headingOne">
                           <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne{{ cliente.id }}" aria-expanded="false" aria-controls="collapseOne{{ cliente.id }}">
-                              Compras realizadas: {{  cliente.total_pedidos }} <br>
+                              Contratos ({{  cliente.total_pedidos }}) <br>
                             </button>
                           </h5>
                         </div>
@@ -35,15 +35,17 @@
                                 <div class="card-header" style="font-size: small;">
                                 {% for pedido in cliente.pedido_set.all  %}
                                     {%  if pedido.id < 10 %}
-                                        Pedido 0{{ pedido.id }}
+                                        Contrato 0{{ pedido.id }}
                                     {%  else %}
-                                        Pedido {{ pedido.id }}
+                                        Contrato {{ pedido.id }}
                                     {% endif %}
                                     <br>
                                     Feito em {{ pedido.dataHoraCriacao|date:'d/m/Y' }}<br>
                                     R$ {{ pedido.valor|floatformat:2  }} <br>
                                     Status: {{ pedido.status  }}
                                     <a href="{% url 'update_pedido' pedido.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="16px"></a>
+                                    <a href="{% url 'create_andamento' pedido.id 'pedido' pedido.cliente.phonewhatts %}"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>&nbsp;
+
                                     <br><br>
 
                                  {%  endfor  %}

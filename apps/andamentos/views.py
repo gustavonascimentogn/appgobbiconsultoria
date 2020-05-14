@@ -32,15 +32,15 @@ class AndamentoEdit(UpdateView):
             ##if (str(self.kwargs['origem']) == 'pedido'):
             if andamento.pedido:
                 emailContato = andamento.pedido.cliente.emailContato ## para quem vai a mensagem
-                message = 'Referente ao Pedido ' + str(andamento.pedido.pk) + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
-                html_message= 'Este e-mail refere-se ao Pedido <b>' + str(andamento.pedido.pk) + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
+                message = 'Referente ao Contrato/Serviço ' + str(andamento.pedido.pk) + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
+                html_message= 'Este e-mail refere-se ao Contrato/Serviço <b>' + str(andamento.pedido.pk) + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
             else: #elif (self.kwargs['origem'] is 'solicitacao'):
                 emailContato = andamento.solicitacao.cliente.emailContato ## para quem vai a mensagem
-                message = 'Referente a solicitação ' + andamento.solicitacao.solicitacao + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
-                html_message= 'Este e-mail refere-se a solicitação <b>' + andamento.solicitacao.solicitacao + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
-            email_from = settings.EMAIL_HOST_USER
+                message = 'Referente a Solicitação ' + andamento.solicitacao.solicitacao + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
+                html_message= 'Este e-mail refere-se a Solicitação <b>' + andamento.solicitacao.solicitacao + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
+            email_from = self.request.user.email #settings.EMAIL_HOST_USER
             recipient_list = [emailContato, email_from,]
-            send_mail( subject, message, email_from, recipient_list,html_message=html_message )
+            send_mail(subject, message, email_from, recipient_list,html_message=html_message )
 
         return redirect('list_andamentos')
 
@@ -78,9 +78,10 @@ class AndamentoNovo(CreateView):
                 emailContato = andamento.solicitacao.cliente.emailContato ## para quem vai a mensagem
                 message = 'Referente a solicitação ' + andamento.solicitacao.solicitacao + ' | Atualização de status: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
                 html_message= 'Este e-mail refere-se a solicitação <b>' + andamento.solicitacao.solicitacao + '</b><br>Atualização de status: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
-            email_from = settings.EMAIL_HOST_USER
+            email_from = self.request.user.email #settings.EMAIL_HOST_USER
             recipient_list = [emailContato, email_from,]
-            send_mail( subject, message, email_from, recipient_list,html_message=html_message)
+            ##send_mail(subject, message, from_email, recipient_list, fail_silently=False, auth_user=None, auth_password=None, connection=None, html_message=None)
+            send_mail( subject, message, email_from, recipient_list,html_message=html_message,auth_user=settings.EMAIL_HOST_USER, auth_password=settings.EMAIL_HOST_PASSWORD)
 
 
         if (str(self.kwargs['origem']) == 'pedido'):

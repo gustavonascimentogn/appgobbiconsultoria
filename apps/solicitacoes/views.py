@@ -46,6 +46,7 @@ class SolicitacaoNovo(CreateView):
     def form_valid(self, form):
         solicitacao = form.save(commit=False)
         solicitacao.save()
+
         ## return super(SolicitacaoNovo, self).form_valid(form)
         ## substituindo a chamada a superclasse, pois o get_absolute_url nao estava funcionando
         from django.shortcuts import redirect

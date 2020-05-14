@@ -11,7 +11,7 @@ class Empresa(models.Model):
     cep = models.CharField(max_length=9, blank=False, help_text='CEP da empresas, com traço', verbose_name='CEP')
     cidade = models.CharField(max_length=100, blank=False, help_text='Cidade sede da empresas', verbose_name='Cidade')
     estado = models.CharField(max_length=2, blank=False, help_text='UF da empresas', verbose_name='Estado')
-    email = models.CharField(max_length=100, blank=False, null=True, help_text='E-mail de contato da empresa',verbose_name='E-mail de contato')
+    email = models.EmailField(blank=False, null=True, help_text='E-mail de contato da empresa',verbose_name='E-mail de contato')
     logotipo = models.FileField(upload_to='logotipos', default='logotipos/tabo_EZScQUY.png', null=True, verbose_name='Anexe a logotipo para ser exibido no topo da página')
     inscricaoEstadual = models.CharField(max_length=50, blank=True, null=True, default='Isento', help_text='Caso seja isenta, preencha com a palavra "Isento"', verbose_name='Inscrição estadual')
     inscricaoMunicipal = models.CharField(max_length=50, blank=True, null=True, default='Isento', help_text='Caso seja isenta, preencha com a palavra "Isento"', verbose_name='Inscrição municipal')

@@ -10,7 +10,7 @@ class Vendedor(models.Model):
         razao_social = models.CharField(max_length=100, blank=True, null=True, verbose_name='Razão social')
         cpf_cnpj = models.CharField(max_length=50, blank=True, null=False , help_text='Incluindo pontos e traço.', verbose_name='CPF / CNPJ')
         nomeContato = models.CharField(max_length=100, blank=False, help_text='Nome da pessoa que será o contato principal', verbose_name='Nome da pessoa de contato')
-        emailContato = models.CharField(max_length=100, blank=False, help_text='E-mail que será utilizado nas comunicações', verbose_name='E-mail da pessoa de contato')
+        emailContato = models.EmailField(max_length=100, blank=False, help_text='E-mail que será utilizado nas comunicações', verbose_name='E-mail da pessoa de contato')
         cidade = models.CharField(max_length=100, blank=False, verbose_name='Cidade')
         estado = models.CharField(max_length=2, blank=False, verbose_name='Estado')
         endereco = models.CharField(max_length=100, blank=False, help_text='Endereço contendo Rua e Número', verbose_name='Endereço')

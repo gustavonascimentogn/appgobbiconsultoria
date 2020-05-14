@@ -1,5 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
+
+from .form import ClienteForm
 from .models import Cliente
 
 ## Classe para listagem dos registros
@@ -30,8 +32,7 @@ class ClientesListSemContrato(ListView):
 ## Classe para edição dos registros
 class ClienteEdit(UpdateView):
     model = Cliente
-    fields = ['nome','razao_social','cpf_cnpj','inscricaoMunicipal','inscricaoEstadual','nomeContato','emailContato','telefone','cidade','estado',
-              'endereco','complemento','bairro','cep','appPassword','appHabilitado']
+    form_class = ClienteForm
 
     def form_valid(self, form):
         cliente = form.save(commit=False)
@@ -46,8 +47,7 @@ class ClienteDelete(DeleteView):
 
 class ClienteNovo(CreateView):
     model = Cliente
-    fields = ['nome','razao_social','cpf_cnpj','inscricaoMunicipal','inscricaoEstadual','nomeContato','emailContato','telefone','cidade','estado',
-              'endereco','complemento','bairro','cep','appPassword','appHabilitado']
+    form_class = ClienteForm
 
     ## Sobrescrevendo o método form_valid para vincular o Cliente a empresa que o atende
     ## Ao final, chamo o método da super classe para prosseguir com a gravação

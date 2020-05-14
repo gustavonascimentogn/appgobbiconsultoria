@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django import forms
 from .models import Solicitacao
 from apps.clientes.models import Cliente
 
@@ -13,3 +14,6 @@ class SolicitacaoForm(ModelForm):
     class Meta:
         model = Solicitacao
         fields = ['cliente','solicitacao','atendida','fechada']
+        widgets = {
+          'solicitacao': forms.Textarea(attrs={'rows':4, 'cols':15}),
+        }
