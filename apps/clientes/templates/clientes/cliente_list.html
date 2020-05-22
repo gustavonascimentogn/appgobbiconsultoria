@@ -34,19 +34,25 @@
                             <div class="card text-white bg-secondary mb-3" >
                                 <div class="card-header" style="font-size: small;">
                                 {% for pedido in cliente.pedido_set.all  %}
+                                    <a href="{% url 'update_pedido' pedido.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="16px"></a>
+                                    <strong>
                                     {%  if pedido.id < 10 %}
                                         Contrato 0{{ pedido.id }}
                                     {%  else %}
                                         Contrato {{ pedido.id }}
                                     {% endif %}
+                                    </strong>
+
                                     <br>
                                     Feito em {{ pedido.dataHoraCriacao|date:'d/m/Y' }}<br>
                                     R$ {{ pedido.valor|floatformat:2  }} <br>
-                                    Status: {{ pedido.status  }}
-                                    <a href="{% url 'update_pedido' pedido.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="16px"></a>
-                                    <a href="{% url 'create_andamento' pedido.id 'pedido' pedido.cliente.phonewhatts %}"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>&nbsp;
-
-                                    <br><br>
+                                    Status: {{ pedido.status  }}<br>
+                                    <b>Serviços contratados</b><br>
+                                    {%  for servico in pedido.servico.all  %}
+                                            <a href="{% url 'create_andamento' pedido.id 'pedido' pedido.cliente.phonewhatts servico.id %}"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>
+                                        &nbsp;&nbsp;&nbsp;{{  servico.nome  }}<br>
+                                    {%  endfor  %}<br>
+                                    <br>
 
                                  {%  endfor  %}
                                 </div>

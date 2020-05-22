@@ -1,4 +1,6 @@
 from django.db import models
+
+from apps.servicos.models import Servico
 from apps.status.models import Status
 from apps.pedidos.models import Pedido
 from apps.solicitacoes.models import Solicitacao
@@ -11,6 +13,7 @@ class Andamento(models.Model):
 
     status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Status')
     pedido = models.ForeignKey(Pedido, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Pedido relacionado')
+    servico = models.ForeignKey(Servico, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Serviço relacionado')
     solicitacao = models.ForeignKey(Solicitacao, blank=True, null=True, default=None, on_delete=models.PROTECT, verbose_name='Descreva a solicitação')
 
     @property

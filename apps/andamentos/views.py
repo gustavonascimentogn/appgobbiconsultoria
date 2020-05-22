@@ -95,7 +95,8 @@ class AndamentoNovo(CreateView):
 
         if (self.kwargs['origem'] == 'pedido'):
             form.instance.pedido_id = self.kwargs['pk']
-        else: #elif (self.kwargs['origem'] is 'solicitacao'):
+            form.instance.servico_id = self.kwargs['servico']
+        else: #elif (self.kwargs['origem'] == 'solicitacao'):
             form.instance.solicitacao_id = self.kwargs['pk']
 
         if form.is_valid():

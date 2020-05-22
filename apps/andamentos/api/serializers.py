@@ -9,4 +9,4 @@ class AndamentoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Andamento
-        fields = ['pedido','dataHoraCriacao','comentario','status']
+        fields = ['pedido','dataHoraCriacao','comentario','status','servico']

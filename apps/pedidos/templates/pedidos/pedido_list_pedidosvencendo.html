@@ -31,6 +31,7 @@
                         {%  endfor %}
                         <b>Serviços contratados</b><br>
                         {%  for item in pedido.servico.all  %}
+                                <a href="{% url 'create_andamento' pedido.id 'pedido' pedido.cliente.phonewhatts item.id %}"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>
                             &nbsp;&nbsp;&nbsp;{{  item.nome  }}<br>
                         {%  endfor  %}<br>
                         Movimentações: {{ pedido.total_andamentos }}<br>
@@ -117,7 +118,6 @@
                 </div>
                 <div class="card-footer bg-transparent" align="center">
                     <a href="{% url 'update_pedido' pedido.id %}" ><img src="{% static 'images/edit32x32.png'%}" alt="Editar" ></a>&nbsp;
-                    <a href="{% url 'create_andamento' pedido.id 'pedido' pedido.cliente.phonewhatts %}"><img src="{% static 'images/ship.png'%}" alt="Movimentar" ></a>&nbsp;
                     <a href="{% url 'delete_pedido' pedido.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a>&nbsp;
                 </div>
             </div>

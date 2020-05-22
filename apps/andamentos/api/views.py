@@ -21,10 +21,11 @@ class AndamentoViewSet(viewsets.ModelViewSet):
             function = self.request.query_params.get('function')
             if function == 'getStatus':
                 '''
-                /api/andamentos/?function=getStatus&idPedido=1&format=json
+                /api/andamentos/?function=getStatus&idPedido=1&idServico=1&format=json
                 '''
                 idPedido = self.request.query_params.get('idPedido')
-                andamentos = Andamento.objects.filter(pedido__pk=idPedido,disponivelCliente=True).order_by('-pk')
+                idServico = self.request.query_params.get('idServico')
+                andamentos = Andamento.objects.filter(pedido__pk=idPedido,servico__pk=idServico,disponivelCliente=True).order_by('-pk')
                 return andamentos
             elif function == 'list':
                 '''
