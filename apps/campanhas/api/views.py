@@ -12,8 +12,8 @@ class CampanhaViewSet(viewsets.ModelViewSet):
 
         queryset = Campanha.objects.all()
         serializer_class = CampanhaSerializer
-        authentication_classes = (TokenAuthentication,)
-        permission_classes = (IsAuthenticated,)
+        #authentication_classes = (TokenAuthentication,)
+        #permission_classes = (IsAuthenticated,)
 
 
         def get_queryset(self):
@@ -24,9 +24,9 @@ class CampanhaViewSet(viewsets.ModelViewSet):
                 /api/campanhas/?empresa=1&function=list&format=json
                 '''
                 empresa = self.request.query_params.get('empresa')
-
+                # l = less, g = grather, t = than, e = equal
                 # __lte, __gte, __lt, __gt are used for <=, >=, < and >
-                campanhas = Campanha.objects.filter(empresa=empresa,dataHoraAtivacao__lte=datetime.Now(),dataHoraInativacao__gte=datetime.Now())\
+                campanhas = Campanha.objects.filter(empresa=empresa,dataHoraAtivacao__lte=date.today(),dataHoraInativacao__gte=date.today())\
                     .order_by('dataHoraAtivacao')
 
                 return campanhas
