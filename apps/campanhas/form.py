@@ -1,4 +1,4 @@
-from bootstrap_datepicker_plus import DateTimePickerInput
+from bootstrap_datepicker_plus import DatePickerInput
 from django import forms
 
 from apps.campanhas.models import Campanha
@@ -9,6 +9,6 @@ class CampanhaForm(forms.ModelForm):
         model = Campanha
         fields = ['nome','texto_campanha','dataHoraAtivacao','dataHoraInativacao','arquivo']
         widgets = {
-            'dataHoraAtivacao': DateTimePickerInput(format='%d/%m/%Y HH:mm'),
-            'dataHoraInativacao': DateTimePickerInput(format='%d/%m/%Y HH:mm'),
+            'dataHoraAtivacao': DatePickerInput(format='%d/%m/%Y'),
+            'dataHoraInativacao': DatePickerInput(format='%d/%m/%Y'),
         }
