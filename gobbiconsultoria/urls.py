@@ -6,7 +6,7 @@ from django.conf.urls import url, include
 from django.urls import path
 from rest_framework import routers
 
-from apps.campanhas.api.views import CampanhaViewSet
+
 from apps.core.api.views import UserViewSet
 from apps.clientes.api.views import ClienteViewSet
 from apps.pedidos.api.views import PedidoViewSet
@@ -14,6 +14,7 @@ from apps.servicos.api.views import ServicoViewSet
 from apps.solicitacoes.api.views import SolicitacaoViewSet
 from apps.status.api.views import StatusViewSet
 from apps.andamentos.api.views import AndamentoViewSet
+from apps.campanhas.api.views import CampanhaViewSet
 
 
 # API REST
@@ -25,7 +26,8 @@ router.register(r'api/clientes/<slug:function>/<slug:empresa>/<slug:cpfcnpj>/<sl
 router.register(r'api/clientes/<slug:function>/<slug:empresa>/<slug:cpfcnpj>/<slug:senha>', ClienteViewSet,'clientes')
 router.register(r'api/pedidos', PedidoViewSet)
 router.register(r'api/pedidos/<slug:function>/<slug:empresa>', PedidoViewSet,'pedidos')
-router.register(r'api/campanhas/<slug:function>/<slug:empresa>', CampanhaViewSet,'campanhas')
+## router.register(r'api/campanhas/<slug:function>/<slug:empresa>', CampanhaViewSet,'campanhas')
+router.register(r'api/campanhas', CampanhaViewSet)
 router.register(r'api/servicos', ServicoViewSet,'servicos')
 router.register(r'api/status', StatusViewSet,'status')
 router.register(r'api/andamentos', AndamentoViewSet,'status')

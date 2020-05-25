@@ -1,8 +1,5 @@
 from datetime import date
-
 from django.db.models.functions import datetime
-from rest_framework.decorators import action
-
 from apps.campanhas.models import Campanha
 from rest_framework import viewsets
 from apps.campanhas.api.serializers import CampanhaSerializer
@@ -27,9 +24,11 @@ class CampanhaViewSet(viewsets.ModelViewSet):
                 /api/campanhas/?empresa=1&function=list&format=json
                 '''
                 empresa = self.request.query_params.get('empresa')
-                today_min = datetime.datetime.combine(date.today(), datetime.time.min) #
-                campanhas = Campanha.objects.filter(empresa=empresa,dataHoraInativacao__mte=today_min)\
-                    .order_by('dataHoraAtivacao') # mte --> most than or equal to
+
+                # __lte, __gte, __lt, __gt are used for <=, >=, < and >
+                campanhas = Campanha.objects.filter(empresa=empresa,dataHoraAtivacao__lte=datetime.Now(),dataHoraInativacao__gte=datetime.Now())\
+                    .order_by('dataHoraAtivacao')
+
                 return campanhas
             else:
                 '''
@@ -38,5 +37,4 @@ class CampanhaViewSet(viewsets.ModelViewSet):
                 '''
                 campanhas = Campanha.objects.filter(pk=0)
                 return campanhas
-
 

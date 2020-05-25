@@ -1,5 +1,3 @@
-from rest_framework.decorators import action
-
 from apps.clientes.models import Cliente
 from apps.pedidos.models import Pedido
 from rest_framework import viewsets
