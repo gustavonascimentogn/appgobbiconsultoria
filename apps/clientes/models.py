@@ -7,7 +7,7 @@ from apps.campanhas.models import Campanha
 class Cliente(models.Model):
         nome = models.CharField(max_length=100, blank=False, help_text='Quando for pessoa juridica, digitar o Nome Fantasia', verbose_name='Nome Fantasia')
         razao_social = models.CharField(max_length=100, blank=True, null=True, verbose_name='Razão social')
-        cpf_cnpj = models.CharField(max_length=50, blank=True, null=False , help_text='Incluindo pontos e traço.', verbose_name='CPF / CNPJ')
+        cpf_cnpj = models.CharField(max_length=50, blank=False, null=False , help_text='Incluindo pontos e traço.', verbose_name='CPF / CNPJ')
         nomeContato = models.CharField(max_length=100, blank=True, null=True, help_text='Nome da pessoa que será o contato principal', verbose_name='Nome da pessoa de contato')
         emailContato = models.EmailField(blank=False, null=False, help_text='E-mail que será utilizado nas comunicações', verbose_name='E-mail da pessoa de contato')
         cidade = models.CharField(max_length=100, blank=True, null=True, verbose_name='Cidade')
@@ -24,7 +24,7 @@ class Cliente(models.Model):
         telefone = models.CharField(max_length=17, blank=True, null=True, help_text='Exemplo: +55(11)99999-9999')
         playerId = models.CharField(max_length=50, blank=True, null=True, help_text='Campo utilizado pelo App, para recebimento de Push notification')
         empresa = models.ForeignKey(Empresa, blank=False, null=False, default=None, on_delete=models.PROTECT, verbose_name='Empresa')
-        campanha = models.ManyToManyField(Campanha, blank=True, verbose_name='Campanhas que recebeu via sistema')
+        campanha = models.ManyToManyField(Campanha, blank=True, null=True, verbose_name='Campanhas que recebeu via sistema')
 
         class Meta:
                 constraints = [

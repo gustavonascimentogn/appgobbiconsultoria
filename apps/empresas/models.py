@@ -22,11 +22,11 @@ class Empresa(models.Model):
     comissao_nome_plano_contas_grupo = models.CharField(max_length=50, blank='False',null=False, default='3.3.1.001 - Comissões sobre Vendas', verbose_name='Nome do grupo de contas (devedoras), no Plano de Contas, onde as comissões devem ser lançadas')
 
     ## Dados para configuracao do email padrão
-    #email_host = models.CharField(max_length=100, blank='True',null=True, help_text='Exemplo: smtp.gmail.com')
-    #email_port = models.CharField(max_length=50, blank='True',null=True, help_text='Exemplo: 587')
-    #email_use_tls = models.BooleanField(default=True,blank='True',null=True)
-    #email_host_user = models.EmailField(max_length=150, blank='True',null=True, help_text='Exemplo: atendimento@tabo.com.br')
-    #email_host_password = models.CharField(max_length=50, blank='True',null=True)
+    #email_host = models.CharField(max_length=100, blank=True,null=True, help_text='Exemplo: smtp.gmail.com')
+    #email_port = models.CharField(max_length=50, blank=True,null=True, help_text='Exemplo: 587')
+    #email_use_tls = models.BooleanField(default=True,blank=True,null=True)
+    #email_host_user = models.EmailField(max_length=150, blank=True,null=True, help_text='Exemplo: atendimento@tabo.com.br')
+    #email_host_password = models.CharField(max_length=50, blank=True,null=True)
 
     class Meta:
         ordering = ["nomeFantasia"]
