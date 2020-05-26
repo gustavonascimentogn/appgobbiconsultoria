@@ -12,8 +12,8 @@ class ClienteViewSet(viewsets.ModelViewSet):
 
         queryset = Cliente.objects.all()
         serializer_class = ClienteSerializer
-        #authentication_classes = (TokenAuthentication,)
-        #permission_classes = (IsAuthenticated,)
+        authentication_classes = (TokenAuthentication,)
+        permission_classes = (IsAuthenticated,)
 
         def get_queryset(self):
 
