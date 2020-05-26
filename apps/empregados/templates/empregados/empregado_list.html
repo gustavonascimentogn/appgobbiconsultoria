@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{%  load static %}
+{% block main %}
+
+    {% if view.kwargs.mensagem %}
+    <div class="alert alert-success" role="alert">
+      {{ view.kwargs.mensagem }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+    <p>
+        <h1>Funcionários cadastrados </h1>
+        <a href="{% url 'create_empregado' %}" class="btn btn-info">Cadastrar novo funcionário</a>
+    </p><br>
+
+    <div class="row">
+        {%  for funcionario in object_list %}
+        <div class="col-md-3">
+            <div class="card bg-light mb-3" >
+                <div class="card-header">{{ funcionario.nome }}</div>
+                <div class="card-body">
+                    <!-- <h5 class="card-title">&nbsp;</h5> -->
+                    <p class="card-text">
+                        {{ funcionario.email }}
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent" align="center">
+
+                    <a href="{% url 'delete_empregado' funcionario.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a>&nbsp;
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div><br>
+
+
+
+{% endblock %}

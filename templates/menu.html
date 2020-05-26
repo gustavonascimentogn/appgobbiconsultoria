@@ -31,6 +31,9 @@
           {% now "m" as current_month %}
           <a class="dropdown-item" href="{% url 'list_vendedores' current_month current_year %}">Cadastro de vendedores</a>
           <a class="dropdown-item" href="{% url 'list_campanhas' %}">Cadastro de campanhas</a>
+          <!--
+          <a class="dropdown-item" href="{% url 'list_empregados' %}">Cadastro de funcionários</a>
+          -->
         </div>
       </li>
       <li class="nav-item dropdown">
