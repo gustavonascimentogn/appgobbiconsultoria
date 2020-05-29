@@ -6,4 +6,4 @@ from apps.clientes.models import Cliente
 class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cliente
-        fields = ['cpf_cnpj','appPassword','nomeContato','emailContato','empresa']
+        fields = ['cpf_cnpj','appPassword','nomeContato','emailContato','empresa','playerId_onesignal']

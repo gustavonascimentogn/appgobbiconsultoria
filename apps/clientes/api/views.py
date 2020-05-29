@@ -50,7 +50,7 @@ class ClienteViewSet(viewsets.ModelViewSet):
                 empresa = self.request.query_params.get('empresa')
                 cpfcnpj = self.request.query_params.get('cpfcnpj')
                 playerId = str(self.request.query_params.get('playerId'))
-                ok = Cliente.objects.filter(cpf_cnpj=cpfcnpj,empresa=empresa).update(playerId=playerId)
+                ok = Cliente.objects.filter(cpf_cnpj=cpfcnpj,empresa=empresa).update(playerId_onesignal=playerId)
                 if ok:
                     return Cliente.objects.filter(cpf_cnpj=cpfcnpj,empresa=empresa)
                 else:

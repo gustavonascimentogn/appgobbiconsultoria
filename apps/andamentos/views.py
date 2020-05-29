@@ -94,7 +94,7 @@ class AndamentoNovo(CreateView):
                 message_onesignal = 'Atualização referente a Solicitação ID: ' + andamento.solicitacao.solicitacao + ' disponível no App. Acesse e confira o andamento mais recente.'
             email_from = self.request.user.empregado.email #settings.EMAIL_HOST_USER
             recipient_list = [emailContato, email_from,]
-            ##send_mail(subject, message, from_email, recipient_list, fail_silently=False, auth_user=None, auth_password=None, connection=None, html_message=None)
+            ## EXEMPLO COMPLETO: send_mail(subject, message, from_email, recipient_list, fail_silently=False, auth_user=None, auth_password=None, connection=None, html_message=None)
             send_mail( subject, message, email_from, recipient_list,html_message=html_message,auth_user=settings.EMAIL_HOST_USER, auth_password=settings.EMAIL_HOST_PASSWORD)
 
             ##ENVIANDO PUSH NOTIFICATION
