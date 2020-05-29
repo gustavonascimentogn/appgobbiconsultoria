@@ -1,15 +1,13 @@
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Andamento
 from .form import AndamentoForm
 from django.shortcuts import redirect
-from apps.pedidos.models import Pedido
 
 from django.core.mail import send_mail
 from django.conf import settings
-
-
+import requests
+import json
 
 class AndamentosList(ListView):
     model = Andamento
@@ -32,15 +30,27 @@ class AndamentoEdit(UpdateView):
             ##if (str(self.kwargs['origem']) == 'pedido'):
             if andamento.pedido:
                 emailContato = andamento.pedido.cliente.emailContato ## para quem vai a mensagem
-                message = 'Referente ao Contrato/Serviço ' + str(andamento.pedido.pk) + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
-                html_message= 'Este e-mail refere-se ao Contrato/Serviço <b>' + str(andamento.pedido.pk) + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
+                player_id_onesignal = andamento.pedido.cliente.playerId_onsignal
+                message = 'Referente ao Contrato/Serviço ID: ' + str(andamento.pedido.pk) + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
+                html_message= 'Este e-mail refere-se ao Contrato/Serviço <b>ID: ' + str(andamento.pedido.pk) + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
+                message_onesignal = 'Atualização referente ao Contrato/Serviço ID: ' + str(andamento.pedido.pk) + ' disponível no App. Acesse e confira o andamento mais recente.'
             else: #elif (self.kwargs['origem'] is 'solicitacao'):
                 emailContato = andamento.solicitacao.cliente.emailContato ## para quem vai a mensagem
+                player_id_onesignal = andamento.solicitacao.cliente.playerId_onsignal
                 message = 'Referente a Solicitação ' + andamento.solicitacao.solicitacao + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
-                html_message= 'Este e-mail refere-se a Solicitação <b>' + andamento.solicitacao.solicitacao + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
-            email_from = self.request.user.email #settings.EMAIL_HOST_USER
+                html_message= 'Este e-mail refere-se a Solicitação <b> ID: ' + andamento.solicitacao.solicitacao + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
+                message_onesignal = 'Atualização referente a Solicitação ID: ' + andamento.solicitacao.solicitacao + ' disponível no App. Acesse e confira o andamento mais recente.'
+            email_from = self.request.user.empregado.email #settings.EMAIL_HOST_USER
             recipient_list = [emailContato, email_from,]
-            send_mail(subject, message, email_from, recipient_list,html_message=html_message )
+            send_mail( subject, message, email_from, recipient_list,html_message=html_message,auth_user=settings.EMAIL_HOST_USER, auth_password=settings.EMAIL_HOST_PASSWORD)
+
+            ##ENVIANDO PUSH NOTIFICATION
+            header = {"Content-Type": "application/json; charset=utf-8"}
+            payload = {"app_id": self.request.user.empregado.empresa.appid_onesignal,
+                       "include_player_ids": [player_id_onesignal],
+                       "contents": {"en": message_onesignal}}
+            req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
+            ## print(req.status_code, req.reason)
 
         return redirect('list_andamentos')
 
@@ -72,17 +82,28 @@ class AndamentoNovo(CreateView):
             subject = '['+ nomeFantasia + '] Novidade referente ao seu atendimento'
             if andamento.pedido:
                 emailContato = andamento.pedido.cliente.emailContato ## para quem vai a mensagem
-                message = 'Referente ao Pedido ' + str(andamento.pedido.pk) + ' | Atualização de status: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
-                html_message= 'Este e-mail refere-se ao Pedido <b>' + str(andamento.pedido.pk) + '</b><br>Atualização de status: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
+                player_id_onesignal = andamento.pedido.cliente.playerId_onsignal
+                message = 'Referente ao Contrato/Serviço ID: ' + str(andamento.pedido.pk) + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
+                html_message= 'Este e-mail refere-se ao Contrato/Serviço <b>ID: ' + str(andamento.pedido.pk) + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
+                message_onesignal = 'Atualização referente ao Contrato/Serviço ID:' + str(andamento.pedido.pk) + ' disponível no App. Acesse e confira o andamento mais recente.'
             else: #elif (self.kwargs['origem'] is 'solicitacao'):
                 emailContato = andamento.solicitacao.cliente.emailContato ## para quem vai a mensagem
-                message = 'Referente a solicitação ' + andamento.solicitacao.solicitacao + ' | Atualização de status: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
-                html_message= 'Este e-mail refere-se a solicitação <b>' + andamento.solicitacao.solicitacao + '</b><br>Atualização de status: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
-            email_from = self.request.user.email #settings.EMAIL_HOST_USER
+                player_id_onesignal = andamento.solicitacao.cliente.playerId_onsignal
+                message = 'Referente a Solicitação ID: ' + andamento.solicitacao.solicitacao + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
+                html_message= 'Este e-mail refere-se a Solicitação <b>ID: ' + andamento.solicitacao.solicitacao + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
+                message_onesignal = 'Atualização referente a Solicitação ID: ' + andamento.solicitacao.solicitacao + ' disponível no App. Acesse e confira o andamento mais recente.'
+            email_from = self.request.user.empregado.email #settings.EMAIL_HOST_USER
             recipient_list = [emailContato, email_from,]
             ##send_mail(subject, message, from_email, recipient_list, fail_silently=False, auth_user=None, auth_password=None, connection=None, html_message=None)
             send_mail( subject, message, email_from, recipient_list,html_message=html_message,auth_user=settings.EMAIL_HOST_USER, auth_password=settings.EMAIL_HOST_PASSWORD)
 
+            ##ENVIANDO PUSH NOTIFICATION
+            header = {"Content-Type": "application/json; charset=utf-8"}
+            payload = {"app_id": self.request.user.empregado.empresa.appid_onesignal,
+                       "include_player_ids": [player_id_onesignal],
+                       "contents": {"en": message_onesignal}}
+            req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
+            ## print(req.status_code, req.reason)
 
         if (str(self.kwargs['origem']) == 'pedido'):
             return redirect('list_pedidos')

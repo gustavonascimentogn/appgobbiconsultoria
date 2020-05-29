@@ -22,7 +22,7 @@ class Cliente(models.Model):
         inscricaoEstadual = models.CharField(max_length=50, blank=False, null=False, help_text='Caso seja isenta, preencha com a palavra ˜Isenta˜', verbose_name='Inscrição estadual')
         inscricaoMunicipal = models.CharField(max_length=50, blank=False, null=False, help_text='Caso seja isenta, preencha com a palavra ˜Isenta˜', verbose_name='Inscrição municipal')
         telefone = models.CharField(max_length=17, blank=True, null=True, help_text='Exemplo: +55(11)99999-9999')
-        playerId = models.CharField(max_length=50, blank=True, null=True, help_text='Campo utilizado pelo App, para recebimento de Push notification')
+        playerId_onsignal = models.CharField(max_length=50, blank=True, null=True, help_text='Campo utilizado pelo App, para recebimento de Push notification')
         empresa = models.ForeignKey(Empresa, blank=False, null=False, default=None, on_delete=models.PROTECT, verbose_name='Empresa')
         campanha = models.ManyToManyField(Campanha, blank=True, null=True, verbose_name='Campanhas que recebeu via sistema')
 

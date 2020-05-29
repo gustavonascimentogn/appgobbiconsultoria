@@ -20,6 +20,7 @@ class Empresa(models.Model):
     ## dados para parcelas de vendas e comissões de vendedores
     parcela_nome_plano_contas_grupo = models.CharField(max_length=50, blank='False',null=False, default='4.1.1.001 – Venda de Serviços', verbose_name='Nome do grupo de contas (credoras), no Plano de Contas, onde as parcelas devem ser lançadas')
     comissao_nome_plano_contas_grupo = models.CharField(max_length=50, blank='False',null=False, default='3.3.1.001 - Comissões sobre Vendas', verbose_name='Nome do grupo de contas (devedoras), no Plano de Contas, onde as comissões devem ser lançadas')
+    appid_onesignal = models.CharField(max_length=150, blank=True, null=True, help_text='Informação preenchida quando houver App publicado no site Onesignal para a empresa.')
 
     ## Dados para configuracao do email padrão
     #email_host = models.CharField(max_length=100, blank=True,null=True, help_text='Exemplo: smtp.gmail.com')
