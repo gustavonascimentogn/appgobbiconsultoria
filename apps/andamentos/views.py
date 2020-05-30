@@ -30,13 +30,13 @@ class AndamentoEdit(UpdateView):
             ##if (str(self.kwargs['origem']) == 'pedido'):
             if andamento.pedido:
                 emailContato = andamento.pedido.cliente.emailContato ## para quem vai a mensagem
-                player_id_onesignal = andamento.pedido.cliente.playerId_onsignal
+                player_id_onesignal = andamento.pedido.cliente.playerId_onesignal
                 message = 'Referente ao Contrato/Serviço ID: ' + str(andamento.pedido.pk) + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
                 html_message= 'Este e-mail refere-se ao Contrato/Serviço <b>ID: ' + str(andamento.pedido.pk) + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
                 message_onesignal = 'Atualização referente ao Contrato/Serviço ID: ' + str(andamento.pedido.pk) + ' disponível no App. Acesse e confira o andamento mais recente.'
             else: #elif (self.kwargs['origem'] is 'solicitacao'):
                 emailContato = andamento.solicitacao.cliente.emailContato ## para quem vai a mensagem
-                player_id_onesignal = andamento.solicitacao.cliente.playerId_onsignal
+                player_id_onesignal = andamento.solicitacao.cliente.playerId_onesignal
                 message = 'Referente a Solicitação ' + andamento.solicitacao.solicitacao + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
                 html_message= 'Este e-mail refere-se a Solicitação <b> ID: ' + andamento.solicitacao.solicitacao + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
                 message_onesignal = 'Atualização referente a Solicitação ID: ' + andamento.solicitacao.solicitacao + ' disponível no App. Acesse e confira o andamento mais recente.'
@@ -82,13 +82,13 @@ class AndamentoNovo(CreateView):
             subject = '['+ nomeFantasia + '] Novidade referente ao seu atendimento'
             if andamento.pedido:
                 emailContato = andamento.pedido.cliente.emailContato ## para quem vai a mensagem
-                player_id_onesignal = andamento.pedido.cliente.playerId_onsignal
+                player_id_onesignal = andamento.pedido.cliente.playerId_onesignal
                 message = 'Referente ao Contrato/Serviço ID: ' + str(andamento.pedido.pk) + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
                 html_message= 'Este e-mail refere-se ao Contrato/Serviço <b>ID: ' + str(andamento.pedido.pk) + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
                 message_onesignal = 'Atualização referente ao Contrato/Serviço ID:' + str(andamento.pedido.pk) + ' disponível no App. Acesse e confira o andamento mais recente.'
             else: #elif (self.kwargs['origem'] is 'solicitacao'):
                 emailContato = andamento.solicitacao.cliente.emailContato ## para quem vai a mensagem
-                player_id_onesignal = andamento.solicitacao.cliente.playerId_onsignal
+                player_id_onesignal = andamento.solicitacao.cliente.playerId_onesignal
                 message = 'Referente a Solicitação ID: ' + andamento.solicitacao.solicitacao + ' | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
                 html_message= 'Este e-mail refere-se a Solicitação <b>ID: ' + andamento.solicitacao.solicitacao + '</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
                 message_onesignal = 'Atualização referente a Solicitação ID: ' + andamento.solicitacao.solicitacao + ' disponível no App. Acesse e confira o andamento mais recente.'
