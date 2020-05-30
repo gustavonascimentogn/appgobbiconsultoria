@@ -88,7 +88,7 @@ class AndamentoNovo(CreateView):
             andamento.pedido = None
             andamento.servico = None
             andamento.solicitacao = None
-        andamento.save()
+        #andamento.save()
 
         ## ESSE CODIGO SE REPETE NO EDIT E NO CREATE
         if andamento.disponivelCliente:
