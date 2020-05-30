@@ -49,7 +49,7 @@
                                     Status: {{ pedido.status  }}<br>
                                     <b>Serviços contratados</b><br>
                                     {%  for servico in pedido.servico.all  %}
-                                            <a href="{% url 'create_andamento' pedido.id 'pedido' pedido.cliente.phonewhatts servico.id %}"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>
+                                            <a href="{% url 'create_andamento' pedido.id 'cliente' pedido.cliente.phonewhatts servico.id %}"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>
                                         &nbsp;&nbsp;&nbsp;{{  servico.nome  }}<br>
                                     {%  endfor  %}<br>
                                     <br>
