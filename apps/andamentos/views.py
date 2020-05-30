@@ -78,8 +78,8 @@ class AndamentoNovo(CreateView):
 
     def form_valid(self, form):
         andamento = form.save(commit=False)
-        origem = self.kwargs['origem']
-        if origem == 'pedido' or origem == 'cliente':
+        origem = str(self.kwargs['origem'])
+        if (origem == str('pedido')) or (origem == str('cliente')):
             andamento.pedido = Pedido.objects.get(pk=self.kwargs['pk'])
             andamento.servico = Servico.objects.get(pk=self.kwargs['servico'])
         else:
