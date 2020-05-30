@@ -84,6 +84,10 @@ class AndamentoNovo(CreateView):
             andamento.servico = Servico.objects.get(pk=self.kwargs['servico'])
         elif (origem == str('solicitacao')):
             andamento.solicitacao = Solicitacao.objects.get(pk=self.kwargs['pk'])
+        else:
+            andamento.pedido = None
+            andamento.servico = None
+            andamento.solicitacao = None
         andamento.save()
 
         ## ESSE CODIGO SE REPETE NO EDIT E NO CREATE
