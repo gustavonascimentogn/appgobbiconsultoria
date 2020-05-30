@@ -82,7 +82,7 @@ class AndamentoNovo(CreateView):
         if (origem == str('pedido')) or (origem == str('cliente')):
             andamento.pedido = Pedido.objects.get(pk=self.kwargs['pk'])
             andamento.servico = Servico.objects.get(pk=self.kwargs['servico'])
-        else:
+        elif (origem == str('solicitacao')):
             andamento.solicitacao = Solicitacao.objects.get(pk=self.kwargs['pk'])
         andamento.save()
 
