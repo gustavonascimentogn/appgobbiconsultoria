@@ -186,6 +186,11 @@ class PedidoNovo(CreateView):
         pedidoN.valor = valorContrato
         pedidoN.save()
 
+        ## incluindo os serviços
+        servicos = self.request.POST.getlist('servico')
+        for item in servicos:
+            pedidoN.servico.add(item)
+
         ## INCLUINDO AS PARCELAS DO PEDIDO
         insert_list = []
         empresa_logada = self.request.user.empregado.empresa

@@ -29,7 +29,7 @@ class CampanhaEdit(UpdateView):
 
 class CampanhaDelete(DeleteView):
     model = Campanha
-    success_url = reverse_lazy('list_clientes')
+    success_url = reverse_lazy('list_campanhas')
 
 class CampanhaNovo(CreateView):
     model = Campanha
