@@ -22,8 +22,8 @@ class Pedido(models.Model):
     status = models.ForeignKey(Status, blank=False, default=None, on_delete=models.PROTECT, verbose_name='Status do serviço contratado')
     arquivo = models.FileField(upload_to='documentos',verbose_name='Anexe o contrato', null=True, blank=True)
 
-    servico = models.ManyToManyField(Servico, blank=False, default=None, verbose_name='Serviços contratados')
-    vendedor = models.ManyToManyField(Vendedor, blank=False,  default=None, verbose_name='Vendedor que realizou a venda (para cálculo de comissão)')
+    servico = models.ManyToManyField(Servico, blank=False, default=None, related_name='pedidos', verbose_name='Serviços contratados')
+    vendedor = models.ManyToManyField(Vendedor, blank=False,  default=None, related_name='pedidos', verbose_name='Vendedor que realizou a venda (para cálculo de comissão)')
 
     class Meta:
         ordering = ["dataHoraCriacao"]

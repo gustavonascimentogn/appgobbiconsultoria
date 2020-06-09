@@ -24,7 +24,7 @@ class Cliente(models.Model):
         telefone = models.CharField(max_length=17, blank=True, null=True, help_text='Exemplo: +55(11)99999-9999')
         playerId_onesignal = models.CharField(max_length=50, blank=True, null=True, help_text='Campo utilizado pelo App, para recebimento de Push notification')
         empresa = models.ForeignKey(Empresa, blank=False, null=False, default=None, on_delete=models.PROTECT, verbose_name='Empresa')
-        campanha = models.ManyToManyField(Campanha, blank=True, null=True, verbose_name='Campanhas que recebeu via sistema')
+        campanha = models.ManyToManyField(Campanha, verbose_name='Campanhas que recebeu via sistema')
 
         class Meta:
                 constraints = [

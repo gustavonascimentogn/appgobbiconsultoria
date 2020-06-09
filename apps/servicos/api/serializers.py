@@ -6,4 +6,4 @@ from apps.servicos.models import Servico
 class ServicoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Servico
-        fields = ['id','descricao']
+        fields = ['id','descricao','nome']
