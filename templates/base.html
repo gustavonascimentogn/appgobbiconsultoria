@@ -39,6 +39,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
+    <title>
+        {% block title %}
+            {%  if request.user.empregado.empresa %}
+                {{  request.user.empregado.empresa  }} - {{ request.user.empregado.nome }}
+            {%  else %}
+                Tabô - Gestão de serviços e contratos
+            {%  endif %}
+        {%  endblock %}
+    </title>
+
+    {{ form.media }}
+
+
     <style>
       .bg-primary {
         background-color: #333333;
@@ -49,24 +62,26 @@
       .text-primary {
         color: #2e3330;
        }
+       .h2, h2 {
+            font-size: 1.0rem !important;
+        }
+        .h3, h3 {
+            font-size: 1.0rem !important;
+        }
        .h4, h4 {
             text-align: center;
+            font-size: 1.0rem !important;
        }
+       .h5, h5 {
+            font-size: 1.0rem !important;
+        }
+        .h1, h1 {
+            font-size: 1.2rem !important;
+        }
     </style>
-
-    <title>
-        {% block title %}
-            {%  if request.user.empregado.empresa %}
-                {{  request.user.empregado.empresa  }} - {{ request.user.empregado.nome }}
-            {%  else %}
-                Tabô - Gestão de serviços e contratos
-            {%  endif %}
-        {%  endblock %} </title>
-
-    {{ form.media }}
-
     {% block head  %}
     {% endblock %}
+
 </head>
 <body>
     <div class="container-fluid" style="text-align:-webkit-center;">

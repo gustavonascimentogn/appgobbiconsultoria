@@ -45,7 +45,9 @@ class AndamentoEdit(UpdateView):
                 message = 'Referente a Solicitação "' + andamento.solicitacao.solicitacao + '" | Status atual: ' + andamento.status.nome + ' | Informação adicionada: ' + andamento.comentario
                 html_message= 'Este e-mail refere-se a Solicitação <b> "' + andamento.solicitacao.solicitacao + '"</b><br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
                 message_onesignal = 'Atualização referente a Solicitação "' + andamento.solicitacao.solicitacao + '" disponível no App. Acesse e confira o andamento mais recente.'
-            email_from = self.request.user.empregado.email #settings.EMAIL_HOST_USER
+            email_from = self.request.user.empregado.email
+            if not email_from:
+                email_from = settings.EMAIL_HOST_USER
             recipient_list = [emailContato, email_from,]
             send_mail( subject, message, email_from, recipient_list,html_message=html_message,auth_user=settings.EMAIL_HOST_USER, auth_password=settings.EMAIL_HOST_PASSWORD)
 
@@ -111,6 +113,8 @@ class AndamentoNovo(CreateView):
                 html_message= 'Este e-mail refere-se a Solicitação <b>"' + andamento.solicitacao.solicitacao + '"<br>Status atual: <b>' + andamento.status.nome + '</b><br>Informação adicionada: <b>' + andamento.comentario + '</b>'
                 message_onesignal = 'Atualização referente a Solicitação "' + andamento.solicitacao.solicitacao + '" disponível no App. Acesse e confira o andamento mais recente.'
             email_from = self.request.user.empregado.email #settings.EMAIL_HOST_USER
+            if not email_from:
+                email_from = settings.EMAIL_HOST_USER
             recipient_list = [emailContato, email_from,]
             ## EXEMPLO COMPLETO: send_mail(subject, message, from_email, recipient_list, fail_silently=False, auth_user=None, auth_password=None, connection=None, html_message=None)
             send_mail( subject, message, email_from, recipient_list,html_message=html_message,auth_user=settings.EMAIL_HOST_USER, auth_password=settings.EMAIL_HOST_PASSWORD)
