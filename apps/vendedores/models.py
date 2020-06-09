@@ -31,11 +31,11 @@ class Vendedor(models.Model):
 
         @property
         def qtd_total_pedidos(self):
-                return self.pedido_set.all().count()
+                return self.pedidos.all().count()
 
         @property
         def valor_total_pedidos(self):
-                return sum(pedido.valor for pedido in self.pedido_set.all())
+                return sum(pedido.valor for pedido in self.pedidos.all())
 
         @property
         def valor_receber_mesatual(self):
@@ -50,7 +50,7 @@ class Vendedor(models.Model):
                 mes = datetime.now().month
                 ano = datetime.now().year
                 soma = 0
-                pedidos_vendedor = self.pedido_set.all()
+                pedidos_vendedor = self.pedidos.all()
                 pedidos_vendedor = pedidos_vendedor.filter(cliente=self.cliente) # retorna os pedidos que o vendedor também é cliente
                 for pedido in pedidos_vendedor:
                     contas_receber = pedido.contareceber_set.filter(dataVencimento__year=ano,dataVencimento__month=mes)
