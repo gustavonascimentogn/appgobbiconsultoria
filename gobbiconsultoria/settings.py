@@ -1,4 +1,7 @@
+from __future__ import absolute_import, unicode_literals
+
 import os
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,8 +40,8 @@ INSTALLED_APPS = [
     'apps.vendedores',
     'apps.planos_contas',
     'apps.planos_contas_grupos',
-    'django_celery_results',
 
+    'django_celery_results',
     'bootstrapform',
     'rest_framework',
     'rest_framework.authtoken',
@@ -156,8 +159,9 @@ BOOTSTRAP4 = {
 
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = '[application/json]'
+CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
+
 
 from .local_settings import  *

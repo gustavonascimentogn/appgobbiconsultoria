@@ -2,7 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from celery import shared_task
-from demoapp.models import Widget
+from .models import ContaReceber
 
 
 @shared_task
@@ -22,11 +22,11 @@ def xsum(numbers):
 
 @shared_task
 def count_widgets():
-    return Widget.objects.count()
+    return ContaReceber.objects.count()
 
 
 @shared_task
 def rename_widget(widget_id, name):
-    w = Widget.objects.get(id=widget_id)
+    w = ContaReceber.objects.get(id=widget_id)
     w.name = name
     w.save()
