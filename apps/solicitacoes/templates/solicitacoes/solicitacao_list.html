@@ -5,7 +5,24 @@
     <p>
         <h1>Solicitações cadastradas</h1>
         <a href="{% url 'create_solicitacao' %}" class="btn btn-info">Cadastrar nova solicitação</a>
-    </p><br>
+    </p>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; Primeira</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% endif %}
+
+            <span class="current">
+                [Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}]
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+            {% endif %}
+        </span>
+    </div><br>
 
     <div class="row">
         {%  for solicitacao in object_list %}
@@ -37,6 +54,23 @@
                     </div>
                 </div>
         {% endfor %}
+    </div><br>
+     <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; Primeira</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% endif %}
+
+            <span class="current">
+                [Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}]
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+            {% endif %}
+        </span>
     </div><br>
 
 {% endblock %}
