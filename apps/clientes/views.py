@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
+from django.db.models import Q
 
 from .form import ClienteForm
 from .models import Cliente
@@ -15,7 +16,13 @@ class ClientesList(ListView):
     ## Listando somente clientes da empresa do funcionario logado
     def get_queryset(self):
         empresa_logada = self.request.user.empregado.empresa
-        return Cliente.objects.filter(empresa=empresa_logada).order_by('nome')
+        clientes = Cliente.objects.filter(empresa=empresa_logada).order_by('nome')
+
+        busca = self.request.GET.get('search')
+        if busca:
+            clientes = clientes.filter(Q(nome__icontains=busca) | Q(nomeContato__icontains=busca) | Q(razao_social__icontains=busca))
+
+        return clientes
 
 ## Classe para listagem dos registros
 class ClientesListSemContrato(ListView):
@@ -27,7 +34,13 @@ class ClientesListSemContrato(ListView):
     ## Listando somente clientes sem contrato da empresa do funcionario logado
     def get_queryset(self):
         empresa_logada = self.request.user.empregado.empresa
-        return Cliente.objects.filter(empresa=empresa_logada, pedido=None).order_by('nome')
+        clientes = Cliente.objects.filter(empresa=empresa_logada, pedido=None).order_by('nome')
+
+        busca = self.request.GET.get('search')
+        if busca:
+            clientes = clientes.filter(Q(nome__icontains=busca) | Q(nomeContato__icontains=busca) | Q(razao_social__icontains=busca))
+
+        return clientes
 
 ## Classe para edição dos registros
 class ClienteEdit(UpdateView):
