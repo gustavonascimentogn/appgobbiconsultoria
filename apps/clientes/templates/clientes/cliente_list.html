@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 {%  load static %}
-
+{% block head %}
+<script>
+    function abrirJanela(url) {
+        window.open(url, "andamentos", "toolbar=yes, scrollbars=yes, resizable=yes, top=50, left=450, width=400, height=350");
+    }
+</script>
+{% endblock %}
 {% block main %}
+
     <div class="row">
         <div class="col-md-6">
             <h1>Clientes cadastrados</h1>
@@ -46,7 +53,8 @@
                         Solicitações realizadas: {{ cliente.total_solicitacao }}<br>
                         Documentos anexados: {{ cliente.total_arquivos }}
                     </p>
-                    <!-- Accordion -->
+
+                    <!-- Accordion CONTRATOS -->
                     <div id="accordion{{ cliente.id }}">
                       <div class="card">
                         <div class="card-header" id="headingOne">
@@ -77,7 +85,8 @@
                                     <b>Serviços contratados</b><br>
                                     {%  for servico in pedido.servico.all  %}
                                             <a href="{% url 'create_andamento' pedido.id 'cliente' pedido.cliente.phonewhatts servico.id %}"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>
-                                        &nbsp;&nbsp;&nbsp;{{  servico.nome  }}<br>
+                                    <a href="#" onclick="abrirJanela('{% url 'list_andamentos' pedido.id servico.id %}');"><img src="{% static 'images/list.png'%}" alt="Histórico" ></a>
+                                            {{  servico.nome  }}<br>
                                     {%  endfor  %}<br>
                                     <br>
 
@@ -87,7 +96,47 @@
                         </div>
                       </div>
                     </div>
-                    <!-- fim accordion -->
+                    <!-- fim accordion Contratos-->
+                    <!-- Accordion Parcelas -->
+                    <div id="accordionParcela{{ cliente.id }}">
+                      <div class="card">
+                        <div class="card-header" id="headingOneParcela{{ cliente.id }}">
+                          <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOneParcela{{ cliente.id }}" aria-expanded="false" aria-controls="collapseOneParcela{{ cliente.id }}">
+                              Parcelas<br>
+                            </button>
+                          </h5>
+                        </div>
+
+                        <div id="collapseOneParcela{{ cliente.id }}" class="collapse" aria-labelledby="headingOneParcela{{ cliente.id }}"  data-parent="#accordionParcela{{ cliente.id }}">
+                            <div class="card text-white bg-secondary mb-3" >
+                                <div class="card-header" style="font-size: small;">
+                                    {%  for pedido in cliente.pedido_set.all %}
+                                        <strong>Contrato {{ pedido.id }}</strong><br>
+                                        {% for parcela in pedido.contareceber_set.all  %}
+                                            {%  if parcela.numParcela < 10 %}
+                                                0{{ parcela.numParcela }}:
+                                            {%  else %}
+                                                {{ parcela.numParcela }}:
+                                            {% endif %}
+                                                    {{ parcela.dataVencimento|date:'d/m/Y'  }} | R$ {{ parcela.valor|floatformat:2 }}
+                                            {%  if parcela.paga %}
+                                                <img src="{% static 'images/check.png'%}" alt="Editar" >
+                                                <a onclick="window.open('{% url 'update_contareceber_documento' parcela.id %}','contapagar');"><img src="{% static 'images/document16px.png'%}" alt="Editar"></a>
+                                            {%  else %}
+                                                <img src="{% static 'images/not.png'%}" alt="Editar" >
+                                                <a href="{% url 'update_contareceber' parcela.id %}"> <img src="{% static 'images/edit.png'%}" alt="Editar" width="7%"></a>
+                                            {%  endif%}
+                                            <br>
+                                         {%  endfor  %}
+                                        <br>
+                                    {%  endfor %}
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- fim accordion Parcelas -->
                 </div>
                 <div class="card-footer bg-transparent" align="center">
                     <a href="{% url 'update_cliente' cliente.id %}" ><img src="{% static 'images/edit32x32.png'%}" alt="Editar" ></a>&nbsp;

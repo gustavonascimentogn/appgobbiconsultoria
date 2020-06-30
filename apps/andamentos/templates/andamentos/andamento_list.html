@@ -1,47 +1,26 @@
-{% extends 'base.html' %}
+{% extends 'base-javascript.html' %}
 {%  load static %}
 
 {% block main %}
 
-    <p>
-        <h1>Movimentações cadastradas</h1>
-    </p>
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; Primeira</a>
-                <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-            {% endif %}
-
-            <span class="current">
-                [Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}]
-            </span>
-
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
-            {% endif %}
-        </span>
-    </div><br>
-
     <div class="row">
     {% for andamento in object_list %}
 
-        <div class="col-md-3">
+        <div class="col-md-12">
             {% if not andamento.pedido_id == None %}
-                <div class="card text-white bg-info mb-3" >
-                    <div class="card-header"><h5>{{ andamento.pedido.cliente.nome }} <br> Pedido {{ andamento.pedido_id }}</h5></div>
+                <div class="card bg-light mb-12" >
+                    <div class="card-header"><h5>{{ andamento.pedido.cliente.nome }} <br> Contrato {{ andamento.pedido_id }} <br>{{ andamento.dataHoraCriacao|date:'d/m/Y H:m' }}</h5></div>
              {% else %}
-                <div class="card text-white bg-secondary mb-3" >
+                <div class="card bg-secondary mb-12" >
                     <div class="card-header"><h5>{{ andamento.solicitacao.cliente.nome }} <br> Solicitacao {{ andamento.solicitacao_id }}</h5></div>
                 {% endif %}
                 <div class="card-body">
-                    <h5 class="card-title">{{ andamento.dataHoraCriacao|date:'d/m/Y' }}</h5>
+
                     <p class="card-text">
-                        {{ andamento.comentario }}<br>
-                        Visivel para cliente? {{ andamento.disponivelCliente }}<br>
+                        {{ andamento.comentario }}<br><br>
+                        Disponível para o cliente? {{ andamento.disponivelCliente }}<br>
                         Status do andamento:  {{ andamento.status }} <br>
-                        Status do pedido:  {{ andamento.pedido.status }}
+                        Status do contrato:  {{ andamento.pedido.status }}
                     </p>
                 </div>
                 <div class="card-footer bg-transparent" align="center">

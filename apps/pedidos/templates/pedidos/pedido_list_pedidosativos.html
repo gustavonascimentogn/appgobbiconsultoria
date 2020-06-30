@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {%  load static %}
-
+{% block head %}
+<script>
+    function abrirJanela(url) {
+        window.open(url, "andamentos", "toolbar=yes, scrollbars=yes, resizable=yes, top=50, left=450, width=400, height=350");
+    }
+</script>
+{% endblock %}
 {% block main %}
 
     <p>
@@ -29,7 +35,7 @@
     <div class="row">
         {%  for pedido in object_list %}
         <div class="col-md-4">
-                <div class="card text-white bg-success mb-3">
+                <div class="card bg-light mb-3">
 
                 <div class="card-header"><h5>{{ pedido.cliente.nome }} <br> Pedido.ID: {{ pedido.id }}</h5></div>
                 <div class="card-body">
@@ -49,6 +55,7 @@
                         <b>Serviços contratados</b><br>
                         {%  for item in pedido.servico.all  %}
                                 <a href="{% url 'create_andamento' pedido.id 'pedido' pedido.cliente.phonewhatts item.id %}"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>
+                        <a href="#" onclick="abrirJanela('{% url 'list_andamentos' pedido.id item.id %}');"><img src="{% static 'images/list.png'%}" alt="Histórico" ></a>
                             &nbsp;&nbsp;&nbsp;{{  item.nome  }}<br>
                         {%  endfor  %}<br>
                         Movimentações: {{ pedido.total_andamentos }}<br>

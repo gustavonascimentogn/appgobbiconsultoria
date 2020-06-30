@@ -16,7 +16,15 @@ from ..solicitacoes.models import Solicitacao
 
 class AndamentosList(ListView):
     model = Andamento
-    paginate_by = 20
+    paginate_by = 1
+
+    ## Listando somente andamentos do cliente e servico clicado
+    def get_queryset(self):
+        pedido = self.kwargs['idpedido']
+        servico = self.kwargs['idservico']
+        andamentos = Andamento.objects.filter(pedido__pk=pedido,servico__pk=servico).order_by('-pk')
+        return andamentos
+
 
 ## Classe para edição dos registros
 class AndamentoEdit(UpdateView):
