@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Servico
@@ -11,7 +12,13 @@ class ServicosList(ListView):
     ## Listando somente servicos da empresa do funcionario logado
     def get_queryset(self):
         empresa_logada = self.request.user.empregado.empresa
-        return Servico.objects.filter(empresa=empresa_logada)
+        servicos =  Servico.objects.filter(empresa=empresa_logada)
+
+        busca = self.request.GET.get('search')
+        if busca:
+            servicos = servicos.filter(Q(nome__icontains=busca) | Q(descricao__icontains=busca))
+
+        return servicos
 
 ## Classe para edição dos registros
 class ServicoEdit(UpdateView):

@@ -17,9 +17,7 @@
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'home'   %}">&nbsp; <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'home'   %}">Home <span class="sr-only">(current)</span></a>
-      </li>
+
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Cadastros
@@ -61,7 +59,7 @@
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Manutenção e configuração
+          Configuração
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{% url 'list_servicos' %}">Portifólio de serviços oferecidos</a>
@@ -72,6 +70,18 @@
         <a class="nav-link" href="{% url 'logout' %}">Sair</a>
       </li>
     </ul>
+
+  </div>
+  <div class="navbar justify-content-between">
+    <form class="form-inline" method="GET">
+      <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fa fa-search"></i></span>
+        </div>
+        <input type="search" class="form-control" aria-label="Search" aria-describedby="inputGroup-sizing-sm"  name="search" id="search">
+        <button class="btn btn-sm btn-outline-secondary" type="submit" id="btneraser"><i class="fa fa-eraser"></i></button>
+      </div>
+    </form>
   </div>
 </nav>
 </div>

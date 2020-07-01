@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.db.models.functions import datetime
 from django.views.generic import UpdateView, CreateView, ListView
 
@@ -23,6 +24,11 @@ class ContasPagarList(ListView):
         contas_pagar = ContaPagar.objects.filter(grupoConta__in=planoContasGrupo,dataVencimento__year=ano,
                                                  dataVencimento__month=mes)\
             .order_by('dataVencimento','vendedor__nome','pedido__cliente__nome','dataHoraCriacao')
+
+        busca = self.request.GET.get('search')
+        if busca:
+            contas_pagar = contas_pagar.filter(Q(pedido__vendedor__nome__icontains=busca) | Q(pedido__vendedor__nomeContato__icontains=busca) | Q(pedido__vendedor__razao_social__icontains=busca))
+
         return contas_pagar
 
 

@@ -25,6 +25,18 @@ class AndamentosList(ListView):
         andamentos = Andamento.objects.filter(pedido__pk=pedido,servico__pk=servico).order_by('-pk')
         return andamentos
 
+class AndamentosListSolicitacao(ListView):
+    model = Andamento
+    paginate_by = 1
+
+    template_name = "andamentos/andamento_list_solicitacao.html"
+
+    ## Listando somente andamentos do cliente e servico clicado
+    def get_queryset(self):
+        solicitacao = self.kwargs['idsolicitacao']
+        andamentos = Andamento.objects.filter(solicitacao__pk=solicitacao).order_by('-pk')
+        return andamentos
+
 
 ## Classe para edição dos registros
 class AndamentoEdit(UpdateView):

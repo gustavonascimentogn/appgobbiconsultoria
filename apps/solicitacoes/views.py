@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Solicitacao
@@ -13,7 +14,13 @@ class SolicitacoesList(ListView):
     def get_queryset(self):
         empresa_logada = self.request.user.empregado.empresa
         clientes_da_empresa = Cliente.objects.filter(empresa=empresa_logada)
-        return Solicitacao.objects.filter(cliente__in=clientes_da_empresa).order_by('-pk')
+        solicitacoes = Solicitacao.objects.filter(cliente__in=clientes_da_empresa).order_by('-pk')
+
+        busca = self.request.GET.get('search')
+        if busca:
+            solicitacoes = solicitacoes.filter(Q(cliente__nome__icontains=busca) | Q(cliente__nomeContato__icontains=busca) | Q(cliente__razao_social__icontains=busca) | Q(solicitacao__icontains=busca))
+
+        return solicitacoes
 
 ## Classe para edição dos registros
 class SolicitacaoEdit(UpdateView):

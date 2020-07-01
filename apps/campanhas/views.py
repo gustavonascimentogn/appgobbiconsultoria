@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 
@@ -12,7 +13,13 @@ class CampanhasList(ListView):
     ## Listando somente clientes da empresa do funcionario logado
     def get_queryset(self):
         empresa_logada = self.request.user.empregado.empresa
-        return Campanha.objects.filter(empresa=empresa_logada)
+        campanhas = Campanha.objects.filter(empresa=empresa_logada)
+
+        busca = self.request.GET.get('search')
+        if busca:
+            campanhas = campanhas.filter(Q(nome__icontains=busca) | Q(texto_campanha__icontains=busca))
+
+        return campanhas
 
 ## Classe para edição dos registros
 class CampanhaEdit(UpdateView):

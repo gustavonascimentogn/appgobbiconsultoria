@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block head %}
+<script>
+    function abrirJanela(url) {
+        window.open(url, "andamentos", "toolbar=yes, scrollbars=yes, resizable=yes, top=50, left=450, width=400, height=350");
+    }
+</script>
+{% endblock %}
 
 {% block main %}
     <p>
@@ -41,6 +48,7 @@
                             <p class="card-text">
                                 {{ solicitacao.cliente.nome }}<br>
                                 {{ solicitacao.solicitacao }}<br>
+                                <a href="#" onclick="abrirJanela('{% url 'list_andamentos_solicitacao' solicitacao.id %}');"><img src="{% static 'images/list.png'%}" alt="Histórico" ></a>
                                 Movimentações: {{ solicitacao.total_andamentos }}<br>
                                 Atendida: {{ solicitacao.atendida }}<br>
                                 Fechada: {{ solicitacao.fechada }}

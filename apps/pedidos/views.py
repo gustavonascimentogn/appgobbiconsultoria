@@ -10,6 +10,7 @@ from apps.vendedores.models import Vendedor
 from .form import PedidoForm
 from apps.planos_contas_grupos.models import PlanoContasGrupo
 from apps.planos_contas.models import PlanoContas
+from django.db.models import Q
 
 ## Classe para listagem dos registros
 from ..servicos.models import Servico
@@ -23,7 +24,13 @@ class PedidosList(ListView):
     def get_queryset(self):
         empresa_logada = self.request.user.empregado.empresa
         clientes_da_empresa = Cliente.objects.filter(empresa=empresa_logada)
-        return Pedido.objects.filter(cliente__in=clientes_da_empresa).order_by('status__id','-pk')
+        pedidos = Pedido.objects.filter(cliente__in=clientes_da_empresa).order_by('status__id','-pk')
+
+        busca = self.request.GET.get('search')
+        if busca:
+            pedidos = pedidos.filter(Q(cliente__nome__icontains=busca) | Q(cliente__nomeContato__icontains=busca) | Q(cliente__razao_social__icontains=busca))
+
+        return pedidos
 
 
 class PedidosListVencendo(ListView):

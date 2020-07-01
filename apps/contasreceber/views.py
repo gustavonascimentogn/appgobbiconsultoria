@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.db.models.functions import datetime
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, CreateView, ListView
@@ -23,8 +24,11 @@ class ContasReceberList(ListView):
                                                  dataVencimento__month=mes)\
             .order_by('dataVencimento','dataHoraCriacao')
 
-        return contas_receber ##ContaPagar.objects.filter(grupoConta__in=planoContasGrupo,dataVencimento__year=ano,dataVencimento__month=mes).order_by('pedido__cliente__nome','dataVencimento','dataHoraCriacao')
+        busca = self.request.GET.get('search')
+        if busca:
+            contas_receber = contas_receber.filter(Q(pedido__cliente__nome__icontains=busca) | Q(pedido__cliente__nomeContato__icontains=busca) | Q(pedido__cliente__razao_social__icontains=busca))
 
+        return contas_receber
 
 ## Classe para edição dos registros
 class ContaReceberEdit(UpdateView):

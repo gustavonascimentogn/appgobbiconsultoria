@@ -1,5 +1,6 @@
 from datetime import datetime, date
 
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 
@@ -19,8 +20,13 @@ class VendedoresList(ListView):
     ## Listando somente vendedores da empresa do funcionario logado
     def get_queryset(self):
         empresa_logada = self.request.user.empregado.empresa
+        vendedores =  Vendedor.objects.filter(empresa=empresa_logada).order_by('nome')
 
-        return Vendedor.objects.filter(empresa=empresa_logada)
+        busca = self.request.GET.get('search')
+        if busca:
+            vendedores = vendedores.filter(Q(nome__icontains=busca) | Q(nomeContato__icontains=busca) | Q(razao_social__icontains=busca) | Q(emailContato__icontains=busca))
+
+        return vendedores
 
 ## Classe para edição dos registros
 class VendedorEdit(UpdateView):
