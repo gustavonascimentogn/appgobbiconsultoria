@@ -28,17 +28,22 @@
         {%  for status in object_list %}
         <div class="col-md-3">
             <div class="card bg-light mb-3" >
-                <div class="card-header"><h5>{{ status.nome }} (Id. {{ status.id }}) </h5></div>
+                <div class="card-header"><h5>{{ status.nome }} (Sequência: {{ status.sequencia }}) </h5></div>
                 <div class="card-body">
                     <h5 class="card-title">{{ status.nome }}</h5>
                     <p class="card-text">
-                        {{ status.nome }}<br>
+                        Sequência: {{ status.sequencia }}<br>
                         Ativo: {{ status.ativo }}<br>
                     </p>
                 </div>
                 <div class="card-footer bg-transparent" align="center">
+                    {%  if status.nome != 'Novo' and status.nome != 'Finalizado'  %}
                     <a href="{% url 'update_status' status.id %}" ><img src="{% static 'images/edit32x32.png'%}" alt="Editar" ></a>
                     <a href="{% url 'delete_status' status.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a>
+                    {%  else %}
+                    <img src="{% static 'images/edit_disabled_32x32.png'%}" alt="Editar">
+                    <img src="{% static 'images/delete.png'%}" alt="Deletar">
+                    {%  endif %}
                 </div>
             </div>
         </div>

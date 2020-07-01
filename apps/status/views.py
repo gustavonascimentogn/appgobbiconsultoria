@@ -15,7 +15,7 @@ class StatusList(ListView):
 ## Classe para edição dos registros
 class StatusEdit(UpdateView):
     model = Status
-    fields = ['nome','ativo']
+    fields = ['nome','sequencia','ativo']
 
     def form_valid(self, form):
         status = form.save(commit=False)
@@ -30,7 +30,7 @@ class StatusDelete(DeleteView):
 
 class StatusNovo(CreateView):
     model = Status
-    fields = ['nome','ativo']
+    fields = ['nome','sequencia','ativo']
 
     ## Sobrescrevendo o método form_valid para vincular o Cliente a empresa que o atende
     ## Ao final, chamo o método da super classe para prosseguir com a gravação
