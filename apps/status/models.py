@@ -13,4 +13,4 @@ class Status(models.Model):
         ordering = ["pk"]
 
     def __str__(self):
-        return self.nome
+        return self.empresa.nomeFantasia + ' | ' + self.nome
