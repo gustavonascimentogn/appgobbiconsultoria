@@ -15,6 +15,6 @@ class AndamentoForm(ModelForm):
         model = Andamento
         fields = ['status','comentario','disponivelCliente']
         widgets = {
-          'comentario': forms.Textarea(attrs={'rows':4, 'cols':15}),
+          'comentario': forms.Textarea(attrs={'rows':6, 'cols':25}),
         }
 
