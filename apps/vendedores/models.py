@@ -27,7 +27,7 @@ class Vendedor(models.Model):
                 ordering = ["nome"]
 
         def __str__(self):
-                return self.nome + ' (Contato: ' + self.nomeContato + ' - ' + str(self.percentual_bonificacao) + '%)'
+                return self.nome + ' (Contato: ' + self.nomeContato + ' | ' + str(self.percentual_bonificacao) + '% | ' + str(self.duracao_em_meses) + ' meses)'
 
         @property
         def qtd_total_pedidos(self):
