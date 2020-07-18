@@ -3,7 +3,7 @@
 {% block head %}
 <script>
     function abrirJanela(url) {
-        window.open(url, "andamentos", "toolbar=yes, scrollbars=yes, resizable=yes, top=50, left=450, width=400, height=350");
+        window.open(url, "andamentos", "toolbar=yes, scrollbars=yes, resizable=yes, top=50, left=150, width=800, height=550");
     }
 </script>
 {% endblock %}
@@ -71,11 +71,11 @@
 
                                     <br>
                                     Feito em {{ pedido.dataHoraCriacao|date:'d/m/Y' }}<br>
-                                    R$ {{ pedido.valor|floatformat:2  }} <br>
+                                    {{ pedido.moeda }} {{ pedido.valor|floatformat:2  }} <br>
                                     Status: {{ pedido.status  }}<br>
                                     <b>Serviços contratados</b><br>
                                     {%  for servico in pedido.servico.all  %}
-                                            <a href="{% url 'create_andamento' pedido.id 'cliente' pedido.cliente.phonewhatts servico.id %}"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>
+                                    <a href="#" onclick="abrirJanela('{% url 'create_andamento' pedido.id 'cliente' pedido.cliente.phonewhatts servico.id %}');"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>
                                     <a href="#" onclick="abrirJanela('{% url 'list_andamentos' pedido.id servico.id %}');"><img src="{% static 'images/list.png'%}" alt="Histórico" ></a>
                                             {{  servico.nome  }}<br>
                                     {%  endfor  %}<br>
@@ -110,7 +110,7 @@
                                             {%  else %}
                                                 {{ parcela.numParcela }}:
                                             {% endif %}
-                                                    {{ parcela.dataVencimento|date:'d/m/Y'  }} | R$ {{ parcela.valor|floatformat:2 }}
+                                                    {{ parcela.dataVencimento|date:'d/m/Y'  }} | {{ pedido.moeda }} {{ parcela.valor|floatformat:2 }}
                                             {%  if parcela.paga %}
                                                 <img src="{% static 'images/check.png'%}" alt="Editar" >
                                                 <a onclick="window.open('{% url 'update_contareceber_documento' parcela.id %}','contapagar');"><img src="{% static 'images/document16px.png'%}" alt="Editar"></a>

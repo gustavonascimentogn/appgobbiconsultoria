@@ -3,7 +3,7 @@
 {% block head %}
 <script>
     function abrirJanela(url) {
-        window.open(url, "andamentos", "toolbar=yes, scrollbars=yes, resizable=yes, top=50, left=450, width=400, height=350");
+        window.open(url, "andamentos", "toolbar=yes, scrollbars=yes, resizable=yes, top=50, left=150, width=800, height=550");
     }
 </script>
 {% endblock %}
@@ -61,7 +61,7 @@
                         {%  endfor %}
                         <b>Serviços contratados</b><br>
                         {%  for servico in pedido.servico.all  %}
-                                <a href="{% url 'create_andamento' pedido.id 'pedido' pedido.cliente.phonewhatts servico.id %}"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>
+                                <a href="#" onclick="abrirJanela('{% url 'create_andamento' pedido.id 'pedido' pedido.cliente.phonewhatts servico.id %}');"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>
                         <a href="#" onclick="abrirJanela('{% url 'list_andamentos' pedido.id servico.id %}');"><img src="{% static 'images/list.png'%}" alt="Histórico" ></a>
                             &nbsp;&nbsp;{{  servico.nome  }}<br>
                         {%  endfor  %}<br>
@@ -74,7 +74,7 @@
                         <div class="card-header" id="headingOne{{ pedido.id }}">
                           <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne{{ pedido.id }}" aria-expanded="false" aria-controls="collapseOne{{ pedido.id }}">
-                              Total R${{ pedido.valor|floatformat:2 }} ({{ pedido.qtdParcelas }}x)<br>
+                              Total {{ pedido.moeda }}{{ pedido.valor|floatformat:2 }} ({{ pedido.qtdParcelas }}x)<br>
 
                             </button>
                           </h5>
@@ -89,7 +89,7 @@
                                     {%  else %}
                                         {{ parcela.numParcela }}:
                                     {% endif %}
-                                            {{ parcela.dataVencimento|date:'d/m/Y'  }} | R$ {{ parcela.valor|floatformat:2 }}
+                                            {{ parcela.dataVencimento|date:'d/m/Y'  }} | {{ pedido.moeda }} {{ parcela.valor|floatformat:2 }}
                                     {%  if parcela.paga %}
                                         <img src="{% static 'images/check.png'%}" alt="Editar" >
                                         <a onclick="window.open('{% url 'update_contareceber_documento' parcela.id %}','contapagar');"><img src="{% static 'images/document16px.png'%}" alt="Editar"></a>
@@ -112,7 +112,7 @@
                         <div class="card-header" id="headingTwo{{ pedido.id }}">
                           <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOneComissao{{ pedido.id }}" aria-expanded="false" aria-controls="collapseOneComissao{{ pedido.id }}">
-                              Comissão R$ {{ pedido.total_comissao|floatformat:2 }}<br>
+                              Comissão {{ pedido.moeda }} {{ pedido.total_comissao|floatformat:2 }}<br>
 
                             </button>
                           </h5>
@@ -127,7 +127,7 @@
                                     {%  else %}
                                         {{ comissao.numParcelaComissao }}
                                     {% endif %}
-                                            {{ comissao.dataVencimento|date:'m/Y'  }} | R$ {{ comissao.valor|floatformat:2 }}
+                                            {{ comissao.dataVencimento|date:'m/Y'  }} | {{ pedido.moeda }} {{ comissao.valor|floatformat:2 }}
                                     {%  if comissao.paga %}
                                         <img src="{% static 'images/check.png'%}" alt="Editar" >
                                         <a onclick="window.open('{% url 'update_contapagar_documento' comissao.id %}','contapagar');"><img src="{% static 'images/document16px.png'%}" alt="Editar"></a>

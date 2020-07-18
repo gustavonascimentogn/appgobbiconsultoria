@@ -9,6 +9,18 @@ from apps.vendedores.models import Vendedor
 
 
 class Pedido(models.Model):
+    real = 'R$'
+    dolar = 'US$'
+    euro = '€'
+
+    TIPO_OPCOES = [
+        (real, 'BRL(R$)'),
+        (dolar, 'US$($)'),
+        (euro, 'EURO(€)'),
+    ]
+
+    moeda = models.CharField(max_length=3, blank=False, null=False, choices=TIPO_OPCOES,
+                                verbose_name='Moeda de negociação do contrato', default=real)
     dataHoraCriacao = models.DateTimeField(auto_now_add=True, editable=False, help_text='Captura automaticamente a data de criação', verbose_name='Data e hora de criação')
     qtdParcelas = models.IntegerField(blank=False, null=False, verbose_name='Quantidade de cobranças a serem geradas (parcelamento)')
     dataVencimento = models.DateField(blank=False, editable=True, verbose_name='Data de vencimento da primeira cobrança')

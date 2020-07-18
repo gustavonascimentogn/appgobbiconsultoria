@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django import forms
 from .models import Pedido
 from apps.clientes.models import Cliente
 from ..status.models import Status
@@ -18,11 +19,12 @@ class PedidoForm(ModelForm):
 
     class Meta:
         model = Pedido
-        fields = ['cliente','vendedor','servico','dataVencimentoContrato','valorParcela','qtdParcelas','dataVencimento',
+        fields = ['cliente','vendedor','servico','dataVencimentoContrato','moeda','valorParcela','qtdParcelas','dataVencimento',
                   'dataVencimentoVendedor','qtdParcelasComissao','percentualComissaoCadaVendedor','status','arquivo']
         widgets = {
             'dataVencimento': DatePickerInput(format='%d/%m/%Y'),
             'dataVencimentoContrato': DatePickerInput(format='%d/%m/%Y'),
             'dataVencimentoVendedor': DatePickerInput(format='%d/%m/%Y'),
+            'moeda':forms.RadioSelect,
         }
 

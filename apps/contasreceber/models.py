@@ -12,7 +12,7 @@ class ContaReceber(models.Model):
         dataVencimento = models.DateField(editable=True, default=timezone.now, verbose_name='Data de vencimento da parcela')
         valor = models.FloatField(blank=False, default=0, verbose_name='Valor a ser pago')
         paga = models.BooleanField(default=False, verbose_name='Parcela está paga?')
-        valorPago = models.FloatField(blank=True, null=True, verbose_name='Valor pago em R$')
+        valorPago = models.FloatField(blank=True, null=True, verbose_name='Valor pago')
         dataPagamento = models.DateField(editable=True, default=None, null=True, blank=True, verbose_name='Data de efetivação do recebimento')
         descricaoConta = models.CharField(max_length=100, blank=False, null=False, verbose_name='Descrição da conta a receber')
         arquivo = models.FileField(upload_to='documentos',verbose_name='Anexe o documento da conta', null=True, blank=True)

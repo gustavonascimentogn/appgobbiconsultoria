@@ -1,6 +1,5 @@
 from datetime import datetime
 from django.db import models
-from django.db.models import Sum, Avg
 from apps.empresas.models import Empresa
 from apps.clientes.models import Cliente
 

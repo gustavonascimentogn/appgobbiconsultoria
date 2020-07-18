@@ -27,6 +27,12 @@ function filter(){
 
     document.getElementsByName("form_filter").submit();
 }
+
+
+function abrirJanela(url) {
+    window.open(url, "andamentos", "toolbar=yes, scrollbars=yes, resizable=yes, top=50, left=150, width=800, height=550");
+}
+
 </script>
 {% endblock %}
 
@@ -136,25 +142,25 @@ function filter(){
               <td>{% if contapagar.vendedor %}{{ contapagar.vendedor }}{% else %}-{% endif %}</td>
               <td>{% if contapagar.pedido.cliente.nome %}{{ contapagar.pedido.cliente.nome }}{% else %}-{% endif %}</td>
               <td>{% if contapagar.pedido %}Ped. {{ contapagar.pedido.pk }} - {% endif %}{{ contapagar.descricaoConta }}</td>
-              <td>{{ contapagar.valor|floatformat:2 }}</td>
+              <td>{{ contapagar.pedido.moeda }}{{ contapagar.valor|floatformat:2 }}</td>
               <td>{% if contapagar.paga %}Sim{% else %}Não{% endif %}</td>
-              <td>{% if contapagar.valorPago %} {{ contapagar.valorPago|floatformat:2}}{% else %}-{% endif %}</td>
+              <td>{% if contapagar.valorPago %} {{ contapagar.pedido.moeda }}{{ contapagar.valorPago|floatformat:2}}{% else %}-{% endif %}</td>
               <td>{% if contapagar.dataPagamento %} {{ contapagar.dataPagamento|date:'d/m/Y' }}{% else %}-{% endif %}</td>
               <td>{{ contapagar.dataHoraCriacao|date:'d/m/Y' }}</td>
               <td>
-                  <a onclick="window.open('{% url 'update_contapagar_documento' contapagar.id %}','contapagar');"><img src="{% static 'images/document16px.png'%}" alt="Editar"></a>
+                  <a onclick="abrirJanela('{% url 'update_contapagar_documento' contapagar.id %}');"><img src="{% static 'images/document16px.png'%}" alt="Editar"></a>
                   {% if contapagar.paga %}
                         {% if contapagar.valorPago  %}
                             {% if contapagar.dataPagamento %}
                                 <img src="{% static 'images/check.png'%}" alt="Editar">
                             {% else %}
-                                <a href="#" onclick="window.open('{% url 'update_contapagar' contapagar.id %}','contapagar');"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
+                                <a onclick="abrirJanela('{% url 'update_contapagar' contapagar.id %}');"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
                             {% endif %}
                         {% else %}
-                            <a href="#" onclick="window.open('{% url 'update_contapagar' contapagar.id %}','contapagar');"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
+                            <a onclick="abrirJanela('{% url 'update_contapagar' contapagar.id %}');"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
                         {% endif %}
                   {% else %}
-                    <a href="#" onclick="window.open('{% url 'update_contapagar' contapagar.id %}','contapagar');"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
+                    <a onclick="abrirJanela('{% url 'update_contapagar' contapagar.id %}');"><img src="{% static 'images/edit.png'%}" alt="Editar"></a>
                   {% endif %}</td>
             </tr>
            {% endfor %}
