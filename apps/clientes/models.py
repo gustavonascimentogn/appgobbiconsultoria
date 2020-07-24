@@ -18,6 +18,7 @@ class Cliente(models.Model):
         cep = models.CharField(max_length=9, blank=True, null=True, help_text='Incluindo traço. Exemplo: 15000-000', verbose_name='CEP')
         appPassword = models.CharField(max_length=12, blank=True, null=True, help_text='Senha para acesso ao App', verbose_name='Password para acesso ao App')
         appHabilitado = models.BooleanField(default=False, blank=True, null=True, verbose_name='Habilitar cliente a utilizar o App?')
+        instagram = models.CharField(max_length=500, blank=True, null=True, verbose_name='Instagram')
 
         inscricaoEstadual = models.CharField(max_length=50, blank=False, null=False, help_text='Caso seja isenta, preencha com a palavra ˜Isenta˜', verbose_name='Inscrição estadual')
         inscricaoMunicipal = models.CharField(max_length=50, blank=False, null=False, help_text='Caso seja isenta, preencha com a palavra ˜Isenta˜', verbose_name='Inscrição municipal')

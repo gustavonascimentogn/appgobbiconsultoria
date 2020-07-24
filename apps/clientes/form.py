@@ -9,7 +9,7 @@ class ClienteForm(ModelForm):
     class Meta:
         model = Cliente
         fields = ['nome','razao_social','cpf_cnpj','inscricaoMunicipal','inscricaoEstadual','nomeContato','emailContato','telefone','cidade','estado',
-              'endereco','complemento','bairro','cep','appPassword','appHabilitado']
+              'endereco','complemento','bairro','cep','instagram','appPassword','appHabilitado']
         widgets = {
           'appPassword': forms.PasswordInput(),
         }
