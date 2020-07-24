@@ -71,7 +71,7 @@
 
                                     <br>
                                     Feito em {{ pedido.dataHoraCriacao|date:'d/m/Y' }}<br>
-                                    {{ pedido.moeda }} {{ pedido.valor|floatformat:2  }} <br>
+                                    {{ pedido.moeda }} {{ pedido.total_contrato|floatformat:2  }} <br>
                                     Status: {{ pedido.status  }}<br>
                                     <b>Serviços contratados</b><br>
                                     {%  for servico in pedido.servico.all  %}

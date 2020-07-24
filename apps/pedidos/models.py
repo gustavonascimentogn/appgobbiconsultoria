@@ -81,6 +81,10 @@ class Pedido(models.Model):
         return sum(contapagar.valor for contapagar in self.contapagar_set.all())
 
     @property
+    def total_contrato(self):
+        return sum(contareceber.valor for contareceber in self.contareceber_set.all())
+
+    @property
     def total_pagar_mesatual(self):
         mes = datetime.now().month
         ano = datetime.now().year
