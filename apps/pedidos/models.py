@@ -24,7 +24,7 @@ class Pedido(models.Model):
     dataHoraCriacao = models.DateTimeField(auto_now_add=True, editable=False, help_text='Captura automaticamente a data de criação', verbose_name='Data e hora de criação')
     qtdParcelas = models.IntegerField(blank=False, null=False, verbose_name='Quantidade de cobranças a serem geradas (parcelamento)')
     dataVencimento = models.DateField(blank=False, editable=True, verbose_name='Data de vencimento da primeira cobrança')
-    valor = models.FloatField(blank=True, null=True, verbose_name='Valor total do contrato', help_text='Caso preenchido, este campo será utilizado para calcular o valor de cada parcela do contrato')
+    valor = models.FloatField(blank=True, null=True, verbose_name='Valor Original do contrato', help_text='Caso preenchido, este campo será utilizado para calcular o valor de cada parcela do contrato')
     valorParcela = models.FloatField(blank=False, null=False, verbose_name='Valor de cada parcela')
     dataVencimentoVendedor = models.DateField(blank=False, editable=True, verbose_name='Data para pagamento da primeira comissão ao vendedor')
     qtdParcelasComissao = models.IntegerField(blank=True, null=True, verbose_name='Quantidade de meses que será gerada comissão para cada vendedor', help_text='Quando preenchido, este valor sobrepõe o valor informado do cadastro do vendedor')

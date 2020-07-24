@@ -38,6 +38,7 @@ class ContaReceberEdit(UpdateView):
     def form_valid(self, form):
         parcela = form.save(commit=False)
 
+        ## valorPago NÃO vazio
         if not parcela.valorPago == None:
             parcela.paga = True
             if parcela.dataPagamento == None:
