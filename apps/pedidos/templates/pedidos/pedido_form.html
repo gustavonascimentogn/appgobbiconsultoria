@@ -15,7 +15,7 @@
                 <div class="card-header" id="headingOne">
                   <h5 class="mb-0">
                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne{{ object.id }}" aria-expanded="false" aria-controls="collapseOne{{ object.id }}">
-                      Valor R$ {{ object.valor|floatformat:2 }} ({{ object.qtdParcelas }} cobranças)<br>
+                      Valor R$ {{ object.total_contrato|floatformat:2 }} ({{ object.qtdParcelas }} cobranças)<br>
                     </button>
                   </h5>
                 </div>
