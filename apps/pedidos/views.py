@@ -240,11 +240,18 @@ class PedidoNovo(CreateView):
         empresa_logada = self.request.user.empregado.empresa
         plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
         grupo_contas_receber = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado, nome=empresa_logada.parcela_nome_plano_contas_grupo, ativo=True)
-        for i in range(1, pedidoN.qtdParcelas+1):
-            #nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
-            day = pedidoN.dataVencimento.day
-            nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
-            nova_data_vencimento = datetime(nova_data_vencimento.year, nova_data_vencimento.month, day)
+
+        nova_data_vencimento = pedidoN.dataVencimento
+        for i in range(1, pedidoN.qtdParcelas + 1):
+            ## tratando os meses de fevereiro que tem 28 dias
+            ## neste momento, a variavel nova_data_vencimento refere-se a última parcela gerada
+            if i != 1 and nova_data_vencimento.month == 1 and nova_data_vencimento.day >= 29:
+                nova_data_vencimento = nova_data_vencimento + timedelta(days=28)
+            elif i != 1 and nova_data_vencimento.day == 31:
+                # nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
+                nova_data_vencimento = nova_data_vencimento + timedelta(days=30)
+            elif i != 1:
+                nova_data_vencimento = nova_data_vencimento + timedelta(days=31)
 
             insert_list.append(ContaReceber(numParcela=i, dataVencimento=nova_data_vencimento,
                                             valor=valorContrato / pedidoN.qtdParcelas,
@@ -280,11 +287,20 @@ class PedidoNovo(CreateView):
                 empresa_logada = self.request.user.empregado.empresa
                 plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
                 grupo_contas_pagar = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado, nome=empresa_logada.comissao_nome_plano_contas_grupo)
+
+
+
+                nova_data_vencimento = pedidoN.dataVencimentoVendedor
                 for i in range(1, duracao_em_meses+1):
-                    #nova_data_vencimento = pedidoN.dataVencimentoVendedor + timedelta(days=((i-1)*31))
-                    day = pedidoN.dataVencimentoVendedor.day
-                    nova_data_vencimento = pedidoN.dataVencimentoVendedor + timedelta(days=((i-1)*31))
-                    nova_data_vencimento = datetime(nova_data_vencimento.year, nova_data_vencimento.month, day)
+                    ## tratando os meses de fevereiro que tem 28 dias
+                    ## neste momento, a variavel nova_data_vencimento refere-se a última parcela gerada
+                    if i != 1 and nova_data_vencimento.month == 1 and nova_data_vencimento.day >= 29:
+                        nova_data_vencimento = nova_data_vencimento + timedelta(days=28)
+                    elif i != 1 and nova_data_vencimento.day == 31:
+                        # nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
+                        nova_data_vencimento = nova_data_vencimento + timedelta(days=30)
+                    elif i != 1:
+                        nova_data_vencimento = nova_data_vencimento + timedelta(days=31)
 
                     insert_list_comissao.append(ContaPagar(numParcela=i, dataVencimento=nova_data_vencimento,
                                                            valor=(pedidoN.valor * (percentualComissao / 100))/duracao_em_meses,
