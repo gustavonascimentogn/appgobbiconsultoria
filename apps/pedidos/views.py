@@ -115,35 +115,38 @@ class PedidoEdit(UpdateView):
         if botao_recalcular=='recalcular':
             ## deletando parcelas nao pagas
             ContaReceber.objects.filter(pedido=pedidoN, paga=False).delete()
-            ## Inserindo novamente as parcelas (conta a pagar)
-            insert_list = []
-            qtd_parcelas_pagas = ContaReceber.objects.filter(pedido=pedidoN, paga=True).count()
-            empresa_logada = self.request.user.empregado.empresa
-            plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
-            grupo_contas_receber = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado,nome=empresa_logada.parcela_nome_plano_contas_grupo)
 
-            nova_data_vencimento = pedidoN.dataVencimento
-            for i in range(1+qtd_parcelas_pagas, pedidoN.qtdParcelas+1):
-                ## tratando os meses de fevereiro que tem 28 dias
-                ## neste momento, a variavel nova_data_vencimento refere-se a última parcela gerada
-                if i != 1 and nova_data_vencimento.month == 1 and nova_data_vencimento.day >= 29:
-                    nova_data_vencimento = nova_data_vencimento + timedelta(days=28)
-                elif i != 1 and nova_data_vencimento.day == 31:
-                    #nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
-                    nova_data_vencimento = nova_data_vencimento + timedelta(days=30)
-                elif i != 1:
-                    nova_data_vencimento = nova_data_vencimento + timedelta(days=31)
-                ## calculando valor do contrato
-                valorContrato = pedidoN.qtdParcelas * pedidoN.valorParcela
-                insert_list.append(ContaReceber(numParcela=i, dataVencimento=nova_data_vencimento,
-                                                valor=valorContrato / pedidoN.qtdParcelas,
-                                                pedido=pedidoN, grupoConta=grupo_contas_receber,
-                                                descricaoConta='Parcela ' + str(i) + '/' + str(pedidoN.qtdParcelas)))
+            if pedidoN.valorParcela > 0:
+                ## Inserindo novamente as parcelas (conta a pagar)
+                insert_list = []
+                qtd_parcelas_pagas = ContaReceber.objects.filter(pedido=pedidoN, paga=True).count()
+                empresa_logada = self.request.user.empregado.empresa
+                plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
+                grupo_contas_receber = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado,nome=empresa_logada.parcela_nome_plano_contas_grupo)
 
-            ContaReceber.objects.bulk_create(insert_list)
+                nova_data_vencimento = pedidoN.dataVencimento
+                for i in range(1+qtd_parcelas_pagas, pedidoN.qtdParcelas+1):
+                    ## tratando os meses de fevereiro que tem 28 dias
+                    ## neste momento, a variavel nova_data_vencimento refere-se a última parcela gerada
+                    if i != 1 and nova_data_vencimento.month == 1 and nova_data_vencimento.day >= 29:
+                        nova_data_vencimento = nova_data_vencimento + timedelta(days=28)
+                    elif i != 1 and nova_data_vencimento.day == 31:
+                        #nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
+                        nova_data_vencimento = nova_data_vencimento + timedelta(days=30)
+                    elif i != 1:
+                        nova_data_vencimento = nova_data_vencimento + timedelta(days=31)
+                    ## calculando valor do contrato
+                    valorContrato = pedidoN.qtdParcelas * pedidoN.valorParcela
+                    insert_list.append(ContaReceber(numParcela=i, dataVencimento=nova_data_vencimento,
+                                                    valor=valorContrato / pedidoN.qtdParcelas,
+                                                    pedido=pedidoN, grupoConta=grupo_contas_receber,
+                                                    descricaoConta='Parcela ' + str(i) + '/' + str(pedidoN.qtdParcelas)))
+
+                ContaReceber.objects.bulk_create(insert_list)
 
             ## deletando comissoes nao pagas
             ContaPagar.objects.filter(pedido=pedidoN, paga=False).delete()
+
             ## Inserindo novamente as comissoes dos vendedores
             vendedores = self.request.POST.getlist('vendedor')
 
@@ -151,8 +154,10 @@ class PedidoEdit(UpdateView):
                 vendedor = Vendedor.objects.get(pk = item)
                 if not vendedor.percentual_bonificacao:
                     vendedor.percentual_bonificacao = 0
+
                 if not pedidoN.percentualComissaoCadaVendedor:
                     pedidoN.percentualComissaoCadaVendedor = 0
+
                 if vendedor.percentual_bonificacao > 0 or pedidoN.percentualComissaoCadaVendedor > 0:
                     insert_list_comissao = []
                     qtd_comissoes_pagas = ContaPagar.objects.filter(pedido=pedidoN, paga=True).count()
@@ -221,8 +226,13 @@ class PedidoNovo(CreateView):
             pedidoN.qtdParcelas = 1
         if not pedidoN.valorParcela:
             pedidoN.valorParcela = 0
-        valorContrato = pedidoN.qtdParcelas * pedidoN.valorParcela
-        pedidoN.valor = valorContrato
+
+
+        botao_recalcular = self.request.POST.get('salvar')
+        if botao_recalcular == 'recalcular':
+            valorContrato = pedidoN.qtdParcelas * pedidoN.valorParcela
+            pedidoN.valor = valorContrato
+
         pedidoN.save()
 
         ## incluindo os serviços
@@ -236,77 +246,80 @@ class PedidoNovo(CreateView):
             pedidoN.vendedor.add(item)
 
         ## INCLUINDO AS PARCELAS DO PEDIDO
-        insert_list = []
-        empresa_logada = self.request.user.empregado.empresa
-        plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
-        grupo_contas_receber = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado, nome=empresa_logada.parcela_nome_plano_contas_grupo, ativo=True)
+        if botao_recalcular=='recalcular' and pedidoN.valorParcela > 0:
+            insert_list = []
+            empresa_logada = self.request.user.empregado.empresa
+            plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
+            grupo_contas_receber = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado, nome=empresa_logada.parcela_nome_plano_contas_grupo, ativo=True)
 
-        nova_data_vencimento = pedidoN.dataVencimento
-        for i in range(1, pedidoN.qtdParcelas + 1):
-            ## tratando os meses de fevereiro que tem 28 dias
-            ## neste momento, a variavel nova_data_vencimento refere-se a última parcela gerada
-            if i != 1 and nova_data_vencimento.month == 1 and nova_data_vencimento.day >= 29:
-                nova_data_vencimento = nova_data_vencimento + timedelta(days=28)
-            elif i != 1 and nova_data_vencimento.day == 31:
-                # nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
-                nova_data_vencimento = nova_data_vencimento + timedelta(days=30)
-            elif i != 1:
-                nova_data_vencimento = nova_data_vencimento + timedelta(days=31)
+            nova_data_vencimento = pedidoN.dataVencimento
+            for i in range(1, pedidoN.qtdParcelas + 1):
+                ## tratando os meses de fevereiro que tem 28 dias
+                ## neste momento, a variavel nova_data_vencimento refere-se a última parcela gerada
+                if i != 1 and nova_data_vencimento.month == 1 and nova_data_vencimento.day >= 29:
+                    nova_data_vencimento = nova_data_vencimento + timedelta(days=28)
+                elif i != 1 and nova_data_vencimento.day == 31:
+                    # nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
+                    nova_data_vencimento = nova_data_vencimento + timedelta(days=30)
+                elif i != 1:
+                    nova_data_vencimento = nova_data_vencimento + timedelta(days=31)
 
-            insert_list.append(ContaReceber(numParcela=i, dataVencimento=nova_data_vencimento,
-                                            valor=valorContrato / pedidoN.qtdParcelas,
-                                            pedido=pedidoN, grupoConta=grupo_contas_receber,
-                                            descricaoConta='Parcela ' + str(i) + '/' + str(pedidoN.qtdParcelas)))
-        ContaReceber.objects.bulk_create(insert_list)
+                insert_list.append(ContaReceber(numParcela=i, dataVencimento=nova_data_vencimento,
+                                                valor=valorContrato / pedidoN.qtdParcelas,
+                                                pedido=pedidoN, grupoConta=grupo_contas_receber,
+                                                descricaoConta='Parcela ' + str(i) + '/' + str(pedidoN.qtdParcelas)))
+            ContaReceber.objects.bulk_create(insert_list)
 
-        ## INCLUINDO AS comissoes dos vendedores
-        vendedores = self.request.POST.getlist('vendedor')
-        for item in vendedores:
-            vendedor = Vendedor.objects.get(pk = item)
-            if not vendedor.percentual_bonificacao:
-                vendedor.percentual_bonificacao = 0
-            if not pedidoN.percentualComissaoCadaVendedor:
-                pedidoN.percentualComissaoCadaVendedor = 0
-            if vendedor.percentual_bonificacao > 0 or pedidoN.percentualComissaoCadaVendedor > 0:
-                insert_list_comissao = []
+            ## INCLUINDO AS comissoes dos vendedores
+            vendedores = self.request.POST.getlist('vendedor')
+            for item in vendedores:
+                vendedor = Vendedor.objects.get(pk = item)
+                if not vendedor.percentual_bonificacao:
+                    vendedor.percentual_bonificacao = 0
 
-                ## atualizacao a quantidade de parcelas que será gerada para o vendedor
-                ## caso tenha sido informado pelo usuario
-                if pedidoN.qtdParcelasComissao:# usuário informou
-                    duracao_em_meses = pedidoN.qtdParcelasComissao
-                else:
-                    duracao_em_meses = vendedor.duracao_em_meses
+                if not pedidoN.percentualComissaoCadaVendedor:
+                    pedidoN.percentualComissaoCadaVendedor = 0
 
-                ## atualizacao % de comissão que será gerada para o vendedor
-                ## caso tenha sido informado pelo usuario
-                if pedidoN.percentualComissaoCadaVendedor: # usuário informou
-                    percentualComissao = pedidoN.percentualComissaoCadaVendedor
-                else:
-                    percentualComissao = vendedor.percentual_bonificacao
+                if vendedor.percentual_bonificacao > 0 or pedidoN.percentualComissaoCadaVendedor > 0:
+                    insert_list_comissao = []
 
-                empresa_logada = self.request.user.empregado.empresa
-                plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
-                grupo_contas_pagar = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado, nome=empresa_logada.comissao_nome_plano_contas_grupo)
+                    ## atualizacao a quantidade de parcelas que será gerada para o vendedor
+                    ## caso tenha sido informado pelo usuario
+                    if pedidoN.qtdParcelasComissao:# usuário informou
+                        duracao_em_meses = pedidoN.qtdParcelasComissao
+                    else:
+                        duracao_em_meses = vendedor.duracao_em_meses
+
+                    ## atualizacao % de comissão que será gerada para o vendedor
+                    ## caso tenha sido informado pelo usuario
+                    if pedidoN.percentualComissaoCadaVendedor: # usuário informou
+                        percentualComissao = pedidoN.percentualComissaoCadaVendedor
+                    else:
+                        percentualComissao = vendedor.percentual_bonificacao
+
+                    empresa_logada = self.request.user.empregado.empresa
+                    plano_contas_logado = PlanoContas.objects.get(empresa=empresa_logada, ativo=True)
+                    grupo_contas_pagar = PlanoContasGrupo.objects.get(planoContas=plano_contas_logado, nome=empresa_logada.comissao_nome_plano_contas_grupo)
 
 
 
-                nova_data_vencimento = pedidoN.dataVencimentoVendedor
-                for i in range(1, duracao_em_meses+1):
-                    ## tratando os meses de fevereiro que tem 28 dias
-                    ## neste momento, a variavel nova_data_vencimento refere-se a última parcela gerada
-                    if i != 1 and nova_data_vencimento.month == 1 and nova_data_vencimento.day >= 29:
-                        nova_data_vencimento = nova_data_vencimento + timedelta(days=28)
-                    elif i != 1 and nova_data_vencimento.day == 31:
-                        # nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
-                        nova_data_vencimento = nova_data_vencimento + timedelta(days=30)
-                    elif i != 1:
-                        nova_data_vencimento = nova_data_vencimento + timedelta(days=31)
+                    nova_data_vencimento = pedidoN.dataVencimentoVendedor
+                    for i in range(1, duracao_em_meses+1):
+                        ## tratando os meses de fevereiro que tem 28 dias
+                        ## neste momento, a variavel nova_data_vencimento refere-se a última parcela gerada
+                        if i != 1 and nova_data_vencimento.month == 1 and nova_data_vencimento.day >= 29:
+                            nova_data_vencimento = nova_data_vencimento + timedelta(days=28)
+                        elif i != 1 and nova_data_vencimento.day == 31:
+                            # nova_data_vencimento = pedidoN.dataVencimento + timedelta(days=((i-1)*31))
+                            nova_data_vencimento = nova_data_vencimento + timedelta(days=30)
+                        elif i != 1:
+                            nova_data_vencimento = nova_data_vencimento + timedelta(days=31)
 
-                    insert_list_comissao.append(ContaPagar(numParcela=i, dataVencimento=nova_data_vencimento,
-                                                           valor=(pedidoN.valor * (percentualComissao / 100))/duracao_em_meses,
-                                                           pedido=pedidoN, grupoConta = grupo_contas_pagar, vendedor=vendedor, descricaoConta='Parcela ' + str(i) + '/' + str(duracao_em_meses)))
+                        insert_list_comissao.append(ContaPagar(numParcela=i, dataVencimento=nova_data_vencimento,
+                                                               valor=(pedidoN.valor * (percentualComissao / 100))/duracao_em_meses,
+                                                               pedido=pedidoN, grupoConta = grupo_contas_pagar, vendedor=vendedor, descricaoConta='Parcela ' + str(i) + '/' + str(duracao_em_meses)))
 
-                ContaPagar.objects.bulk_create(insert_list_comissao)
+                    ContaPagar.objects.bulk_create(insert_list_comissao)
 
         ## return super(PedidoNovo, self).form_valid(form)
         ## substituindo a chamada a superclasse, pois o get_absolute_url nao estava funcionando
