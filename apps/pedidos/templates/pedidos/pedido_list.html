@@ -62,7 +62,7 @@
                         <b>Serviços contratados</b><br>
                         {%  for servico in pedido.servico.all  %}
                                 <a href="#" onclick="abrirJanela('{% url 'create_andamento' pedido.id 'pedido' pedido.cliente.phonewhatts servico.id %}');"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>
-                        <a href="#" onclick="abrirJanela('{% url 'list_andamentos' pedido.id servico.id %}');"><img src="{% static 'images/list.png'%}" alt="Histórico" ></a>
+                                <a href="#" onclick="abrirJanela('{% url 'list_andamentos' pedido.id servico.id %}');"><img src="{% static 'images/list.png'%}" alt="Histórico" ></a>
                             &nbsp;&nbsp;{{  servico.nome  }}<br>
                         {%  endfor  %}<br>
                         Movimentações: {{ pedido.total_andamentos }}<br>

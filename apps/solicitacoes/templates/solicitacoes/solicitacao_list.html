@@ -3,7 +3,7 @@
 {% block head %}
 <script>
     function abrirJanela(url) {
-        window.open(url, "andamentos", "toolbar=yes, scrollbars=yes, resizable=yes, top=50, left=450, width=400, height=350");
+        window.open(url, "andamentos", "toolbar=yes, scrollbars=yes, resizable=yes, top=50, left=150, width=800, height=550");
     }
 </script>
 {% endblock %}
@@ -48,6 +48,7 @@
                             <p class="card-text">
                                 {{ solicitacao.cliente.nome }}<br>
                                 {{ solicitacao.solicitacao }}<br>
+                                <a href="#" onclick="abrirJanela('{% url 'create_andamento' solicitacao.id 'solicitacao' solicitacao.cliente.phonewhatts %}');"><img src="{% static 'images/ship16x16.png'%}" alt="Movimentar" ></a>
                                 <a href="#" onclick="abrirJanela('{% url 'list_andamentos_solicitacao' solicitacao.id %}');"><img src="{% static 'images/list.png'%}" alt="Histórico" ></a>
                                 Movimentações: {{ solicitacao.total_andamentos }}<br>
                                 Atendida: {{ solicitacao.atendida }}<br>
@@ -56,7 +57,6 @@
                         </div>
                         <div class="card-footer bg-transparent" align="center">
                             <a href="{% url 'update_solicitacao' solicitacao.id %}" ><img src="{% static 'images/edit32x32.png'%}" alt="Editar" ></a>
-                            <a href="{% url 'create_andamento' solicitacao.id 'solicitacao' solicitacao.cliente.phonewhatts %}"><img src="{% static 'images/ship.png'%}" alt="Movimentar" ></a>&nbsp;
                             <a href="{% url 'delete_solicitacao' solicitacao.id %}"><img src="{% static 'images/delete.png'%}" alt="Deletar" ></a>
                         </div>
                     </div>

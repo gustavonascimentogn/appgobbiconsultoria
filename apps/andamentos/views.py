@@ -69,7 +69,10 @@ class AndamentoEdit(UpdateView):
             if not email_from:
                 email_from = settings.EMAIL_HOST_USER
             recipient_list = [emailContato, email_from,]
-            send_mail( subject, message, email_from, recipient_list,html_message=html_message,auth_user=settings.EMAIL_HOST_USER, auth_password=settings.EMAIL_HOST_PASSWORD)
+            try:
+                send_mail( subject, message, email_from, recipient_list,html_message=html_message,auth_user=settings.EMAIL_HOST_USER, auth_password=settings.EMAIL_HOST_PASSWORD)
+            except Exception as e:
+                print(e)
 
             ##ENVIANDO PUSH NOTIFICATION
             header = {"Content-Type": "application/json; charset=utf-8"}
@@ -79,7 +82,11 @@ class AndamentoEdit(UpdateView):
             req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
             ## print(req.status_code, req.reason)
 
-        return redirect('list_andamentos')
+
+        if andamento.pedido:
+            return redirect('list_andamentos', andamento.pedido.pk, andamento.servico.pk)
+        else:
+            return redirect('list_andamentos_solicitacao', andamento.solicitacao.pk)
 
 
     ## Methodo para filtrar o campo "cliente", trazendo somente os clientes da empresa do user logado
@@ -136,8 +143,11 @@ class AndamentoNovo(CreateView):
             if not email_from:
                 email_from = settings.EMAIL_HOST_USER
             recipient_list = [emailContato, email_from,]
-            ## EXEMPLO COMPLETO: send_mail(subject, message, from_email, recipient_list, fail_silently=False, auth_user=None, auth_password=None, connection=None, html_message=None)
-            send_mail( subject, message, email_from, recipient_list,html_message=html_message,auth_user=settings.EMAIL_HOST_USER, auth_password=settings.EMAIL_HOST_PASSWORD)
+            try:
+                ## EXEMPLO COMPLETO: send_mail(subject, message, from_email, recipient_list, fail_silently=False, auth_user=None, auth_password=None, connection=None, html_message=None)
+                send_mail( subject, message, email_from, recipient_list,html_message=html_message,auth_user=settings.EMAIL_HOST_USER, auth_password=settings.EMAIL_HOST_PASSWORD)
+            except Exception as e:
+                print(e)
 
             ##ENVIANDO PUSH NOTIFICATION
             header = {"Content-Type": "application/json; charset=utf-8"}
@@ -147,12 +157,11 @@ class AndamentoNovo(CreateView):
             req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
             ## print(req.status_code, req.reason)
 
-        if (str(self.kwargs['origem']) == 'pedido'):
-            return redirect('list_pedidos')
-        elif (str(self.kwargs['origem']) == 'cliente'):
-            return redirect('list_clientes')
-        else: #elif (self.kwargs['origem'] == 'solicitacao'):
-            return redirect('list_solicitacoes')
+
+        if andamento.pedido:
+            return redirect('list_andamentos', andamento.pedido.pk, andamento.servico.pk)
+        else:
+            return redirect('list_andamentos_solicitacao', andamento.solicitacao.pk)
 
 
     def post(self, request, *args, **kwargs):
