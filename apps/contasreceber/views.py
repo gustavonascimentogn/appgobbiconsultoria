@@ -51,7 +51,7 @@ class ContaReceberEdit(UpdateView):
         parcela.save()
 
         from django.shortcuts import redirect
-        return redirect('list_pedidos')
+        return redirect('update_contareceber_documento',parcela.pk)
 
     ## Methodo para usar o arquivo form.py
     def get_form_kwargs(self):

@@ -142,12 +142,15 @@ class AndamentoNovo(CreateView):
             email_from = self.request.user.empregado.email #settings.EMAIL_HOST_USER
             if not email_from:
                 email_from = settings.EMAIL_HOST_USER
+
             recipient_list = [emailContato, email_from,]
+
             try:
                 ## EXEMPLO COMPLETO: send_mail(subject, message, from_email, recipient_list, fail_silently=False, auth_user=None, auth_password=None, connection=None, html_message=None)
                 send_mail( subject, message, email_from, recipient_list,html_message=html_message,auth_user=settings.EMAIL_HOST_USER, auth_password=settings.EMAIL_HOST_PASSWORD)
             except Exception as e:
                 print(e)
+
 
             ##ENVIANDO PUSH NOTIFICATION
             header = {"Content-Type": "application/json; charset=utf-8"}
