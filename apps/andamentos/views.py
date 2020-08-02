@@ -8,15 +8,17 @@ from django.core.mail import send_mail
 from django.conf import settings
 import requests
 import json
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from ..pedidos.models import Pedido
 from ..servicos.models import Servico
 from ..solicitacoes.models import Solicitacao
 
 
-class AndamentosList(ListView):
+class AndamentosList(LoginRequiredMixin,ListView):
     model = Andamento
     paginate_by = 1
+
 
     ## Listando somente andamentos do cliente e servico clicado
     def get_queryset(self):
@@ -25,7 +27,7 @@ class AndamentosList(ListView):
         andamentos = Andamento.objects.filter(pedido__pk=pedido,servico__pk=servico).order_by('-pk')
         return andamentos
 
-class AndamentosListSolicitacao(ListView):
+class AndamentosListSolicitacao(LoginRequiredMixin,ListView):
     model = Andamento
     paginate_by = 1
 
@@ -39,7 +41,7 @@ class AndamentosListSolicitacao(ListView):
 
 
 ## Classe para edição dos registros
-class AndamentoEdit(UpdateView):
+class AndamentoEdit(LoginRequiredMixin,UpdateView):
     model = Andamento
     form_class = AndamentoForm
 
@@ -88,7 +90,6 @@ class AndamentoEdit(UpdateView):
         else:
             return redirect('list_andamentos_solicitacao', andamento.solicitacao.pk)
 
-
     ## Methodo para filtrar o campo "cliente", trazendo somente os clientes da empresa do user logado
     def get_form_kwargs(self):
         kwargs = super(AndamentoEdit, self).get_form_kwargs() ## recupera o DICT kwargs e todos os argumentos
@@ -96,12 +97,12 @@ class AndamentoEdit(UpdateView):
         return kwargs
 
 
-class AndamentoDelete(DeleteView):
+class AndamentoDelete(LoginRequiredMixin,DeleteView):
     model = Andamento
     success_url = reverse_lazy('list_pedidos')
 
 
-class AndamentoNovo(CreateView):
+class AndamentoNovo(LoginRequiredMixin,CreateView):
     model = Andamento
     form_class = AndamentoForm
 
@@ -165,7 +166,6 @@ class AndamentoNovo(CreateView):
             return redirect('list_andamentos', andamento.pedido.pk, andamento.servico.pk)
         else:
             return redirect('list_andamentos_solicitacao', andamento.solicitacao.pk)
-
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()

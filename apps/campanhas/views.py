@@ -1,12 +1,13 @@
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .form import CampanhaForm
 from .models import Campanha
 
 ## Classe para listagem dos registros
-class CampanhasList(ListView):
+class CampanhasList(LoginRequiredMixin,ListView):
     model = Campanha
     paginate_by = 20
 
@@ -22,7 +23,7 @@ class CampanhasList(ListView):
         return campanhas
 
 ## Classe para edição dos registros
-class CampanhaEdit(UpdateView):
+class CampanhaEdit(LoginRequiredMixin,UpdateView):
     model = Campanha
     ## fields = ['nome','dataHoraAtivacao','dataHoraInativacao','arquivo']
     form_class = CampanhaForm
@@ -34,11 +35,11 @@ class CampanhaEdit(UpdateView):
         from django.shortcuts import redirect
         return redirect('list_campanhas')
 
-class CampanhaDelete(DeleteView):
+class CampanhaDelete(LoginRequiredMixin,DeleteView):
     model = Campanha
     success_url = reverse_lazy('list_campanhas')
 
-class CampanhaNovo(CreateView):
+class CampanhaNovo(LoginRequiredMixin,CreateView):
     model = Campanha
     ##fields = ['nome','dataHoraAtivacao','dataHoraInativacao','arquivo']
     form_class = CampanhaForm

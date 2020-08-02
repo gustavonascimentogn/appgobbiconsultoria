@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.db.models.functions import datetime
 from django.urls import reverse_lazy
@@ -10,7 +11,7 @@ from apps.planos_contas_grupos.models import PlanoContasGrupo
 from ..planos_contas.models import PlanoContas
 
 
-class ContasReceberList(ListView):
+class ContasReceberList(LoginRequiredMixin,ListView):
     model = ContaReceber
     paginate_by = 20
 
@@ -31,7 +32,7 @@ class ContasReceberList(ListView):
         return contas_receber
 
 ## Classe para edição dos registros
-class ContaReceberEdit(UpdateView):
+class ContaReceberEdit(LoginRequiredMixin,UpdateView):
     model = ContaReceber
     form_class = ContaReceberForm
 
@@ -61,7 +62,7 @@ class ContaReceberEdit(UpdateView):
 
 
 
-class ContaReceberEditDocumento(UpdateView):
+class ContaReceberEditDocumento(LoginRequiredMixin,UpdateView):
     model = ContaReceber
     form_class = ContaReceberFormDocumento
 
@@ -80,7 +81,7 @@ class ContaReceberEditDocumento(UpdateView):
         kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
         return kwargs
 
-class ContaReceberNovo(CreateView):
+class ContaReceberNovo(LoginRequiredMixin,CreateView):
     model = ContaReceber
     form_class = ContaReceberForm
 

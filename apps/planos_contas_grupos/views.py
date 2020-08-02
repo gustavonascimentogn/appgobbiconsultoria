@@ -1,10 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import PlanoContasGrupo
 from apps.planos_contas.models import PlanoContas
 
 ## Classe para listagem dos registros
-class PlanoContasGruposList(ListView):
+class PlanoContasGruposList(LoginRequiredMixin,ListView):
     model = PlanoContasGrupo
     paginate_by = 20
 
@@ -15,7 +16,7 @@ class PlanoContasGruposList(ListView):
         return PlanoContasGrupo.objects.filter(planoContas=plano_contas_ativo[0],ativo=True,grupoPai=None).order_by('nome')
 
 ## Classe para edição dos registros
-class PlanoContasGrupoEdit(UpdateView):
+class PlanoContasGrupoEdit(LoginRequiredMixin,UpdateView):
     model = PlanoContasGrupo
     fields = ['nome','natureza','ativo']
 
@@ -33,12 +34,12 @@ class PlanoContasGrupoEdit(UpdateView):
 
 
 
-class PlanoContasGrupoDelete(DeleteView):
+class PlanoContasGrupoDelete(LoginRequiredMixin,DeleteView):
     model = PlanoContasGrupo
     success_url = reverse_lazy('list_plano_contas_grupos')
 
 
-class PlanoContasGrupoNovo(CreateView):
+class PlanoContasGrupoNovo(LoginRequiredMixin,CreateView):
     model = PlanoContasGrupo
     fields = ['nome','natureza','ativo']
 

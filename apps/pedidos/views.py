@@ -10,13 +10,15 @@ from apps.vendedores.models import Vendedor
 from .form import PedidoForm
 from apps.planos_contas_grupos.models import PlanoContasGrupo
 from apps.planos_contas.models import PlanoContas
-from django.db.models import Q
+#from django.db.models import Q
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 ## Classe para listagem dos registros
 from ..servicos.models import Servico
 
 
-class PedidosList(ListView):
+class PedidosList(LoginRequiredMixin,ListView):
     model = Pedido
     paginate_by = 20
 
@@ -33,7 +35,7 @@ class PedidosList(ListView):
         return pedidos
 
 
-class PedidosListVencendo(ListView):
+class PedidosListVencendo(LoginRequiredMixin,ListView):
     model = Pedido
     paginate_by = 20
 
@@ -52,7 +54,7 @@ class PedidosListVencendo(ListView):
 
         return result_list
 
-class PedidosListAtivos(ListView):
+class PedidosListAtivos(LoginRequiredMixin,ListView):
     model = Pedido
     paginate_by = 20
 
@@ -73,7 +75,7 @@ class PedidosListAtivos(ListView):
 
 
 ## Classe para edição dos registros
-class PedidoEdit(UpdateView):
+class PedidoEdit(LoginRequiredMixin,UpdateView):
     model = Pedido
     form_class = PedidoForm
 
@@ -210,12 +212,12 @@ class PedidoEdit(UpdateView):
         return kwargs
 
 
-class PedidoDelete(DeleteView):
+class PedidoDelete(LoginRequiredMixin,DeleteView):
     model = Pedido
     success_url = reverse_lazy('list_pedidos')
 
 
-class PedidoNovo(CreateView):
+class PedidoNovo(LoginRequiredMixin,CreateView):
     model = Pedido
     form_class = PedidoForm
 

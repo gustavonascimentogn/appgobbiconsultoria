@@ -1,9 +1,10 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Template_mensagem
 
 ## Classe para listagem dos registros
-class Templates_mensagensList(ListView):
+class Templates_mensagensList(LoginRequiredMixin,ListView):
     model = Template_mensagem
     paginate_by = 20
 
@@ -13,7 +14,7 @@ class Templates_mensagensList(ListView):
         return Template_mensagem.objects.filter(empresa=empresa_logada)
 
 ## Classe para edição dos registros
-class Template_mensagemEdit(UpdateView):
+class Template_mensagemEdit(LoginRequiredMixin,UpdateView):
     model = Template_mensagem
     fields = ['texto','tipo','ativo','arquivo']
 
@@ -24,11 +25,11 @@ class Template_mensagemEdit(UpdateView):
         from django.shortcuts import redirect
         return redirect('list_templates_mensagens')
 
-class Template_mensagemDelete(DeleteView):
+class Template_mensagemDelete(LoginRequiredMixin,DeleteView):
     model = Template_mensagem
     success_url = reverse_lazy('list_templates_mensagens')
 
-class Template_mensagemNovo(CreateView):
+class Template_mensagemNovo(LoginRequiredMixin,CreateView):
     model = Template_mensagem
     fields = ['texto','tipo','ativo','arquivo']
 

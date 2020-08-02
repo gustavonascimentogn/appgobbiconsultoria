@@ -1,5 +1,6 @@
 from datetime import datetime, date
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
@@ -13,7 +14,7 @@ from ..planos_contas.models import PlanoContas
 from ..planos_contas_grupos.models import PlanoContasGrupo
 
 
-class VendedoresList(ListView):
+class VendedoresList(LoginRequiredMixin,ListView):
     model = Vendedor
     paginate_by = 20
 
@@ -29,7 +30,7 @@ class VendedoresList(ListView):
         return vendedores
 
 ## Classe para edição dos registros
-class VendedorEdit(UpdateView):
+class VendedorEdit(LoginRequiredMixin,UpdateView):
     model = Vendedor
     form_class = VendedorForm
 
@@ -48,13 +49,13 @@ class VendedorEdit(UpdateView):
         kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
         return kwargs
 
-class VendedorDelete(DeleteView):
+class VendedorDelete(LoginRequiredMixin,DeleteView):
     model = Vendedor
     mes = datetime.now().month
     ano = datetime.now().year
     success_url = reverse_lazy('list_vendedores', mes, ano)
 
-class VendedorNovo(CreateView):
+class VendedorNovo(LoginRequiredMixin,CreateView):
     model = Vendedor
     form_class = VendedorForm
 

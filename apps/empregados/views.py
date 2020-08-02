@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -12,7 +13,7 @@ from .models import Empregado
 from ..empresas.models import Empresa
 
 
-class EmpregadosList(ListView):
+class EmpregadosList(LoginRequiredMixin,ListView):
     model = Empregado
     paginate_by = 20
 
@@ -23,7 +24,7 @@ class EmpregadosList(ListView):
 
 
 ## Classe para edição dos registros
-class EmpregadoEdit(UpdateView):
+class EmpregadoEdit(LoginRequiredMixin,UpdateView):
     model = Empregado
     form_class = EmpregadoForm
 
@@ -62,11 +63,11 @@ class EmpregadoEdit(UpdateView):
         return redirect('list_empregados',mensagem)
 
 
-class EmpregadoDelete(DeleteView):
+class EmpregadoDelete(LoginRequiredMixin,DeleteView):
     model = Empregado
     success_url = reverse_lazy('list_empregados')
 
-class EmpregadoNovo(CreateView):
+class EmpregadoNovo(LoginRequiredMixin,CreateView):
     model = Empregado
     form_class = EmpregadoForm
 

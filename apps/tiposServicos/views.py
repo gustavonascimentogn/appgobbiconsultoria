@@ -1,10 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import TiposServico
 
 ## Classe para listagem dos registros
-class TiposServicosList(ListView):
+class TiposServicosList(LoginRequiredMixin,ListView):
     model = TiposServico
     paginate_by = 20
 
@@ -20,7 +21,7 @@ class TiposServicosList(ListView):
         return tipos
 
 ## Classe para edição dos registros
-class TiposServicoEdit(UpdateView):
+class TiposServicoEdit(LoginRequiredMixin,UpdateView):
     model = TiposServico
     fields = ['nomeTipo','descricao']
 
@@ -32,11 +33,11 @@ class TiposServicoEdit(UpdateView):
         return redirect('list_tiposServicos')
 
 
-class TiposServicoDelete(DeleteView):
+class TiposServicoDelete(LoginRequiredMixin,DeleteView):
     model = TiposServico
     success_url = reverse_lazy('list_tiposServicos')
 
-class TiposServicoNovo(CreateView):
+class TiposServicoNovo(LoginRequiredMixin,CreateView):
     model = TiposServico
     fields = ['nomeTipo','descricao']
 

@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
@@ -5,7 +6,7 @@ from .models import Servico
 from .form import ServicoForm
 
 ## Classe para listagem dos registros
-class ServicosList(ListView):
+class ServicosList(LoginRequiredMixin,ListView):
     model = Servico
     paginate_by = 20
 
@@ -21,7 +22,7 @@ class ServicosList(ListView):
         return servicos
 
 ## Classe para edição dos registros
-class ServicoEdit(UpdateView):
+class ServicoEdit(LoginRequiredMixin,UpdateView):
     model = Servico
     form_class = ServicoForm
 
@@ -37,11 +38,11 @@ class ServicoEdit(UpdateView):
         kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
         return kwargs
 
-class ServicoDelete(DeleteView):
+class ServicoDelete(LoginRequiredMixin,DeleteView):
     model = Servico
     success_url = reverse_lazy('list_servicos')
 
-class ServicoNovo(CreateView):
+class ServicoNovo(LoginRequiredMixin,CreateView):
     model = Servico
     form_class = ServicoForm
 

@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
@@ -6,7 +7,7 @@ from .models import Cliente
 from .form import SolicitacaoForm
 
 ## Classe para listagem dos registros
-class SolicitacoesList(ListView):
+class SolicitacoesList(LoginRequiredMixin,ListView):
     model = Solicitacao
     paginate_by = 20
 
@@ -23,7 +24,7 @@ class SolicitacoesList(ListView):
         return solicitacoes
 
 ## Classe para edição dos registros
-class SolicitacaoEdit(UpdateView):
+class SolicitacaoEdit(LoginRequiredMixin,UpdateView):
     model = Solicitacao
     form_class = SolicitacaoForm
 
@@ -40,11 +41,11 @@ class SolicitacaoEdit(UpdateView):
         kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
         return kwargs
 
-class SolicitacaoDelete(DeleteView):
+class SolicitacaoDelete(LoginRequiredMixin,DeleteView):
     model = Solicitacao
     success_url = reverse_lazy('list_solicitacoes')
 
-class SolicitacaoNovo(CreateView):
+class SolicitacaoNovo(LoginRequiredMixin,CreateView):
     model = Solicitacao
     form_class = SolicitacaoForm
 

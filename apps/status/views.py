@@ -1,9 +1,10 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Status
 
 ## Classe para listagem dos registros
-class StatusList(ListView):
+class StatusList(LoginRequiredMixin,ListView):
     model = Status
     paginate_by = 20
 
@@ -13,7 +14,7 @@ class StatusList(ListView):
         return Status.objects.filter(empresa=empresa_logada)
 
 ## Classe para edição dos registros
-class StatusEdit(UpdateView):
+class StatusEdit(LoginRequiredMixin,UpdateView):
     model = Status
     fields = ['nome','sequencia','ativo']
 
@@ -24,11 +25,11 @@ class StatusEdit(UpdateView):
         from django.shortcuts import redirect
         return redirect('list_status')
 
-class StatusDelete(DeleteView):
+class StatusDelete(LoginRequiredMixin,DeleteView):
     model = Status
     success_url = reverse_lazy('list_status')
 
-class StatusNovo(CreateView):
+class StatusNovo(LoginRequiredMixin,CreateView):
     model = Status
     fields = ['nome','sequencia','ativo']
 

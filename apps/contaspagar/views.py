@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.db.models.functions import datetime
 from django.views.generic import UpdateView, CreateView, ListView
@@ -11,7 +12,7 @@ from ..contasreceber.models import ContaReceber
 from ..planos_contas_grupos.models import PlanoContasGrupo
 from apps.planos_contas.models import PlanoContas
 
-class ContasPagarList(ListView):
+class ContasPagarList(LoginRequiredMixin,ListView):
     model = ContaPagar
     paginate_by = 20
 
@@ -32,7 +33,7 @@ class ContasPagarList(ListView):
         return contas_pagar
 
 
-class ContaPagarEdit(UpdateView):
+class ContaPagarEdit(LoginRequiredMixin,UpdateView):
     model = ContaPagar
     form_class = ContaPagarForm
 
@@ -57,7 +58,7 @@ class ContaPagarEdit(UpdateView):
         kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
         return kwargs
 
-class ContaPagarEditDocumento(UpdateView):
+class ContaPagarEditDocumento(LoginRequiredMixin,UpdateView):
     model = ContaPagar
     form_class = ContaPagarFormDocumento
 
@@ -76,7 +77,7 @@ class ContaPagarEditDocumento(UpdateView):
         kwargs.update({'user':self.request.user}) ## adiciona um argumento no DICT kwargs
         return kwargs
 
-class ContaPagarNovo(CreateView):
+class ContaPagarNovo(LoginRequiredMixin,CreateView):
     model = ContaPagar
     form_class = ContaPagarForm
 

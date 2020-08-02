@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from django.db.models import Q
@@ -9,7 +10,7 @@ from .models import Cliente
 from ..empresas.models import Empresa
 
 
-class ClientesList(ListView):
+class ClientesList(LoginRequiredMixin,ListView):
     model = Cliente
     paginate_by = 20
 
@@ -25,7 +26,7 @@ class ClientesList(ListView):
         return clientes
 
 ## Classe para listagem dos registros
-class ClientesListSemContrato(ListView):
+class ClientesListSemContrato(LoginRequiredMixin,ListView):
     model = Cliente
     paginate_by = 20
 
@@ -43,7 +44,7 @@ class ClientesListSemContrato(ListView):
         return clientes
 
 ## Classe para edição dos registros
-class ClienteEdit(UpdateView):
+class ClienteEdit(LoginRequiredMixin,UpdateView):
     model = Cliente
     form_class = ClienteForm
 
@@ -54,11 +55,11 @@ class ClienteEdit(UpdateView):
         from django.shortcuts import redirect
         return redirect('list_clientes')
 
-class ClienteDelete(DeleteView):
+class ClienteDelete(LoginRequiredMixin,DeleteView):
     model = Cliente
     success_url = reverse_lazy('list_clientes')
 
-class ClienteNovo(CreateView):
+class ClienteNovo(LoginRequiredMixin,CreateView):
     model = Cliente
     form_class = ClienteForm
 

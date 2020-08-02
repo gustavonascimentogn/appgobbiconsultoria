@@ -1,8 +1,9 @@
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .models import Arquivo
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class ArquivoEdit(UpdateView):
+class ArquivoEdit(LoginRequiredMixin,UpdateView):
     model = Arquivo
     fields = ['nome','arquivo']
 
@@ -14,12 +15,12 @@ class ArquivoEdit(UpdateView):
         from django.shortcuts import redirect
         return redirect('update_cliente',str(cliente_id))
 
-class ArquivoDelete(DeleteView):
+class ArquivoDelete(LoginRequiredMixin,DeleteView):
     model = Arquivo
     success_url = reverse_lazy('list_clientes')
 
 
-class ArquivoNovo(CreateView):
+class ArquivoNovo(LoginRequiredMixin,CreateView):
     model = Arquivo
     fields = ['nome','arquivo']
 
