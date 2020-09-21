@@ -10,7 +10,7 @@ from apps.vendedores.models import Vendedor
 from .form import PedidoForm
 from apps.planos_contas_grupos.models import PlanoContasGrupo
 from apps.planos_contas.models import PlanoContas
-#from django.db.models import Q
+from django.db.models import Q
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 

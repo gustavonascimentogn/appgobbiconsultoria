@@ -49,7 +49,7 @@ git push origin :the_remote_branch # deletar branch remota
 
 ------------------ CRIANDO APLICATIVOS ------
 
-1. Criar Python Package chamado "app" dentro do projeto 
+1. Criar Python Package chamado "apps" dentro do projeto 
 2. Criar os apps desejados:
 	2.1 Executar comando: 	
 		
@@ -64,27 +64,31 @@ git push origin :the_remote_branch # deletar branch remota
 	---
 	class Empresa(models.Model):
 		dataHoraCriacao = models.DateTimeField(auto_now_add=True, editable=False, help_text='Captura automaticamente a data de criação')
-		nomeFantasia = models.CharField(max_length=100, blank=False, help_text='Nome Fantasia da empresa')
-		razaoSocial = models.CharField(max_length=100, blank=False, help_text='Razao Social da empresa')
+		nomeFantasia = models.CharField(max_length=100, blank=False, null=False, help_text='Nome Fantasia da empresa')
+		razaoSocial = models.CharField(max_length=100, blank=False, null=False, help_text='Razao Social da empresa')
+		ativo = models.BooleanField(blank=False, null=False, default=True)
+		
+		class Meta:
+			ordering = ["nomeFantasia"]
 
 		def __str__(self):
-	        	return self.nomeFantasia
+	        return self.nomeFantasia
 	---
 
 	3.2 Executar comando makemigrations
 		python manage.py makemigrations
 		
 	3.3 Executar comando migrate
-		python manage.py makemigrations
+		python manage.py migrate
 		
 4. Abrir arquivo admin dentro do diretório do App e Registrar o Model. Adicionar os seguintes comandos ao arquivo
 
 	from .models import NOME DA CLASSE CADASTRADA NO ARQUIVO MODELS.PY
-		from .models import Pedido
-	
 	admin.site.register(NOME DA CLASSE CADASTRADA NO ARQUIVO MODELS.PY)
-		# Register your models here.
-		admin.site.register(Pedido)
+	
+	Exemplo: 
+	from .models import Pedido
+	admin.site.register(Pedido)
 	
 	Executar runserver
 
@@ -121,9 +125,32 @@ git push origin :the_remote_branch # deletar branch remota
 		empresa = models.ForeignKey(Empresa, blank=True, default=None, on_delete=models.PROTECT)
 		tipo = models.ForeignKey(TiposServico, blank=True, default=None, on_delete=models.PROTECT)
 		clientes = models.ManyToManyField(Cliente, blank=True, default=None)
+		
+5.1 QUANDO UM RELACIONAMENTO NxN TEM ATRIBUTOS - EXEMPLO
+
+from django.db import models
+
+class Person(models.Model):
+    name = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.name
+
+class Group(models.Model):
+    name = models.CharField(max_length=128)
+    members = models.ManyToManyField(Person, through='Membership')
+
+    def __str__(self):
+        return self.name
+
+class Membership(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    date_joined = models.DateField()
+    invite_reason = models.CharField(max_length=64)
 
 ------------------- CONFIGURANDO TEMPLATES ------------
-6. Criar pasta "templates" na raís do projeto
+6. Criar pasta "templates" na raíz do projeto
 
 7. No arquivos settings, dentro da pasta do Projeto, incluir na seção "TEMPLATES", no parametro "DIRS" o nome da pasta "templates" (pasta a ser criada na raíz do projeto)
 
@@ -205,6 +232,10 @@ git push origin :the_remote_branch # deletar branch remota
 		 
 ################## Criando pagina de Login
 
+0. Copiar app Core para dentro de "apps" do projeto  
+
+	Incluir o App na seção INSTALLED APPS no arquivo Settings 
+
 1. No arquivo urls.py da pasta gobbiconsultoria, incluir comando que cria o sistema de logins (sem templates, que precisará ser criado depois):
 
 	path('accounts/', include('django.contrib.auth.urls')),
@@ -226,12 +257,45 @@ git push origin :the_remote_branch # deletar branch remota
 
 4. Incluir no arquivo view.py de todos os Apps que exigirem autenticação. Inserir antes de qualquer função definida:
 
+	IMPORTANTE: Este exemplo é para quando houver metodos, porém, o DEV padrão é Class Based (outro formato)
 	...
 	from django.contrib.auth.decorators import login_required
+	from django.utils.decorators import method_decorator
 
-	@login_required
+	# antes de todos os metodos das classes
+    	@method_decorator(login_required)
+		
 	...
 	
+################### TRADUÇAO
+
+No WIndows, precisa ter o gettext instaldo:
+## https://mlocati.github.io/articles/gettext-iconv-windows.html
+
+## Todos os templates devem conter:
+{%  load i18n %}
+
+## Os textos a serem traduzidos precisam estar dentro do blocktrans ou da tag trans
+
+{% blocktrans %}
+Texto a ser traduzido
+{% endblocktrans %}
+
+OU
+
+{% trans "Texto a ser traduzido" %}
+
+OU
+
+Através de criação de variável na View e utilização no Template (ver vídeo)
+
+## comando que gera os arquivos de traduçao
+python manage.py makemessages -i protocolsvenv -l en 
+
+## comando que compila as mensagens (rodar após arquivos terem sido traduzidos)
+django-admin compilemessages
+
+
 ################### CRUD
 
 1. Criar link Gerenciar clientes, no Core/templates/Core/index.html

@@ -143,7 +143,7 @@ function abrirJanela(url) {
               <td>{% if contapagar.pedido.cliente.nome %}{{ contapagar.pedido.cliente.nome }}{% else %}-{% endif %}</td>
               <td>{% if contapagar.pedido %}Ped. {{ contapagar.pedido.pk }} - {% endif %}{{ contapagar.descricaoConta }}</td>
               <td>{{ contapagar.pedido.moeda }}{{ contapagar.valor|floatformat:2 }}</td>
-              <td>{% if contapagar.paga %}Sim{% else %}Não{% endif %}</td>
+              <td>{% if contapagar.paga %}<kbd class="bg-success">Sim</kbd>{% else %}<kbd class="bg-danger">Não</kbd>{% endif %}</td>
               <td>{% if contapagar.valorPago %} {{ contapagar.pedido.moeda }}{{ contapagar.valorPago|floatformat:2}}{% else %}-{% endif %}</td>
               <td>{% if contapagar.dataPagamento %} {{ contapagar.dataPagamento|date:'d/m/Y' }}{% else %}-{% endif %}</td>
               <td>{{ contapagar.dataHoraCriacao|date:'d/m/Y' }}</td>

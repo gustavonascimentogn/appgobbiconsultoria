@@ -39,7 +39,7 @@ class EmpregadoEdit(LoginRequiredMixin,UpdateView):
                 ## Se encontrou, então e-mail do usuario NÃO foi alterado (existe o email para aquele empregado)
                 empregado.user.username = self.request.POST.get("email")
                 empregado.user.email = self.request.POST.get("email")
-                empregado.user.password = self.request.POST.get("senha")
+                empregado.user.set_password(self.request.POST.get("senha"))
                 empregado.user.save()
                 empregado.save()
                 mensagem = 'Alteração de funcionário realizado com sucesso'
@@ -50,7 +50,7 @@ class EmpregadoEdit(LoginRequiredMixin,UpdateView):
                     ## se não existe, então e-mail liberado para cadastro
                     empregado.user.username = self.request.POST.get("email")
                     empregado.user.email = self.request.POST.get("email")
-                    empregado.user.password = self.request.POST.get("senha")
+                    empregado.user.set_password(self.request.POST.get("senha"))
                     empregado.user.save()
                     empregado.save()
                     mensagem = 'Alteração de funcionário realizado com sucesso'
