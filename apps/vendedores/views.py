@@ -51,9 +51,9 @@ class VendedorEdit(LoginRequiredMixin,UpdateView):
 
 class VendedorDelete(LoginRequiredMixin,DeleteView):
     model = Vendedor
-    mes = datetime.now().month
-    ano = datetime.now().year
-    success_url = reverse_lazy('list_vendedores', mes, ano)
+    #mes = datetime.now().month
+    #ano = datetime.now().year
+    success_url = reverse_lazy('list_vendedores') #, mes, ano)
 
 class VendedorNovo(LoginRequiredMixin,CreateView):
     model = Vendedor
