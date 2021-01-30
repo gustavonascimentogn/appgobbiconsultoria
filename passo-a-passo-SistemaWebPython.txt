@@ -307,7 +307,7 @@ django-admin compilemessages
 
 ------------- 
 
-3. Criar arquivos TEMPLATE para as opções Editar, Confirmar Deletar e Listar Clientes. O arquivo templates/clientes/cliente_list.html trará todos os clientes cadastrados. O nome do arquivo deve ser composto por <NomeDoModel>_list.html
+3. Criar arquivos TEMPLATE para as opções Editar, Confirmar, Deletar e Listar Clientes. O arquivo templates/clientes/cliente_list.html trará todos os clientes cadastrados. O nome do arquivo deve ser composto por <NomeDoModel>_list.html
 	Neste caso, o model chama "cliente"
 	
 	### cliente_list.html - Lista todos os clientes

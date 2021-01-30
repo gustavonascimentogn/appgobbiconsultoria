@@ -40,17 +40,17 @@
                         Valor a pagar &nbsp;em &nbsp;{{ view.kwargs.mes }}/{{ view.kwargs.ano }}: R$ {{ vendedor.valor_pagar_mesatual|floatformat:2 }}
                     </p>
                     <!-- Accordion -->
-                    <div id="accordionComissao{{ vendedor.id }}">
+                    <div id="accordionContratos{{ vendedor.id }}">
                       <div class="card">
                         <div class="card-header" id="headingOne">
                           <h5 class="mb-0" align="center">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOneComissao{{ vendedor.id }}" aria-expanded="false" aria-controls="collapseOneComissao{{ vendedor.id }}">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOneContratos{{ vendedor.id }}" aria-expanded="false" aria-controls="collapseOneContratos{{ vendedor.id }}">
                                 <div align="center">Contratos</div>
                             </button>
                           </h5>
                         </div>
 
-                        <div id="collapseOneComissao{{ vendedor.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordionComissao{{ vendedor.id }}">
+                        <div id="collapseOneContratos{{ vendedor.id }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordionContratos{{ vendedor.id }}">
                             <div class="card text-white bg-secondary mb-3" >
                                 <div class="card-header" style="font-size: small;">
                                 {% for pedido in vendedor.pedido_set.all  %}

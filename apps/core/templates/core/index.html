@@ -1,110 +1,72 @@
 {% extends 'base.html' %}
 
-
 {% block main %}
 <br>
 <div class="row">
     <div class="col-md-3">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <!--
             <div class="card-header" align="center"><h4 style="font-size: 1.0rem;">Clientes cadastrados</h4></div>
             <div class="card-body">
                 <h3 class="card-title"><h1 align="center">{{   total_clientes   }}</h1></h3>
             </div>
+            -->
             <div class="card-footer bg-transparent" align="center">
-                <a href="{% url 'list_clientes' %}">Total de cadastros realizados</a>
+                <a href="{% url 'list_clientes' %}">Clientes cadastrados ({{   total_clientes   }})</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <!--
             <div class="card-header" align="center"><h4 style="font-size: 1.0rem;">Clientes sem contrato</h4></div>
             <div class="card-body">
                 <h3 class="card-title"><h1 align="center">{{   total_clientes_sem_pedidos   }}</h1></h3>
             </div>
+            -->
             <div class="card-footer bg-transparent" align="center">
-                <a href="{% url 'list_clientes_semcontrato' %}">Total de clientes sem serviços prestados</a>
+                <a href="{% url 'list_clientes_semcontrato' %}">Clientes sem contrato ({{   total_clientes_sem_pedidos   }})</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <!--
             <div class="card-header" align="center"><h4 style="font-size: 1.0rem;">Contratos ativos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4></div>
             <div class="card-body">
                 <h3 class="card-title"><h1 align="center">{{   total_contratos_ativos   }} </h1></h3>
             </div>
+            -->
             <div class="card-footer bg-transparent" align="center">
-                <a href="{% url 'list_pedidos_ativos' %}">Total de contratos ativos</a>
+                <a href="{% url 'list_pedidos_ativos' %}">Contratos ativos ({{   total_contratos_ativos   }})</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <!--
             <div class="card-header" align="center"><h4 style="font-size: 1.0rem;">Contratos vencendo</h4></div>
             <div class="card-body">
                 <h3 class="card-title"><h1 align="center">{{  total_contratos_vencendo }}</h1></h3>
             </div>
+            -->
             <div class="card-footer bg-transparent" align="center">
-                <a href="{% url 'list_pedidos_vencendo' %}">Total de contratos vencendo neste mês</a>
+                <a href="{% url 'list_pedidos_vencendo' %}">Contratos vencendo no mês ({{  total_contratos_vencendo }})</a>
             </div>
         </div>
     </div>
-
-        <!--
-        <div class="card">
-          <div class="card-header">
-              <h4>
-                <i class="fa fa-users" aria-hidden="true"></i> Dashboard
-              </h4>
-          </div>
-          <div class="card-body text-secondary">
-            <ul>
-                <li>Total de clientes cadastrados: {{   total_clientes   }}</li>
-                <li>Clientes sem serviços cadastrados: {{   total_clientes_sem_pedidos   }}</li>
-                <li>Total de serviços vendidos: {{   total_pedidos   }} </li>
-                <li>Total de campanhas criadas: {{  total_campanhas }}</li>
-            </ul>
-          </div>
-        </div>
-        -->
 </div>
-    <!--
-    <div class="span3">
-        <div class="card">
-          <div class="card-header">
-              <h4>
-                <i class="fa fa-handshake-o" aria-hidden="true"></i> Serviços
-              </h4>
-          </div>
-          <div class="card-body text-secondary">
-            <ul>
-                <li>Movimentados hoje:  </li>
-                <li>Finalizados (7 dias): </li>
-                <li>Sem movimentação: </li>
-                <li>Cancelados (90 dias):  </li>
-            </ul>
-          </div>
-        </div>
+<!-- Cliente GOBBI -->
+<div class="row" align="center">
+    <div class="col-md-12">
+    <iframe width="1200" height="480" src="https://datastudio.google.com/embed/reporting/bdaa1843-9033-4665-8fe9-1b719aa36ece/page/ERTzB" frameborder="0" style="border:0" allowfullscreen></iframe>
     </div>
-    <div class="span3">
-        <div class="card" >
-            <div class="card-header">
-                <h4>
-                <i class="fa fa-bullhorn" aria-hidden="true"></i> Campanhas
-              </h4>
-            </div>
-            <div class="card-body text-secondary">
-                <ul>
-                    <li>Ativas: </li>
-                    <li>Finalizadas (7 dias):  </li>
-                    <li>A iniciar (7 dias):  </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    -->
+</div>
+<!-- FIM CLIENTE GOBBI -->
+
 
 
 {% endblock %}
