@@ -1,0 +1,180 @@
+Atualizando versão do App Gobbi
+
+Link para baixar versão específica do Python:
+https://www.python.org/ftp/python/
+
+Problemas com módulo _bz2 (referente ao pandas)
+
+---> Instalar a biblioteca no Linux
+sudo apt-get install libbz2-dev
+
+---> Copiar arquivo para dentro da pasta do python, dentro da VENV
+
+sudo cp /usr/lib/python3.7/lib-dynload/_bz2.cpython-37m-x86_64-linux-gnu.so  /home/ubuntu/nanovenv/lib/python3.7
+
+
+
+Tutorial para subir o servidor UWsgi e NGINX
+https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html
+
+Log no NGINX 
+sudo vi /var/log/nginx/error.log
+sudo vi /var/log/nginx/access.log
+
+Log do Aplicativo / Vassals
+cd /var/log/uwsgi
+
+Arquivos de configuração do NGINX
+/etc/nginx/sites-available/mysite_nginx.conf
+
+Symlink to this file from /etc/nginx/sites-enabled
+sudo ln -s /etc/nginx/sites-available/mysite_nginx.conf /etc/nginx/sites-enabled/
+
+
+Para Pegar Os Requirements:
+pip freeze > requirements.txt
+
+pip install -r requirements.txt
+
+Conectando ao Servidor:
+ssh -i "downloads/tabo.pem" ubuntu@ec2-34-234-2-191.compute-1.amazonaws.com
+
+Acessando repositório GIT
+cd /home/ubuntu/appgobbiconsultoria
+
+Verificando se há alterações locais
+git status
+
+Caso haja alterações locais, rodar comando git stash
+git stash
+
+Baixar a versão mais recente
+git pull origin master
+
+Entrar no diretório onde está o arquivo de configuração local
+cd /home/ubuntu/
+
+Copiar local_settings.py para a pasta do projeto
+cp local_settings.py /home/ubuntu/appgobbiconsultoria/gobbiconsultoria
+
+Ativando a virtualenv
+cd /home/ubuntu
+. venv/bin/activate
+
+Acessando novamente o repositório GIT e atualizar BD
+cd /home/ubuntu/appgobbiconsultoria
+python manage.py migrate
+
+Reiniciando NGINX e Rodar o emperor
+# sudo /etc/init.d/nginx restart
+#uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
+#sudo /etc/init.d/postgresql restart
+#sudo systemctl start uwsgi_gobbiconsultoria.service
+#sudo systemctl start uwsgi_protocols.service
+#uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
+#sudo service php7.3-fpm restart
+sudo service nginx restart
+sudo systemctl start uwsgi_geral.service
+
+—————
+URL da documentação Django e NGINX
+https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html
+
+Configuração SystemCTL
+https://uwsgi-docs.readthedocs.io/en/latest/Systemd.html
+
+	 cd /etc/systemd/system
+
+————
+URL para instalação PHP no NGINX (Magento 2)
+https://blog.locaweb.com.br/artigos/desenvolvimento-artigos/nginx-com-php-5-ou-7-em-qualquer-servidor-ubuntu-ou-debian/
+
+Local do arquivo de configuração do PHP: /etc/php/7.3/cli/php.ini
+Comando para ver a lista de comandos disponíveis do Magento2:
+	php bin/magento list
+
+
+URL Para testar o certificado HTTPS
+https://www.ssllabs.com/ssltest/analyze.html?d=tabo.com.br
+
+URL do Sistema
+URL de acesso: http://tabo.com.br/
+URL de acesso: http://34.234.2.191/
+
+
+
+#####################################################################
+Conexão com Postgres
+
+Reiniciando o Postgres
+sudo /etc/init.d/postgresql restart
+
+SENHAS
+admin
+PADRÃO GUSTAVO
+
+(Ambiente DEV - sqlite)
+django
+django 
+
+POSTGRES
+### Logar no linux como user postgres
+sudo su - postgres
+
+### Acessar psql 
+#psql –U nomeuser nomebanco
+psql -U user_tabo tabo
+
+#### CREATE ####
+CREATE USER user_spacetimes WITH PASSWORD 'udig78ujghs';
+CREATE DATABASE spacetimes OWNER user_spacetimes;
+
+
+BD: tabo
+User: user_tabo
+Senha: ud78dekdhg873nmhf
+
+BD: nanochemtech
+User: user_nanochemtech
+Senha: 46etdhfgetr546
+
+BD: protocols
+User: user_protocols
+Senha: Uydhjgyd689@khhs
+
+BD: spacetimes
+User: user_spacetimes
+Senha: udig78ujghs
+
+
+#####################
+
+Senhas
+
+Senha para email solutudosjrp@gmail.com (Google Ads) GVN@1ab3
+
+E-mail: noreply@tabo.com.br
+Tabo@noreply
+
+E-mail: contato@tabo.com.br
+Tabo@contato
+
+FTP
+ftp.uhserver.com
+user: gobbi
+Password: @Gobbi@1
+Directory: /gobbiconsultoria.online
+
+
+SELECT DE CONSTRAINTS
+https://makandracards.com/zeroglosa/37127-visualizar-todas-as-constraints-de-um-banco-postgresql
+
+SELECT
+    c.conname nomeForeignKey,
+    c.conrelid::pg_catalog.regclass tabelaOrigem,
+    pg_catalog.pg_get_constraintdef(c.oid, TRUE) AS definicaoForeignKey
+FROM pg_catalog.pg_constraint c
+    JOIN pg_catalog.pg_class r ON r.oid = c.confrelid
+    JOIN pg_catalog.pg_namespace n ON n.oid = r.relnamespace
+    WHERE n.nspname = 'public' AND c.contype = 'f'
+ORDER BY c.conrelid, r.relname, c.conname;
